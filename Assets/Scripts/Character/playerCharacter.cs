@@ -92,9 +92,8 @@ public class playerCharacter : MonoBehaviour {
 	private Vector3 groundNormal;
 	private Vector3 OriginalPosition;
 	private int jumpsRemaining;
-
-
-
+	public float rotationMultiplier = 6;
+	public Vector3 addedVel = new Vector3 (0,0,0);
 
 	void Start () 
 	{
@@ -146,7 +145,27 @@ public class playerCharacter : MonoBehaviour {
 		Vector3 vec = new Vector3 (Input.GetAxis (currentButtons.movementHorizontalAxis), 0f, Input.GetAxis (currentButtons.movementVerticalAxis));
 
 
-		transform.Rotate(new Vector3(0, Input.GetAxis(currentButtons.rotationHorizontalAxis), 0) * Time.deltaTime * rotationSpeed * 6);
+		if (Input.GetAxis (currentButtons.rTrigger) >= 1) 
+		{
+
+			if(Input.GetAxis(currentButtons.rotationHorizontalAxis) != 0)
+			{
+				rotationMultiplier+= 0.4f;
+			}
+			else
+			{
+				rotationMultiplier  = 6;
+			}
+
+			transform.Rotate(new Vector3(0, Input.GetAxis(currentButtons.rotationHorizontalAxis), 0) * Time.deltaTime * rotationSpeed * rotationMultiplier);
+		} 
+		else 
+		{
+			rotationMultiplier  = 6;
+
+			transform.Rotate(new Vector3(0, Input.GetAxis(currentButtons.rotationHorizontalAxis), 0) * Time.deltaTime * rotationSpeed * rotationMultiplier);
+		}
+
 
 		if (Input.GetButtonDown (currentButtons.sprintButton)) {
 			currentSpeed = runningSpeed;
@@ -155,9 +174,11 @@ public class playerCharacter : MonoBehaviour {
 			currentSpeed = walkingSpeed;
 		}
 
-		moveDir = new Vector3 (-Input.GetAxis (currentButtons.movementHorizontalAxis) / 2, 0, -Input.GetAxis (currentButtons.movementVerticalAxis));
-		moveDir = transform.TransformDirection(moveDir);
+		moveDir = new Vector3 (-Input.GetAxis (currentButtons.movementHorizontalAxis), 0, -Input.GetAxis (currentButtons.movementVerticalAxis));
+		//moveDir = transform.TransformDirection(moveDir);  //This line makes you move in the direction you face
 		moveDir *= currentSpeed;
+		moveDir += addedVel; 
+		addedVel = addedVel / 2;
 
 		//Debug.Log (jumpsRemaining.ToString());
 
@@ -200,6 +221,8 @@ public class playerCharacter : MonoBehaviour {
 		vSpeed -= gravityStrength * Time.deltaTime;
 		moveDir.y = vSpeed;
 		CC.Move (moveDir * Time.deltaTime);
+
+
 	}
 	private bool TooSteep () 
 	{
@@ -211,7 +234,7 @@ public class playerCharacter : MonoBehaviour {
 		
 		groundNormal = hit.normal;
 		
-		if (hit.gameObject.GetComponent<Rigidbody> () != null && !hit.collider.attachedRigidbody.isKinematic) 
+		if (hit.rigidbody != null && !hit.collider.attachedRigidbody.isKinematic) 
 		{
 			RB = hit.collider.attachedRigidbody;
 			//Grab the rigidbody of what we've collided with, if it exists and isn't kinematic, continue
@@ -219,9 +242,26 @@ public class playerCharacter : MonoBehaviour {
 			//if (hit.moveDirection.y < -0.3) { return; } //don't affect objects under player
 			
 			Vector3 push = new Vector3 (hit.moveDirection.x, 0, hit.moveDirection.z);  //Make a vector of velocity to push the rigidbody
-			RB.velocity = RB.velocity + push * 1f; //Apply the force
+			//RB.velocity = RB.velocity + push * 1f; //Apply the force
+			RB.AddForceAtPosition(push, hit.point);
+
+
 		}
 
 
-	}
+		if (hit.gameObject.tag == "Player") 
+		{
+			playerCharacter	enemyPC = hit.gameObject.GetComponent<playerCharacter>();
+			float multiplier =  rotationMultiplier;
+			Vector3 push = new Vector3 (hit.moveDirection.x, hit.moveDirection.y, hit.moveDirection.z)*multiplier; 
+			enemyPC.addedVel = push;
+			
+			//enemyCC.Move(push);
+		}
+
+
+
+	} 
+
 }
+
