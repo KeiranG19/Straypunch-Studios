@@ -92,7 +92,7 @@ public class playerCharacter : MonoBehaviour {
 	private Vector3 groundNormal;
 	private Vector3 OriginalPosition;
 	private int jumpsRemaining;
-	public float rotationMultiplier = 6;
+	public float rotationMultiplier = 1;
 	public Vector3 addedVel = new Vector3 (0,0,0);
 
 	void Start () 
@@ -140,8 +140,136 @@ public class playerCharacter : MonoBehaviour {
 		Movement();
 	}
 
+	private bool started_spinning = false;
+	private Vector3 starting_angle;
+	private Quaternion spin_direction;
+	private float sensitivityX=90;
+	private float sensitivityY=90;
+	float aim_angle = 0.0f;
+	float previous_angle = 0.0f;
+	float distance_between_angles = 0.0f;
 	void Movement()
 	{
+
+
+			Vector3 vec = new Vector3 (Input.GetAxis (currentButtons.movementHorizontalAxis), 0f, Input.GetAxis (currentButtons.movementVerticalAxis));
+			
+			
+			if (Input.GetAxis (currentButtons.rTrigger) >= 1) 
+			{
+				
+				// stick * 90 x/ y
+				//if(next_thumbstick_direction is within 0.20 or -0.20 of previous angle, do rotate
+				
+				
+				
+				//starting_angle = new Vector3(0,((x/y))*90,0);
+				
+				//transform.Rotate(new Vector3(0,starting_angle.y,0));
+				//transform.TransformDirection(starting_angle);
+				//starting_angle = new Vector3(x, 0, y);
+				//spin_direction = Quaternion.LookRotation(starting_angle, Vector3.up);
+				float x = Input.GetAxis(currentButtons.rotationHorizontalAxis)*sensitivityX;
+				float y = Input.GetAxis(currentButtons.rotationVerticalAxis)*sensitivityY; 
+
+				//print("   vert: " + Input.GetAxis(currentButtons.rotationVerticalAxis).ToString()+" horz: " + Input.GetAxis(currentButtons.rotationHorizontalAxis).ToString());
+				
+				
+				//Vector3 targetRotationX = new Vector3(0, x, 0);
+			//Vector3 targetRotationY = new Vector3(0, y, 0);
+			//Vector3 targetRotation = Vector3.Dot( targetRotationX,targetRotationY);
+				//transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(targetRotationX),.2f);
+
+
+			//float R_analog_threshold = 0.20f;
+			
+			//if (Mathf.Abs(x) < R_analog_threshold) {x = 0.0f;} 
+			
+			//if (Mathf.Abs(y) < R_analog_threshold) {y = 0.0f;} 
+
+
+
+			// CALCULATE ANGLE AND ROTATE
+			if (x != 0.0f || y != 0.0f) {
+				started_spinning = true;
+				aim_angle = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
+
+				transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(aim_angle, Vector3.up),.2f) ;
+				print("   new angle: " + aim_angle + "old angle:"+previous_angle);
+
+				if(started_spinning == true)
+				{
+					if(rotationMultiplier <200)
+					{
+
+						rotationMultiplier += 0.0000001f + (rotationMultiplier / 40);
+					}
+					transform.Rotate(new Vector3(0,(transform.eulerAngles.y/90),0)* rotationMultiplier);
+				}
+
+
+
+			}
+			else
+			{
+				if(rotationMultiplier < 0)
+				{
+					
+					rotationMultiplier =0;
+				}
+				else{
+					rotationMultiplier -= 0.0001f + (rotationMultiplier / 20);
+				}
+				started_spinning = false;
+			}
+
+
+				//rotationMultiplier+= 0.4f;
+				//transform.Rotate(new Vector3(0,starting_angle.y,0));
+				
+			}
+			/*
+			if(started_spinning == false)
+			{
+				starting_angle = new Vector3(0,x,y);
+				transform.Rotate(new Vector3(0,starting_angle.x,starting_angle.z));
+				started_spinning = true;
+			}
+			else{
+
+			float R_analog_threshold = 0.60f;
+			spin_direction = new Vector3(0,x,y);
+
+			if (starting_angle.x + R_analog_threshold >= spin_direction.x || starting_angle.x - R_analog_threshold <= spin_direction.x)
+			{
+				starting_angle = spin_direction;
+			
+				rotationMultiplier+= 0.4f;
+				transform.Rotate(new Vector3(0,spin_direction.x,spin_direction.z) * Time.deltaTime * rotationSpeed * rotationMultiplier);
+			}
+			}
+		}
+		else{
+		started_spinning = false;
+		rotationMultiplier  = 6;
+		}*/
+			/*
+			if(Input.GetAxis(currentButtons.rotationHorizontalAxis) != 0)
+			{
+				rotationMultiplier+= 0.4f;
+			}
+			else
+			{
+				rotationMultiplier  = 6;
+			}
+
+			transform.Rotate(new Vector3(0, Input.GetAxis(currentButtons.rotationHorizontalAxis), y) * Time.deltaTime * rotationSpeed * rotationMultiplier);
+		} 
+
+
+
+
+		/*
 		Vector3 vec = new Vector3 (Input.GetAxis (currentButtons.movementHorizontalAxis), 0f, Input.GetAxis (currentButtons.movementVerticalAxis));
 
 
@@ -165,7 +293,8 @@ public class playerCharacter : MonoBehaviour {
 
 			transform.Rotate(new Vector3(0, Input.GetAxis(currentButtons.rotationHorizontalAxis), 0) * Time.deltaTime * rotationSpeed * rotationMultiplier);
 		}
-
+*/
+	
 
 		if (Input.GetButtonDown (currentButtons.sprintButton)) {
 			currentSpeed = runningSpeed;
@@ -217,7 +346,7 @@ public class playerCharacter : MonoBehaviour {
 			}
 			
 		}
-
+		
 		vSpeed -= gravityStrength * Time.deltaTime;
 		moveDir.y = vSpeed;
 		CC.Move (moveDir * Time.deltaTime);
