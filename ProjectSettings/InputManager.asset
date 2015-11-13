@@ -479,11 +479,11 @@ InputManager:
     altPositiveButton: 
     gravity: 0
     dead: .400000006
-    sensitivity: .100000001
+    sensitivity: .800000012
     snap: 1
     invert: 0
-    type: 1
-    axis: 2
+    type: 2
+    axis: 4
     joyNum: 2
   - serializedVersion: 3
     m_Name: P2RotY
@@ -495,11 +495,11 @@ InputManager:
     altPositiveButton: 
     gravity: 0
     dead: .400000006
-    sensitivity: .100000001
+    sensitivity: .800000012
     snap: 1
     invert: 0
-    type: 1
-    axis: 2
+    type: 2
+    axis: 4
     joyNum: 3
   - serializedVersion: 3
     m_Name: P3RotY
@@ -511,11 +511,11 @@ InputManager:
     altPositiveButton: 
     gravity: 0
     dead: .400000006
-    sensitivity: .100000001
+    sensitivity: .800000012
     snap: 1
     invert: 0
-    type: 1
-    axis: 2
+    type: 2
+    axis: 4
     joyNum: 4
   - serializedVersion: 3
     m_Name: P0Back
