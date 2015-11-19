@@ -50,7 +50,7 @@ public class playerCharacter : MonoBehaviour {
 	/// Component References
 	///////////////////////////////////////////////////////////////////
 
-	private CharacterController CC;
+	private CharacterController RC;
 	private Rigidbody RB;
 
 
@@ -92,7 +92,7 @@ public class playerCharacter : MonoBehaviour {
 	private Vector3 groundNormal;
 	private Vector3 OriginalPosition;
 	private int jumpsRemaining;
-	public float rotationMultiplier = 6;
+	public float rotationMultiplier = 1;
 	public Vector3 addedVel = new Vector3 (0,0,0);
 
 	void Start () 
@@ -100,9 +100,9 @@ public class playerCharacter : MonoBehaviour {
 
 		SetupButtons();
 		OriginalPosition = transform.position;
-		if(CC == null)
+		if(RC == null)
 		{
-			CC = GetComponent<CharacterController> ();
+			RC = GetComponent<CharacterController> ();
 		}
 
 	
@@ -140,32 +140,83 @@ public class playerCharacter : MonoBehaviour {
 		Movement();
 	}
 
+	private bool started_spinning = false;
+	private float sensitivityX=90;
+	private float sensitivityY=90;
+	float aim_angle = 0.0f;
+
 	void Movement()
 	{
 		Vector3 vec = new Vector3 (Input.GetAxis (currentButtons.movementHorizontalAxis), 0f, Input.GetAxis (currentButtons.movementVerticalAxis));
 
+		float x = Input.GetAxis(currentButtons.rotationHorizontalAxis)*sensitivityX;
+		float y = Input.GetAxis(currentButtons.rotationVerticalAxis)*sensitivityY;
 
-		if (Input.GetAxis (currentButtons.rTrigger) >= 1) 
+		// CLAMP THE SPIN SPEED
+		// UPPER BOUND OF SPIN SPEED
+		if(rotationMultiplier <= 80)
 		{
-
-			if(Input.GetAxis(currentButtons.rotationHorizontalAxis) != 0)
+			// LOWER BOUND OF SPIN SPEED
+			if(rotationMultiplier >= 0)
 			{
-				rotationMultiplier+= 0.4f;
+				// IF RIGHT TRIGGER IS DOWN
+				if (Input.GetAxis (currentButtons.rTrigger) >= 1) 
+				{ 
+					// DEBUG THUMBSTICK ANGLES
+					print("   vert: " + Input.GetAxis(currentButtons.rotationVerticalAxis).ToString()+" horz: " + Input.GetAxis(currentButtons.rotationHorizontalAxis).ToString());
+
+					// HOLDING, BUT NOT SPINING THE THUMBSTICK, INCREASE SLOWLY
+					if(x != 0 && y == 0)
+					{
+						rotationMultiplier+= 0.2f;
+						started_spinning = true;
+						transform.Rotate(new Vector3(0, x, 0) * Time.deltaTime * rotationMultiplier);
+					}
+					else
+					{
+						//	SPINNING THE THUMBSTICK, INCREASE FASTER
+						if (x != 0.0f || y != 0.0f) 
+						{
+							started_spinning = true;
+							aim_angle = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
+
+							// CALCULATE ANGLE AND ROTATE
+							transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(aim_angle, Vector3.up),.2f) ;
+
+							if(started_spinning == true)
+							{
+								rotationMultiplier += 0.0000001f + (rotationMultiplier / 40);
+								transform.Rotate(new Vector3(0,(transform.eulerAngles.y/90),0)* rotationMultiplier);
+							}
+						}
+						else 
+						{
+							started_spinning = false;
+						}
+			
+					}
+				}
+				else
+				{
+					started_spinning = false;
+				}
+				if(started_spinning == false)
+				{
+					//DECREASE ROTATION OVER TIME IF NOT SPINNING
+					rotationMultiplier -= 0.0001f + (rotationMultiplier / 20);
+					transform.Rotate(new Vector3(0, -90, 0) * Time.deltaTime * rotationMultiplier);
+				}
 			}
 			else
 			{
-				rotationMultiplier  = 6;
+				rotationMultiplier =0;
 			}
-
-			transform.Rotate(new Vector3(0, Input.GetAxis(currentButtons.rotationHorizontalAxis), 0) * Time.deltaTime * rotationSpeed * rotationMultiplier);
-		} 
-		else 
-		{
-			rotationMultiplier  = 6;
-
-			transform.Rotate(new Vector3(0, Input.GetAxis(currentButtons.rotationHorizontalAxis), 0) * Time.deltaTime * rotationSpeed * rotationMultiplier);
 		}
-
+		else
+		{
+			rotationMultiplier =80;
+		}
+	
 
 		if (Input.GetButtonDown (currentButtons.sprintButton)) {
 			currentSpeed = runningSpeed;
@@ -183,7 +234,7 @@ public class playerCharacter : MonoBehaviour {
 		//Debug.Log (jumpsRemaining.ToString());
 
 		float jumpSleep = 0;
-		if (CC.isGrounded) 
+		if (RC.isGrounded) 
 		{
 			vSpeed = 0; 
 			jumpsRemaining = additionalJumps;
@@ -217,16 +268,16 @@ public class playerCharacter : MonoBehaviour {
 			}
 			
 		}
-
+		
 		vSpeed -= gravityStrength * Time.deltaTime;
 		moveDir.y = vSpeed;
-		CC.Move (moveDir * Time.deltaTime);
+		RC.Move (moveDir * Time.deltaTime);
 
 
 	}
 	private bool TooSteep () 
 	{
-		return (groundNormal.y <= Mathf.Cos (CC.slopeLimit * Mathf.Deg2Rad));
+		return (groundNormal.y <= Mathf.Cos (RC.slopeLimit * Mathf.Deg2Rad));
 		//gets the slope and returns boolean true or false for if it should be traverseable
 	}
 	void OnControllerColliderHit (ControllerColliderHit hit) 
