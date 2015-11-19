@@ -3,12 +3,17 @@ using System.Collections;
 
 public class CameraScript : MonoBehaviour {
 
-	public float cameraRotationSpeed;
+	public float cameraRotationSpeed=1;
+	public float cameraZoomSpeed=1;
+	public float cameraZoomDist=1;
+	public float mapWidth = 100;
+	public float verticalZoomMultiplier=1;
 	private Vector3 midpoint;
-	private float prevMaxDist = 0;
+	private float closestX = 0;
+	private Vector3 startposition;
 	// Use this for initialization
 	void Start () {
-	
+		startposition = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -25,21 +30,23 @@ public class CameraScript : MonoBehaviour {
 			//if (player.isAlive) {
 			numPlayers++;
 			midpoint += player.transform.position;
+			if(closestX > player.transform.position.x)
+			{
+				closestX = player.transform.position.x;
+			}
 			//}
 		}
 
 		midpoint = midpoint / numPlayers;
-		float maxDist = 0;
-		foreach (GameObject player in players) {
-			float dist = Vector3.Distance(midpoint,player.transform.position);
-			if(dist>maxDist)
-			{
-				maxDist = dist;
-			}
-		}
+
+		Vector3 Position = transform.position;
+		Position.x = closestX + cameraZoomDist;
+		float heightModifier = Mathf.Abs (closestX / mapWidth)*verticalZoomMultiplier;
+		Position.y = startposition.y + heightModifier;
+		transform.position = Vector3.Lerp (transform.position, Position, Time.deltaTime * cameraZoomSpeed);
+
 		Vector3 Direction = midpoint-transform.position;
 		transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (Direction), Time.deltaTime * cameraRotationSpeed);
-		transform.position = Vector3.Lerp(transform.position,(transform.forward * (prevMaxDist - maxDist))+transform.position,Time.deltaTime);
-		prevMaxDist = maxDist;
+
 	}
-}
+} 

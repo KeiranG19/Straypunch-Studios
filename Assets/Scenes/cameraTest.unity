@@ -1401,3 +1401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraRotationSpeed: 1
+  cameraZoomSpeed: 5
+  cameraZoomDist: -20
+  mapWidth: 100
+  verticalZoomMultiplier: 5
