@@ -22,8 +22,8 @@ public class MatchOptions : MonoBehaviour {
 		lives = numberOfLives;
 	}
 
-	public void LoadScene()
+	public void LoadScene(int level2)
 	{
-		Application.LoadLevel(level);
+		Application.LoadLevel(level2);
 	}
 }	
