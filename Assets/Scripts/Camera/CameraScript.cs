@@ -6,6 +6,11 @@ public class CameraScript : MonoBehaviour {
 	public float cameraRotationSpeed=1;
 	public float cameraDist=1;
 	public float mapWidth = 100;
+<<<<<<< HEAD
+=======
+	public float verticalZoomMultiplier=1;
+	public float ignoreDist = 10;
+>>>>>>> refs/remotes/origin/Camera
 	private Vector3 midpoint;
 	
 	// Use this for initialization
@@ -24,8 +29,30 @@ public class CameraScript : MonoBehaviour {
 		midpoint = new Vector3 (0, 0, 0);
 		foreach (GameObject player in players) {
 			//if (player.isAlive) {
+<<<<<<< HEAD
 			numPlayers++;
 			midpoint += player.transform.position;
+=======
+			if(numPlayers > 0)
+			{
+				float dist = Vector3.Distance(player.transform.position,midpoint/numPlayers);
+				if(dist >= ignoreDist)
+				{
+					midpoint += player.transform.position;
+					numPlayers++;
+				}
+			}
+			else
+			{
+				midpoint += player.transform.position;
+				numPlayers++;
+			}
+			if(closestX > player.transform.position.x)
+			{
+				closestX = player.transform.position.x;
+			}
+
+>>>>>>> refs/remotes/origin/Camera
 			//}
 		}
 
