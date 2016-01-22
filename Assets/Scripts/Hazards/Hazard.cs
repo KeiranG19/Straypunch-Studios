@@ -15,7 +15,7 @@ public class Hazard : MonoBehaviour {
 
 	public type Type;
 	public int damage;
-	public bool active = false;
+	public bool activated = false;
 	public int slowAmount;
 	// Use this for initialization
 	void Start () {
@@ -24,7 +24,7 @@ public class Hazard : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(active == true)
+		if(activated == true)
 		{
 
 			Component[] children = GetComponentsInChildren<ParticleSystem>();
@@ -48,7 +48,7 @@ public class Hazard : MonoBehaviour {
 
 	void OnTriggerStay(Collider other)
 	{
-		if(active == true)
+		if(activated == true)
 		{
 			if(other.gameObject.tag == "Player")
 			{
@@ -67,7 +67,7 @@ public class Hazard : MonoBehaviour {
 
 	void OnTriggerExit(Collider other)
 	{
-		if(active == true)
+		if(activated == true)
 		{
 			if(other.gameObject.tag == "Player")
 			{

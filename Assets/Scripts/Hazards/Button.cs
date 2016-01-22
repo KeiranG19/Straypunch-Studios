@@ -18,7 +18,7 @@ public class Button : MonoBehaviour {
 	{
 		if(other.gameObject.tag == "Player")
 		{
-			Trigger.active = true;
+			Trigger.activated = true;
 			Vector3 newY = new Vector3(0,-0.15f,0);
 			this.transform.position += newY;
 		}
@@ -29,7 +29,7 @@ public class Button : MonoBehaviour {
 	{
 		if(other.gameObject.tag == "Player")
 		{
-		Trigger.active = false;
+		Trigger.activated = false;
 		Vector3 newY = new Vector3(0,0.15f,0);
 		this.transform.position += newY;
 		}

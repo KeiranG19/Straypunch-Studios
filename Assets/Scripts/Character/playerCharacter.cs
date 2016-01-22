@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent (typeof (Rigidbody))]
+[RequireComponent (typeof (CapsuleCollider))]
+
 public class playerCharacter : MonoBehaviour {
 
 	
@@ -49,63 +52,58 @@ public class playerCharacter : MonoBehaviour {
 	////////////////////////////////////////////////////////////////////	
 	/// Component References
 	///////////////////////////////////////////////////////////////////
-
-	private CharacterController RC;
+	
 	private Rigidbody RB;
-
 
 	////////////////////////////////////////////////////////////////////	
 	/// Public Inspector Variables
 	///////////////////////////////////////////////////////////////////
 	[Header("Controller variables")]
 	
-[Tooltip("Current Controller Use ID  (0-3) ")]
+	[Tooltip("Current Controller Use ID  (0-3) ")]
 	public int controllerInUse = 0;
 
 	[Header("Movement variables")]
 
-[Tooltip("Character walking speed")]
+	[Tooltip("Character walking speed")]
 	public float walkingSpeed = 10.0f;
 	
-[Tooltip("Character running speed")]
+	[Tooltip("Character running speed")]
 	public float runningSpeed = 20.0f;
 	
-[Tooltip("How quickly the character can jump")]
+	[Tooltip("How quickly the character can jump")]
 	public float jumpSpeed = 20f;
 	
-[Tooltip("How quickly the character can turn")]
+	[Tooltip("How quickly the character can turn")]
 	public float rotationSpeed = 4f;
 
-[Tooltip("How much gravity to apply to the character")]
+	[Tooltip("How much gravity to apply to the character")]
 	public float gravityStrength = 20.0f;
 
-[Tooltip("How many extra jumps a character can do (0 is a single jump, 1 is a double jump)")]
+	[Tooltip("How many extra jumps a character can do (0 is a single jump, 1 is a double jump)")]
 	public int additionalJumps = 1; 
-	
+
+	public float gravity = 10.0f;
+	public float maxVelocityChange = 10.0f;
+	public bool canJump = true;
+	public float jumpHeight = 2.0f;
+	public bool Ragdoll = false;
 	////////////////////////////////////////////////////////////////////	
 	/// Private Variables
 	////////////////////////////////////////////////////////////////////
 
 	public float currentSpeed = 10.0f;
-	private Vector3 moveDir = Vector3.zero;
-	private float vSpeed = 0;
-	private Vector3 groundNormal;
-	private Vector3 OriginalPosition;
+	
 	private int jumpsRemaining;
 	public float rotationMultiplier = 1;
 	public Vector3 addedVel = new Vector3 (0,0,0);
-
+	public Vector3 velocityChange;
+	Quaternion currentRotation;
+	Quaternion DefaultRotation;
 	void Start () 
 	{
-
 		SetupButtons();
-		OriginalPosition = transform.position;
-		if(RC == null)
-		{
-			RC = GetComponent<CharacterController> ();
-		}
-
-	
+		DefaultRotation = rigidbody.rotation;
 	}
 	void SetupButtons()
 	{
@@ -137,7 +135,10 @@ public class playerCharacter : MonoBehaviour {
 
 	void Update () 
 	{
+		//rigidbody.AddForce(new Vector3 (0, -(gravity * rigidbody.mass), 0));
 		Movement();
+		//addedVel = new Vector3 (0,0,0);
+
 	}
 
 	private bool started_spinning = false;
@@ -147,7 +148,6 @@ public class playerCharacter : MonoBehaviour {
 
 	void Movement()
 	{
-		Vector3 vec = new Vector3 (Input.GetAxis (currentButtons.movementHorizontalAxis), 0f, Input.GetAxis (currentButtons.movementVerticalAxis));
 
 		float x = Input.GetAxis(currentButtons.rotationHorizontalAxis)*sensitivityX;
 		float y = Input.GetAxis(currentButtons.rotationVerticalAxis)*sensitivityY;
@@ -216,87 +216,25 @@ public class playerCharacter : MonoBehaviour {
 		{
 			rotationMultiplier =80;
 		}
-	
-
-		if (Input.GetButtonDown (currentButtons.sprintButton)) {
-			currentSpeed = runningSpeed;
-		}
-		if (Input.GetButtonUp (currentButtons.sprintButton)) {
-			currentSpeed = walkingSpeed;
-		}
-
-		moveDir = new Vector3 (-Input.GetAxis (currentButtons.movementHorizontalAxis), 0, -Input.GetAxis (currentButtons.movementVerticalAxis));
-		//moveDir = transform.TransformDirection(moveDir);  //This line makes you move in the direction you face
-		moveDir *= currentSpeed;
-		moveDir += addedVel; 
-		addedVel = addedVel / 2;
-
-		//Debug.Log (jumpsRemaining.ToString());
-
-		float jumpSleep = 0;
-		if (RC.isGrounded) 
-		{
-			vSpeed = 0; 
-			jumpsRemaining = additionalJumps;
-			
-			if (Input.GetButton (currentButtons.jumpButton) && !TooSteep ()) 
-			{
-				vSpeed = jumpSpeed;
-			}
-			if (TooSteep ()) {
-				//moveDir.y = -jumpSpeed / 2;
-			}
-			
-		}
-		else 
-		{
-
-			if (Input.GetButtonDown(currentButtons.jumpButton)) 
-			{
-			
-
-				if(jumpsRemaining > 0)
-				{
-					vSpeed = jumpSpeed;
-					jumpsRemaining--;
-				}
-				
-				
-			}
-			if (TooSteep ()) {
-				//moveDir.y = -jumpSpeed / 2;
-			}
-			
-		}
-		
-		vSpeed -= gravityStrength * Time.deltaTime;
-		moveDir.y = vSpeed;
-		RC.Move (moveDir * Time.deltaTime);
-
-
 	}
-	private bool TooSteep () 
-	{
-		return (groundNormal.y <= Mathf.Cos (RC.slopeLimit * Mathf.Deg2Rad));
-		//gets the slope and returns boolean true or false for if it should be traverseable
+
+
+	void OnCollisionStay () {
+		currentRotation = rigidbody.rotation;
+		Ragdoll = false;
+		Quaternion.Slerp(currentRotation,DefaultRotation,0.5f);
 	}
+
 	void OnControllerColliderHit (ControllerColliderHit hit) 
 	{
-		
-		groundNormal = hit.normal;
-		
+
 		if (hit.rigidbody != null && !hit.collider.attachedRigidbody.isKinematic) 
 		{
 			RB = hit.collider.attachedRigidbody;
-			//Grab the rigidbody of what we've collided with, if it exists and isn't kinematic, continue
-			
-			//if (hit.moveDirection.y < -0.3) { return; } //don't affect objects under player
-			
+
 			Vector3 push = new Vector3 (hit.moveDirection.x, 0, hit.moveDirection.z);  //Make a vector of velocity to push the rigidbody
-			//RB.velocity = RB.velocity + push * 1f; //Apply the force
+
 			RB.AddForceAtPosition(push, hit.point);
-
-
 		}
 
 
@@ -306,13 +244,7 @@ public class playerCharacter : MonoBehaviour {
 			float multiplier =  rotationMultiplier;
 			Vector3 push = new Vector3 (hit.moveDirection.x, hit.moveDirection.y, hit.moveDirection.z)*multiplier; 
 			enemyPC.addedVel = push;
-			
-			//enemyCC.Move(push);
 		}
-
-
-
 	} 
-
 }
 
