@@ -227,7 +227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 1
   damage: 0
-  active: 1
+  activated: 0
   slowAmount: 1
 --- !u!1 &19264160
 GameObject:
@@ -1685,7 +1685,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   damage: 0
-  active: 0
+  activated: 0
   slowAmount: 0
 --- !u!1 &144003818
 GameObject:
@@ -3330,7 +3330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   damage: 5
-  active: 0
+  activated: 0
   slowAmount: 0
 --- !u!1 &383016741
 GameObject:
@@ -3702,7 +3702,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   damage: 0
-  active: 0
+  activated: 0
   slowAmount: 0
 --- !u!1 &492164971
 GameObject:
@@ -9053,8 +9053,8 @@ MonoBehaviour:
   canJump: 1
   jumpHeight: 2
   Ragdoll: 0
-  currentSpeed: 10
-  rotationMultiplier: 6
+  currentSpeed: 0
+  rotationMultiplier: 0
   addedVel: {x: 0, y: 0, z: 0}
   velocityChange: {x: 0, y: 0, z: 0}
 --- !u!114 &936212507
@@ -9257,7 +9257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   damage: 0
-  active: 0
+  activated: 0
   slowAmount: 0
 --- !u!1 &1067518630
 GameObject:
