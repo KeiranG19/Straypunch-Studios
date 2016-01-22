@@ -19,7 +19,7 @@ public class HazardEditor : Editor {
 		{
 			EditorGUI.indentLevel++;
 			myHazard.damage = EditorGUILayout.IntField("Damage: ",myHazard.damage);
-			myHazard.active = EditorGUILayout.Toggle("Is Active: ",myHazard.active);
+			myHazard.activated = EditorGUILayout.Toggle("Is Active: ",myHazard.activated);
 		}
 		else
 		{
@@ -34,7 +34,7 @@ public class HazardEditor : Editor {
 		{
 			EditorGUI.indentLevel++;
 			myHazard.slowAmount = EditorGUILayout.IntField("slow speed to %: ",myHazard.slowAmount);
-			myHazard.active = EditorGUILayout.Toggle("Is Active: ",myHazard.active);
+			myHazard.activated = EditorGUILayout.Toggle("Is Active: ",myHazard.activated);
 		}
 		else
 		{

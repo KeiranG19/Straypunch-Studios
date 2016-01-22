@@ -83,7 +83,6 @@ public class playerCharacter : MonoBehaviour {
 	[Tooltip("How many extra jumps a character can do (0 is a single jump, 1 is a double jump)")]
 	public int additionalJumps = 1; 
 
-	private bool grounded = false;
 	public float gravity = 10.0f;
 	public float maxVelocityChange = 10.0f;
 	public bool canJump = true;
@@ -94,10 +93,7 @@ public class playerCharacter : MonoBehaviour {
 	////////////////////////////////////////////////////////////////////
 
 	public float currentSpeed = 10.0f;
-	private Vector3 moveDir = Vector3.zero;
-	private float vSpeed = 0;
-	private Vector3 groundNormal;
-	private Vector3 OriginalPosition;
+	
 	private int jumpsRemaining;
 	public float rotationMultiplier = 1;
 	public Vector3 addedVel = new Vector3 (0,0,0);
@@ -107,7 +103,6 @@ public class playerCharacter : MonoBehaviour {
 	void Start () 
 	{
 		SetupButtons();
-		OriginalPosition = transform.position;
 		DefaultRotation = rigidbody.rotation;
 	}
 	void SetupButtons()
@@ -153,7 +148,6 @@ public class playerCharacter : MonoBehaviour {
 
 	void Movement()
 	{
-		Vector3 vec = new Vector3 (Input.GetAxis (currentButtons.movementHorizontalAxis), 0f, Input.GetAxis (currentButtons.movementVerticalAxis));
 
 		float x = Input.GetAxis(currentButtons.rotationHorizontalAxis)*sensitivityX;
 		float y = Input.GetAxis(currentButtons.rotationVerticalAxis)*sensitivityY;
@@ -222,17 +216,10 @@ public class playerCharacter : MonoBehaviour {
 		{
 			rotationMultiplier =80;
 		}
-
-
-
-		
-		grounded = false;
-
 	}
 
 
 	void OnCollisionStay () {
-		grounded = true; 
 		currentRotation = rigidbody.rotation;
 		Ragdoll = false;
 		Quaternion.Slerp(currentRotation,DefaultRotation,0.5f);
@@ -240,21 +227,14 @@ public class playerCharacter : MonoBehaviour {
 
 	void OnControllerColliderHit (ControllerColliderHit hit) 
 	{
-		
-		groundNormal = hit.normal;
-		
+
 		if (hit.rigidbody != null && !hit.collider.attachedRigidbody.isKinematic) 
 		{
 			RB = hit.collider.attachedRigidbody;
-			//Grab the rigidbody of what we've collided with, if it exists and isn't kinematic, continue
-			
-			//if (hit.moveDirection.y < -0.3) { return; } //don't affect objects under player
-			
+
 			Vector3 push = new Vector3 (hit.moveDirection.x, 0, hit.moveDirection.z);  //Make a vector of velocity to push the rigidbody
-			//RB.velocity = RB.velocity + push * 1f; //Apply the force
+
 			RB.AddForceAtPosition(push, hit.point);
-
-
 		}
 
 
@@ -264,12 +244,7 @@ public class playerCharacter : MonoBehaviour {
 			float multiplier =  rotationMultiplier;
 			Vector3 push = new Vector3 (hit.moveDirection.x, hit.moveDirection.y, hit.moveDirection.z)*multiplier; 
 			enemyPC.addedVel = push;
-			
-			//enemyCC.Move(push);
 		}
-
-
-
 	} 
 }
 
