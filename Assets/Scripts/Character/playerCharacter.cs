@@ -6,15 +6,10 @@ using System.Collections;
 
 public class playerCharacter : MonoBehaviour {
 
-	
-	////////////////////////////////////////////////////////////////////	
-	/// Input Structure
-	///////////////////////////////////////////////////////////////////
-
 	struct inputButtons 
 	{
 		/* Left Stick */
-		public	string movementHorizontalAxis;
+		public string movementHorizontalAxis;
 		public string movementVerticalAxis;
 
 		/* Right Stick */
@@ -42,22 +37,15 @@ public class playerCharacter : MonoBehaviour {
 		/*Triggers*/
 		public string lTrigger;
 		public string rTrigger;
-
-
-
-
 	};
+
 	private inputButtons currentButtons;
 
-	////////////////////////////////////////////////////////////////////	
-	/// Component References
-	///////////////////////////////////////////////////////////////////
-	
 	private Rigidbody RB;
 
-	////////////////////////////////////////////////////////////////////	
-	/// Public Inspector Variables
-	///////////////////////////////////////////////////////////////////
+	public float health = 200;
+	public bool isAlive = true;
+
 	[Header("Controller variables")]
 	
 	[Tooltip("Current Controller Use ID  (0-3) ")]
@@ -88,23 +76,21 @@ public class playerCharacter : MonoBehaviour {
 	public bool canJump = true;
 	public float jumpHeight = 2.0f;
 	public bool Ragdoll = false;
-	////////////////////////////////////////////////////////////////////	
-	/// Private Variables
-	////////////////////////////////////////////////////////////////////
-
 	public float currentSpeed = 10.0f;
-	
 	private int jumpsRemaining;
 	public float rotationMultiplier = 1;
 	public Vector3 addedVel = new Vector3 (0,0,0);
 	public Vector3 velocityChange;
 	Quaternion currentRotation;
 	Quaternion DefaultRotation;
+
 	void Start () 
 	{
 		SetupButtons();
 		DefaultRotation = rigidbody.rotation;
 	}
+
+
 	void SetupButtons()
 	{
 		currentButtons.movementHorizontalAxis = "P"+ controllerInUse.ToString() + "Horizontal";
@@ -128,17 +114,16 @@ public class playerCharacter : MonoBehaviour {
 
 		currentButtons.lTrigger = "P" + controllerInUse.ToString() + "Ltrigger";
 		currentButtons.rTrigger = "P" + controllerInUse.ToString() + "Rtrigger";
-
-
-
 	}
 
 	void Update () 
 	{
-		//rigidbody.AddForce(new Vector3 (0, -(gravity * rigidbody.mass), 0));
 		Movement();
-		//addedVel = new Vector3 (0,0,0);
-
+		if (health <= 0 && isAlive) 
+		{
+			isAlive = false;
+			Debug.Log("dead");
+		}
 	}
 
 	private bool started_spinning = false;
@@ -147,7 +132,7 @@ public class playerCharacter : MonoBehaviour {
 	float aim_angle = 0.0f;
 
 	void Movement()
-	{
+	{ 
 
 		float x = Input.GetAxis(currentButtons.rotationHorizontalAxis)*sensitivityX;
 		float y = Input.GetAxis(currentButtons.rotationVerticalAxis)*sensitivityY;
@@ -162,9 +147,6 @@ public class playerCharacter : MonoBehaviour {
 				// IF RIGHT TRIGGER IS DOWN
 				if (Input.GetAxis (currentButtons.rTrigger) >= 1) 
 				{ 
-					// DEBUG THUMBSTICK ANGLES
-					print("   vert: " + Input.GetAxis(currentButtons.rotationVerticalAxis).ToString()+" horz: " + Input.GetAxis(currentButtons.rotationHorizontalAxis).ToString());
-
 					// HOLDING, BUT NOT SPINING THE THUMBSTICK, INCREASE SLOWLY
 					if(x != 0 && y == 0)
 					{
@@ -193,7 +175,6 @@ public class playerCharacter : MonoBehaviour {
 						{
 							started_spinning = false;
 						}
-			
 					}
 				}
 				else

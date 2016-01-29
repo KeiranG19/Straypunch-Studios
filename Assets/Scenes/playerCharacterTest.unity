@@ -6196,7 +6196,6 @@ GameObject:
   - 33: {fileID: 756885394}
   - 136: {fileID: 756885393}
   - 23: {fileID: 756885392}
-  - 143: {fileID: 756885391}
   - 114: {fileID: 756885390}
   - 54: {fileID: 756885395}
   - 114: {fileID: 756885396}
@@ -6231,6 +6230,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae9d46d63c008a488f22dabfd1e8211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
+  isAlive: 1
   controllerInUse: 2
   walkingSpeed: 10
   runningSpeed: 20
@@ -6247,20 +6248,6 @@ MonoBehaviour:
   rotationMultiplier: 6
   addedVel: {x: 0, y: 0, z: 0}
   velocityChange: {x: 0, y: 0, z: 0}
---- !u!143 &756885391
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 756885388}
-  serializedVersion: 2
-  m_Height: 2
-  m_Radius: .500000119
-  m_SlopeLimit: 45
-  m_StepOffset: .300000012
-  m_SkinWidth: .0799999982
-  m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &756885392
 Renderer:
   m_ObjectHideFlags: 0
@@ -9041,6 +9028,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae9d46d63c008a488f22dabfd1e8211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
+  isAlive: 1
   controllerInUse: 0
   walkingSpeed: 10
   runningSpeed: 20
@@ -9339,7 +9328,6 @@ GameObject:
   - 33: {fileID: 1097061388}
   - 136: {fileID: 1097061387}
   - 23: {fileID: 1097061386}
-  - 143: {fileID: 1097061385}
   - 114: {fileID: 1097061384}
   - 54: {fileID: 1097061389}
   - 114: {fileID: 1097061390}
@@ -9374,6 +9362,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae9d46d63c008a488f22dabfd1e8211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 1
+  isAlive: 1
   controllerInUse: 3
   walkingSpeed: 10
   runningSpeed: 20
@@ -9390,20 +9380,6 @@ MonoBehaviour:
   rotationMultiplier: 6
   addedVel: {x: 0, y: 0, z: 0}
   velocityChange: {x: 0, y: 0, z: 0}
---- !u!143 &1097061385
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1097061382}
-  serializedVersion: 2
-  m_Height: 2
-  m_Radius: .500000119
-  m_SlopeLimit: 45
-  m_StepOffset: .300000012
-  m_SkinWidth: .0799999982
-  m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1097061386
 Renderer:
   m_ObjectHideFlags: 0
@@ -14498,7 +14474,6 @@ GameObject:
   - 33: {fileID: 1390836610}
   - 136: {fileID: 1390836609}
   - 23: {fileID: 1390836608}
-  - 143: {fileID: 1390836607}
   - 114: {fileID: 1390836606}
   - 54: {fileID: 1390836612}
   - 114: {fileID: 1390836613}
@@ -14520,6 +14495,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae9d46d63c008a488f22dabfd1e8211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
+  isAlive: 1
   controllerInUse: 1
   walkingSpeed: 10
   runningSpeed: 20
@@ -14536,20 +14513,6 @@ MonoBehaviour:
   rotationMultiplier: 6
   addedVel: {x: 0, y: 0, z: 0}
   velocityChange: {x: 0, y: 0, z: 0}
---- !u!143 &1390836607
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1390836605}
-  serializedVersion: 2
-  m_Height: 2
-  m_Radius: .500000119
-  m_SlopeLimit: 45
-  m_StepOffset: .300000012
-  m_SkinWidth: .0799999982
-  m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1390836608
 Renderer:
   m_ObjectHideFlags: 0
