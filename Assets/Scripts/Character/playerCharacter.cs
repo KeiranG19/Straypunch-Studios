@@ -122,6 +122,7 @@ public class playerCharacter : MonoBehaviour {
 		if (health <= 0 && isAlive) 
 		{
 			isAlive = false;
+			rigidbody.freezeRotation = false;
 			Debug.Log("dead");
 		}
 	}

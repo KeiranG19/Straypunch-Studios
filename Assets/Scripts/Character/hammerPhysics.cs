@@ -12,6 +12,8 @@ public class hammerPhysics : MonoBehaviour {
 
 	public playerCharacter pcOwner;
 
+	public bool isEnabled = true;
+
 	void Start () {
 		Physics.IgnoreCollision(gameObject.GetComponent<CapsuleCollider>(), transform.root.collider); 
 		pcOwner = transform.root.GetComponent<playerCharacter> ();
@@ -20,7 +22,7 @@ public class hammerPhysics : MonoBehaviour {
 
 	void OnTriggerEnter(Collider hit)
 	{
-		if (hit.gameObject.tag == "Player") 
+		if (hit.gameObject.tag == "Player" && isEnabled) 
 		{
 			playerCharacter	enemyPC = hit.gameObject.GetComponent<playerCharacter>();
 

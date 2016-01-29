@@ -5,6 +5,8 @@ public class fastHammerPhysics : MonoBehaviour {
 
 	public playerCharacter pcOwner;
 
+	public bool isEnabled = false;
+
 	void Start () {
 		Physics.IgnoreCollision(gameObject.GetComponent<MeshCollider>(), transform.root.collider); 
 
@@ -15,7 +17,7 @@ public class fastHammerPhysics : MonoBehaviour {
 
 	void OnTriggerEnter(Collider hit)
 	{
-		if (hit.gameObject.tag == "Player") 
+		if (hit.gameObject.tag == "Player" && isEnabled) 
 		{
 			Debug.Log("collision");
 			playerCharacter	enemyPC = hit.gameObject.GetComponent<playerCharacter>();

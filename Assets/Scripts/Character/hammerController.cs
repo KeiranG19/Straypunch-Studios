@@ -17,13 +17,13 @@ public class hammerController : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		if (pcOwner.rotationMultiplier > 30) {
-			slowHit.enabled = false;
-			fastHit.enabled = true;
+			slowHit.isEnabled = false;
+			fastHit.isEnabled = true;
 		} 
 		else 
 		{
-			slowHit.enabled = true;
-			fastHit.enabled = false;
+			slowHit.isEnabled = true;
+			fastHit.isEnabled = false;
 			//
 		}
 	}
