@@ -123,6 +123,11 @@ public class playerCharacter : MonoBehaviour {
 		{
 			isAlive = false;
 			rigidbody.freezeRotation = false;
+			Transform hammer = transform.FindChild("Hammer");
+			hammer.gameObject.AddComponent<Rigidbody>();
+			hammer.GetComponent<CapsuleCollider>().enabled = true;
+			hammer.FindChild("HammerHead").GetComponent<CapsuleCollider>().isTrigger = false;
+			hammer.transform.parent = null;
 			Debug.Log("dead");
 		}
 	}
