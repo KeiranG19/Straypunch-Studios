@@ -229,6 +229,7 @@ MonoBehaviour:
   damage: 0
   activated: 0
   slowAmount: 1
+  waitTimer: .5
 --- !u!1 &19264160
 GameObject:
   m_ObjectHideFlags: 0
@@ -1687,6 +1688,7 @@ MonoBehaviour:
   damage: 0
   activated: 0
   slowAmount: 0
+  waitTimer: .5
 --- !u!1 &144003818
 GameObject:
   m_ObjectHideFlags: 0
@@ -1910,6 +1912,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pcOwner: {fileID: 0}
+  isEnabled: 1
 --- !u!1 &210558117
 GameObject:
   m_ObjectHideFlags: 0
@@ -3332,6 +3335,7 @@ MonoBehaviour:
   damage: 5
   activated: 0
   slowAmount: 0
+  waitTimer: .5
 --- !u!1 &383016741
 GameObject:
   m_ObjectHideFlags: 0
@@ -3704,6 +3708,7 @@ MonoBehaviour:
   damage: 0
   activated: 0
   slowAmount: 0
+  waitTimer: .5
 --- !u!1 &492164971
 GameObject:
   m_ObjectHideFlags: 0
@@ -9248,6 +9253,7 @@ MonoBehaviour:
   damage: 0
   activated: 0
   slowAmount: 0
+  waitTimer: .5
 --- !u!1 &1067518630
 GameObject:
   m_ObjectHideFlags: 0
@@ -9362,7 +9368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae9d46d63c008a488f22dabfd1e8211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  health: 100
   isAlive: 1
   controllerInUse: 3
   walkingSpeed: 10
@@ -16331,6 +16337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pcOwner: {fileID: 0}
+  isEnabled: 0
 --- !u!64 &1993825650
 MeshCollider:
   m_ObjectHideFlags: 0
