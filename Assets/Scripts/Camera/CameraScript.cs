@@ -3,17 +3,18 @@ using System.Collections;
 
 public class CameraScript : MonoBehaviour {
 
-	public float cameraRotationSpeed=1;
-	public float cameraDist=1;
-	public float mapWidth = 100;
+	public float maxDist = 100;
+	public float zoomSpeed = 5;
+	private float zoomAmount = 0;
+	private Vector3 startPosition;
+	private Vector3 forwardPosition;
 
-	public float verticalZoomMultiplier=1;
-	public float ignoreDist = 10;
-
-	private Vector3 midpoint;
-	
 	// Use this for initialization
 	void Start () {
+
+		startPosition = transform.position;
+		forwardPosition = transform.position + (transform.forward * 30);
+
 	}
 	
 	// Update is called once per frame
@@ -24,8 +25,8 @@ public class CameraScript : MonoBehaviour {
 
 	void setLookat() {
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-		float maxZ = 0.0f;
-		float minZ = 0.0f;
+		float maxZ = float.NegativeInfinity;
+		float minZ = float.PositiveInfinity;
 		foreach (GameObject player in players) {
 			if (player.GetComponent<playerCharacter>().isAlive)
 			{
@@ -39,12 +40,17 @@ public class CameraScript : MonoBehaviour {
 				}
 			}
 		}
+
+		float Dist = Mathf.Abs (maxZ - minZ);
 		float zPosition = (maxZ + minZ)/2;
-		float maxDist = Mathf.Abs (Mathf.Abs (maxZ) - Mathf.Abs (minZ));
 
-		 
+		zoomAmount = 1 - (Dist / maxDist);
 
+		startPosition.z = zPosition;
+		forwardPosition.z = zPosition;
 		
-		//transform.position = Vector3.Lerp (transform.position, Position, Time.deltaTime * cameraZoomSpeed);
+		Vector3 targetPosition = Vector3.Lerp (startPosition, forwardPosition, zoomAmount);
+
+		transform.position = Vector3.Lerp (transform.position, targetPosition, Time.deltaTime * zoomSpeed);
 	}
 } 
