@@ -5,6 +5,8 @@ public class fastHammerPhysics : MonoBehaviour {
 
 	public playerCharacter pcOwner;
 
+	public bool isEnabled = false;
+
 	void Start () {
 		Physics.IgnoreCollision(gameObject.GetComponent<MeshCollider>(), transform.root.collider); 
 
@@ -15,8 +17,9 @@ public class fastHammerPhysics : MonoBehaviour {
 
 	void OnTriggerEnter(Collider hit)
 	{
-		if (hit.gameObject.tag == "Player") 
+		if (hit.gameObject.tag == "Player" && isEnabled) 
 		{
+			Debug.Log("collision");
 			playerCharacter	enemyPC = hit.gameObject.GetComponent<playerCharacter>();
 
 			float hammerOffset = 0.8f;
@@ -29,6 +32,7 @@ public class fastHammerPhysics : MonoBehaviour {
 			Vector3 direction = Vector3.Cross((enemyPC.transform.position - transform.position),Vector3.up);
 			direction.y = Random.Range(-0.3f,0.3f);
 			Vector3 forceVec = (direction.normalized * (pcOwner.rotationMultiplier));
+			enemyPC.health -= forceVec.magnitude;
 			hit.rigidbody.AddForce(forceVec,ForceMode.Impulse);
 			hit.rigidbody.AddTorque(Vector3.Cross(forceVec , contactPoint)*5,ForceMode.Impulse);
 			pcOwner.rotationMultiplier /= 2;

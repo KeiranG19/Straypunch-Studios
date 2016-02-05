@@ -17,6 +17,8 @@ public class Hazard : MonoBehaviour {
 	public int damage;
 	public bool activated = false;
 	public int slowAmount;
+	public float waitTimer = 0.5f;
+	private float timer = 0.5f;
 	// Use this for initialization
 	void Start () {
 
@@ -55,7 +57,15 @@ public class Hazard : MonoBehaviour {
 				playerCharacter myPlayer = other.GetComponent<playerCharacter>();
 				if(Type == type.area_damage)
 				{
-					myPlayer.rotationMultiplier = 30;
+					if(timer >= waitTimer)
+					{
+						myPlayer.health -= damage;
+						timer = 0.0f;
+					}
+					else
+					{
+						timer += Time.deltaTime;
+					}
 				}
 				if(Type == type.area_slow)
 				{

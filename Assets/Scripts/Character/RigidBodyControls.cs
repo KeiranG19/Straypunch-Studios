@@ -13,7 +13,7 @@ public class RigidBodyControls : MonoBehaviour {
 	public float jumpHeight = 2.0f;
 	private bool grounded = false;
 	
-	
+	 
 	
 	void Awake () {
 		rigidbody.freezeRotation = true;

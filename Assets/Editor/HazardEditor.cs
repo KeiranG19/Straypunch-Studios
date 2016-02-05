@@ -4,8 +4,8 @@ using UnityEditor;
 
 [CustomEditor(typeof(Hazard))]
 public class HazardEditor : Editor {
-	bool damage_hazard;
-	bool slowing_hazard;
+	//bool damage_hazard;
+	//bool slowing_hazard;
 
 	public override void OnInspectorGUI()
 	{
@@ -20,11 +20,12 @@ public class HazardEditor : Editor {
 			EditorGUI.indentLevel++;
 			myHazard.damage = EditorGUILayout.IntField("Damage: ",myHazard.damage);
 			myHazard.activated = EditorGUILayout.Toggle("Is Active: ",myHazard.activated);
+			myHazard.waitTimer = EditorGUILayout.FloatField("Wait Timer:",myHazard.waitTimer);
 		}
 		else
 		{
-			damage_hazard = false;
-			myHazard.damage = 0;
+			//damage_hazard = false;
+			//myHazard.damage = 0;
 		}
 
 		/*
@@ -38,8 +39,8 @@ public class HazardEditor : Editor {
 		}
 		else
 		{
-			slowing_hazard = false;
-			myHazard.slowAmount = 0;
+			//slowing_hazard = false;
+			//myHazard.slowAmount = 0;
 
 		}
 	}

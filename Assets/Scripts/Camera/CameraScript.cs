@@ -27,9 +27,8 @@ public class CameraScript : MonoBehaviour {
 		int numPlayers = 0;
 		midpoint = new Vector3 (0, 0, 0);
 		foreach (GameObject player in players) {
-			//if (player.isAlive) {
-
-			numPlayers++;
+			if (player.GetComponent<playerCharacter>().isAlive)
+			{
 			midpoint += player.transform.position;
 
 			if(numPlayers > 0)
@@ -52,7 +51,7 @@ public class CameraScript : MonoBehaviour {
 //			}
 
 
-			//}
+			}
 		}
 
 		midpoint = midpoint / numPlayers;
