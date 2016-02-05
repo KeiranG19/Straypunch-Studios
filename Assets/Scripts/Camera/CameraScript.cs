@@ -24,46 +24,27 @@ public class CameraScript : MonoBehaviour {
 
 	void setLookat() {
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-		int numPlayers = 0;
-		midpoint = new Vector3 (0, 0, 0);
+		float maxZ = 0.0f;
+		float minZ = 0.0f;
 		foreach (GameObject player in players) {
 			if (player.GetComponent<playerCharacter>().isAlive)
 			{
-			midpoint += player.transform.position;
-
-			if(numPlayers > 0)
-			{
-				float dist = Vector3.Distance(player.transform.position,midpoint/numPlayers);
-				if(dist >= ignoreDist)
+				if(player.transform.position.z > maxZ)
 				{
-					midpoint += player.transform.position;
-					numPlayers++;
+					maxZ = player.transform.position.z;
+				}
+				else if(player.transform.position.z < minZ)
+				{
+					minZ = player.transform.position.z;
 				}
 			}
-			else
-			{
-				midpoint += player.transform.position;
-				numPlayers++;
-			}
-//			if(closestX > player.transform.position.x)
-//			{
-//				closestX = player.transform.position.x;
-//			}
-
-
-			}
 		}
+		float zPosition = (maxZ + minZ)/2;
+		float maxDist = Mathf.Abs (Mathf.Abs (maxZ) - Mathf.Abs (minZ));
 
-		midpoint = midpoint / numPlayers;
+		 
 
-		/*Vector3 Position = transform.position;
-
-		float heightModifier = Mathf.Abs (closestX / mapWidth)*verticalZoomMultiplier;
-		Position.y = startposition.y + heightModifier;
-		transform.position = Vector3.Lerp (transform.position, Position, Time.deltaTime * cameraZoomSpeed);*/
-
-		Vector3 Direction = midpoint-transform.position;
-		transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (Direction), Time.deltaTime * cameraRotationSpeed);
-
+		
+		//transform.position = Vector3.Lerp (transform.position, Position, Time.deltaTime * cameraZoomSpeed);
 	}
 } 
