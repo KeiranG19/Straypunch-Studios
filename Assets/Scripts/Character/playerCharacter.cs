@@ -5,41 +5,7 @@ using System.Collections;
 [RequireComponent (typeof (CapsuleCollider))]
 
 public class playerCharacter : MonoBehaviour {
-
-	struct inputButtons 
-	{
-		/* Left Stick */
-		public string movementHorizontalAxis;
-		public string movementVerticalAxis;
-
-		/* Right Stick */
-		public string rotationHorizontalAxis;
-		public string rotationVerticalAxis;
-
-		/* Face buttons */
-		public string jumpButton;       //A
-		public string sprintButton;    //B
-		public string attackButton;   //X
-		public string altButton;	 //Y
-
-		/* Bumpers */
-		public string lBumper;
-		public string rBumper;
-
-		/* Back/Start */
-		public string backButton;
-		public string startButton;
-
-		/* Stick clicks */
-		public string lStickClick;
-		public string rStickClick;
-
-		/*Triggers*/
-		public string lTrigger;
-		public string rTrigger;
-	};
-
-	private inputButtons currentButtons;
+		
 
 	private Rigidbody RB;
 
@@ -47,9 +13,6 @@ public class playerCharacter : MonoBehaviour {
 	public bool isAlive = true;
 
 	[Header("Controller variables")]
-	
-	[Tooltip("Current Controller Use ID  (0-3) ")]
-	public int controllerInUse = 0;
 
 	[Header("Movement variables")]
 
@@ -83,42 +46,22 @@ public class playerCharacter : MonoBehaviour {
 	public Vector3 velocityChange;
 	Quaternion currentRotation;
 	Quaternion DefaultRotation;
+	private XboxControls controllerInput;
 
 	void Start () 
 	{
-		SetupButtons();
+		controllerInput = GetComponent<XboxControls> ();
 		DefaultRotation = rigidbody.rotation;
 	}
-
-
-	void SetupButtons()
-	{
-		currentButtons.movementHorizontalAxis = "P"+ controllerInUse.ToString() + "Horizontal";
-		currentButtons.movementVerticalAxis =   "P"+ controllerInUse.ToString() + "Vertical";
-		currentButtons.rotationHorizontalAxis = "P"+ controllerInUse.ToString() + "RotX";
-		currentButtons.rotationVerticalAxis =   "P"+ controllerInUse.ToString() + "RotY"; 
-
-		currentButtons.sprintButton = "P"+ controllerInUse.ToString() + "Sprint";
-		currentButtons.jumpButton =   "P"+ controllerInUse.ToString() + "Jump";
-		currentButtons.attackButton = "P" + controllerInUse.ToString() + "Attack";
-		currentButtons.altButton = "P" + controllerInUse.ToString() + "Alt";
-
-		currentButtons.backButton =  "P" + controllerInUse.ToString() + "Back";
-		currentButtons.startButton = "P" + controllerInUse.ToString() + "Start";
-
-		currentButtons.lBumper = "P" + controllerInUse.ToString() + "Lbumper";
-		currentButtons.rBumper = "P" + controllerInUse.ToString() + "Rbumper";
 	
-		currentButtons.lStickClick = "P" + controllerInUse.ToString() + "LstickClick";
-		currentButtons.rStickClick = "P" + controllerInUse.ToString() + "RstickClick";
-
-		currentButtons.lTrigger = "P" + controllerInUse.ToString() + "Ltrigger";
-		currentButtons.rTrigger = "P" + controllerInUse.ToString() + "Rtrigger";
-	}
 
 	void Update () 
 	{
-		Movement();
+		if (isAlive)
+		{
+			Movement ();
+		}
+
 		if (health <= 0 && isAlive) 
 		{
 			isAlive = false;
@@ -139,34 +82,36 @@ public class playerCharacter : MonoBehaviour {
 
 	void Movement()
 	{ 
+		float rThumbX = Input.GetAxis(controllerInput.buttons.rotationHorizontalAxis)*sensitivityX;
+		float rThumbY = Input.GetAxis(controllerInput.buttons.rotationVerticalAxis)*sensitivityY;
 
-		float x = Input.GetAxis(currentButtons.rotationHorizontalAxis)*sensitivityX;
-		float y = Input.GetAxis(currentButtons.rotationVerticalAxis)*sensitivityY;
+		float lThumbX = Input.GetAxis(controllerInput.buttons.movementHorizontalAxis)*sensitivityX;
+		float lThumbY = -Input.GetAxis(controllerInput.buttons.movementVerticalAxis)*sensitivityY;
 
+	
+			
+		
 		// CLAMP THE SPIN SPEED
 		// UPPER BOUND OF SPIN SPEED
 		if(rotationMultiplier <= 80)
 		{
-			// LOWER BOUND OF SPIN SPEED
-			if(rotationMultiplier >= 0)
-			{
 				// IF RIGHT TRIGGER IS DOWN
-				if (Input.GetAxis (currentButtons.rTrigger) >= 1) 
+			if (Input.GetAxis (controllerInput.buttons.rTrigger) >= 1) 
 				{ 
 					// HOLDING, BUT NOT SPINING THE THUMBSTICK, INCREASE SLOWLY
-					if(x != 0 && y == 0)
+				if(rThumbX != 0 && rThumbY == 0)
 					{
 						rotationMultiplier+= 0.2f;
 						started_spinning = true;
-						transform.Rotate(new Vector3(0, x, 0) * Time.deltaTime * rotationMultiplier);
+					transform.Rotate(new Vector3(0, rThumbX, 0) * Time.deltaTime * rotationMultiplier);
 					}
 					else
 					{
 						//	SPINNING THE THUMBSTICK, INCREASE FASTER
-						if (x != 0.0f || y != 0.0f) 
+					if (rThumbX != 0.0f || rThumbY != 0.0f) 
 						{
 							started_spinning = true;
-							aim_angle = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
+						aim_angle = Mathf.Atan2(rThumbY, rThumbX) * Mathf.Rad2Deg;
 
 							// CALCULATE ANGLE AND ROTATE
 							transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(aim_angle, Vector3.up),.2f) ;
@@ -192,12 +137,13 @@ public class playerCharacter : MonoBehaviour {
 					//DECREASE ROTATION OVER TIME IF NOT SPINNING
 					rotationMultiplier -= 0.0001f + (rotationMultiplier / 20);
 					transform.Rotate(new Vector3(0, -90, 0) * Time.deltaTime * rotationMultiplier);
+					
+					if(Mathf.Abs(rotationMultiplier) <= 1)
+					{
+					aim_angle = Mathf.Atan2(lThumbY, lThumbX) * Mathf.Rad2Deg;
+					transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.AngleAxis (aim_angle, Vector3.up), .2f);
+					}
 				}
-			}
-			else
-			{
-				rotationMultiplier =0;
-			}
 		}
 		else
 		{

@@ -9,6 +9,7 @@ using System.Collections;
  */
 public class hammerPhysics : MonoBehaviour {
 
+	public float damageThreshold = 15.0f;
 
 	public playerCharacter pcOwner;
 
@@ -26,12 +27,19 @@ public class hammerPhysics : MonoBehaviour {
 		{
 			playerCharacter	enemyPC = hit.gameObject.GetComponent<playerCharacter>();
 
+			float hammerOffset = 0.8f;
+			float heightOffset = enemyPC.transform.position.y - transform.position.y;
+			Vector3 contactPoint = enemyPC.transform.position;
+			contactPoint.y += hammerOffset + heightOffset;
 
-
-			Vector3 forceVec = ((pcOwner.rigidbody.velocity.normalized + enemyPC.rigidbody.velocity.normalized) * (pcOwner.rotationMultiplier)) / 3;
-			Vector3 reducedForceY = new Vector3(forceVec.x,forceVec.y / 6,forceVec.z); //the Y force was to great
-			hit.rigidbody.AddForce(reducedForceY,ForceMode.Impulse);
-			hit.rigidbody.AddTorque(forceVec * 5,ForceMode.Impulse);
+			Vector3 direction = (enemyPC.transform.position - transform.position);
+			Vector3 forceVec = (direction.normalized * (pcOwner.rotationMultiplier));
+			if(forceVec.magnitude > damageThreshold)
+				enemyPC.health -= forceVec.magnitude;
+			hit.rigidbody.AddForce(forceVec,ForceMode.Impulse);
+			hit.rigidbody.AddTorque(Vector3.Cross(forceVec , contactPoint)*5,ForceMode.Impulse);
+			pcOwner.rotationMultiplier = -pcOwner.rotationMultiplier/2;
+		
 
 		}
 	}

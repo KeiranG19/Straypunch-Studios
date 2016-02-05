@@ -1962,6 +1962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92c10993ae4daba4ca3f8786153641a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageThreshold: 15
   pcOwner: {fileID: 0}
   isEnabled: 1
 --- !u!1 &210558117
@@ -3485,6 +3486,7 @@ GameObject:
   - 54: {fileID: 428599674}
   - 114: {fileID: 428599673}
   - 95: {fileID: 428599672}
+  - 114: {fileID: 428599679}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Player
@@ -3541,6 +3543,7 @@ MonoBehaviour:
   maxVelocityChange: 10
   canJump: 1
   jumpHeight: 2
+  player: {fileID: 0}
 --- !u!54 &428599674
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3571,7 +3574,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   isAlive: 1
-  controllerInUse: 1
   walkingSpeed: 10
   runningSpeed: 20
   jumpSpeed: 20
@@ -3630,6 +3632,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1036859355}
   m_GameObject: {fileID: 428599670}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &428599679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 428599670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5483eb0c1f461b440bc2d51845fdb2c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controllerInUse: 1
 --- !u!1 &430063689
 GameObject:
   m_ObjectHideFlags: 0
@@ -5139,6 +5153,7 @@ GameObject:
   - 54: {fileID: 566940154}
   - 114: {fileID: 566940153}
   - 95: {fileID: 566940152}
+  - 114: {fileID: 566940159}
   m_Layer: 0
   m_Name: Player 3
   m_TagString: Player
@@ -5195,6 +5210,7 @@ MonoBehaviour:
   maxVelocityChange: 10
   canJump: 1
   jumpHeight: 2
+  player: {fileID: 0}
 --- !u!54 &566940154
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5225,7 +5241,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   isAlive: 1
-  controllerInUse: 2
   walkingSpeed: 10
   runningSpeed: 20
   jumpSpeed: 20
@@ -5284,6 +5299,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 92113784}
   m_GameObject: {fileID: 566940150}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &566940159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 566940150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5483eb0c1f461b440bc2d51845fdb2c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controllerInUse: 2
 --- !u!1 &638278717
 GameObject:
   m_ObjectHideFlags: 0
@@ -6768,6 +6795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92c10993ae4daba4ca3f8786153641a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageThreshold: 15
   pcOwner: {fileID: 0}
   isEnabled: 1
 --- !u!23 &737972960
@@ -9464,6 +9492,7 @@ GameObject:
   - 54: {fileID: 936212508}
   - 114: {fileID: 936212507}
   - 95: {fileID: 936212509}
+  - 114: {fileID: 936212510}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Player
@@ -9544,7 +9573,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   isAlive: 1
-  controllerInUse: 0
   walkingSpeed: 10
   runningSpeed: 20
   jumpSpeed: 20
@@ -9577,6 +9605,7 @@ MonoBehaviour:
   maxVelocityChange: 10
   canJump: 1
   jumpHeight: 2
+  player: {fileID: 0}
 --- !u!54 &936212508
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9609,6 +9638,18 @@ Animator:
   m_ApplyRootMotion: 0
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &936212510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 936212501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5483eb0c1f461b440bc2d51845fdb2c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controllerInUse: 0
 --- !u!1 &972997315
 GameObject:
   m_ObjectHideFlags: 0
@@ -13652,6 +13693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92c10993ae4daba4ca3f8786153641a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageThreshold: 15
   pcOwner: {fileID: 0}
   isEnabled: 1
 --- !u!23 &1277598333
@@ -13712,6 +13754,7 @@ GameObject:
   - 54: {fileID: 1281835853}
   - 114: {fileID: 1281835852}
   - 95: {fileID: 1281835851}
+  - 114: {fileID: 1281835858}
   m_Layer: 0
   m_Name: Player 4
   m_TagString: Player
@@ -13768,6 +13811,7 @@ MonoBehaviour:
   maxVelocityChange: 10
   canJump: 1
   jumpHeight: 2
+  player: {fileID: 0}
 --- !u!54 &1281835853
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13798,7 +13842,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   isAlive: 1
-  controllerInUse: 3
   walkingSpeed: 10
   runningSpeed: 20
   jumpSpeed: 20
@@ -13857,6 +13900,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 2010929160}
   m_GameObject: {fileID: 1281835849}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1281835858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1281835849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5483eb0c1f461b440bc2d51845fdb2c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controllerInUse: 3
 --- !u!1 &1311098923
 GameObject:
   m_ObjectHideFlags: 0
@@ -16848,6 +16903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92c10993ae4daba4ca3f8786153641a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageThreshold: 15
   pcOwner: {fileID: 0}
   isEnabled: 1
 --- !u!23 &1719745955
@@ -18983,7 +19039,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2088560064}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37b21882735ea684dae339635df2041c, type: 3}
   m_Name: 
