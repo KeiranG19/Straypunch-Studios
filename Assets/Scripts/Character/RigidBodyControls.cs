@@ -12,39 +12,50 @@ public class RigidBodyControls : MonoBehaviour {
 	public bool canJump = true;
 	public float jumpHeight = 2.0f;
 	private bool grounded = false;
-	
+	public playerCharacter player;
 	 
 	
-	void Awake () {
+	void Awake () 
+	{
 		rigidbody.freezeRotation = true;
 		rigidbody.useGravity = false;
 	}
-	
-	void FixedUpdate () {
-		if (grounded) {
-			// Calculate how fast we should be moving
-			int id = gameObject.GetComponent<playerCharacter>().controllerInUse;
-			Vector3 direction = new Vector3(Input.GetAxis("P"+id.ToString()+"Horizontal"), 0, Input.GetAxis("P"+id.ToString()+"Vertical"));
-			Vector3 targetVelocity = direction * speed;
+
+	void Start()
+	{
+		player = GetComponent<playerCharacter> ();
+	}
+
+	void FixedUpdate ()
+	{
+		if (player.isAlive)
+		{
+
+			if (grounded) {
+				// Calculate how fast we should be moving
+				int id = gameObject.GetComponent<XboxControls> ().controllerInUse;
+				Vector3 direction = new Vector3 (Input.GetAxis ("P" + id.ToString () + "Horizontal"), 0, Input.GetAxis ("P" + id.ToString () + "Vertical"));
+				Vector3 targetVelocity = direction * speed;
 			
-			// Apply a force that attempts to reach our target velocity
-			Vector3 velocity = rigidbody.velocity;
-			Vector3 velocityChange = (targetVelocity - velocity);
-			velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
-			velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
-			velocityChange.y = 0;
-			rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
+				// Apply a force that attempts to reach our target velocity
+				Vector3 velocity = rigidbody.velocity;
+				Vector3 velocityChange = (targetVelocity - velocity);
+				velocityChange.x = Mathf.Clamp (velocityChange.x, -maxVelocityChange, maxVelocityChange);
+				velocityChange.z = Mathf.Clamp (velocityChange.z, -maxVelocityChange, maxVelocityChange);
+				velocityChange.y = 0;
+				rigidbody.AddForce (velocityChange, ForceMode.VelocityChange);
 			
-			// Jump
-			if (canJump && Input.GetButton("P"+id.ToString()+"Jump")) {
-				rigidbody.velocity = new Vector3(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
+				// Jump
+				if (canJump && Input.GetButton ("P" + id.ToString () + "Jump")) {
+					rigidbody.velocity = new Vector3 (velocity.x, CalculateJumpVerticalSpeed (), velocity.z);
+				}
 			}
 		}
+			// We apply gravity manually for more tuning control
+			rigidbody.AddForce (new Vector3 (0, -gravity * rigidbody.mass, 0));
 		
-		// We apply gravity manually for more tuning control
-		rigidbody.AddForce(new Vector3 (0, -gravity * rigidbody.mass, 0));
+			grounded = false;
 		
-		grounded = false;
 	}
 	
 	void OnCollisionStay () {
