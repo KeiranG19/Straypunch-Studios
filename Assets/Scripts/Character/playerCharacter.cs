@@ -44,10 +44,12 @@ public class playerCharacter : MonoBehaviour {
 	public float rotationMultiplier = 1;
 	public Vector3 addedVel = new Vector3 (0,0,0);
 	public Vector3 velocityChange;
+	public int recoveryTime = 2;
 	Quaternion currentRotation;
 	Quaternion DefaultRotation;
+	public Quaternion previousRotation;
 	private XboxControls controllerInput;
-
+	private float cooldown;
 	void Start () 
 	{
 		controllerInput = GetComponent<XboxControls> ();
@@ -59,7 +61,15 @@ public class playerCharacter : MonoBehaviour {
 	{
 		if (isAlive)
 		{
-			Movement ();
+
+			if (Ragdoll)
+			{
+				rigidbody.freezeRotation = false;
+				recover();
+			}
+			else{
+				Movement ();
+			}
 		}
 
 		if (health <= 0 && isAlive) 
@@ -73,6 +83,8 @@ public class playerCharacter : MonoBehaviour {
 			hammer.transform.parent = null;
 			Debug.Log("dead");
 		}
+
+
 	}
 
 	private bool started_spinning = false;
@@ -151,12 +163,28 @@ public class playerCharacter : MonoBehaviour {
 		}
 	}
 
-
-	void OnCollisionStay () {
-		currentRotation = rigidbody.rotation;
-		Ragdoll = false;
-		Quaternion.Slerp(currentRotation,DefaultRotation,0.5f);
+	public void recover()
+	{
+		//rigidbody.freezeRotation = false;
+		//yield return new WaitForSeconds (5);
+		if (cooldown > recoveryTime) 
+		{
+			currentRotation = transform.rotation;
+			transform.rotation = Quaternion.Lerp (currentRotation, previousRotation, recoveryTime);
+			Ragdoll = false;
+			cooldown = 0;
+		} 
+		else 
+		{
+			cooldown += Time.deltaTime;
+		}
 	}
+
+//	void OnCollisionStay () {
+//		currentRotation = rigidbody.rotation;
+//		Ragdoll = false;
+//		Quaternion.Slerp(currentRotation,DefaultRotation,0.5f);
+//	}
 
 	void OnControllerColliderHit (ControllerColliderHit hit) 
 	{
