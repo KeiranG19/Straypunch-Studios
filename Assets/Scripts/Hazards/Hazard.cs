@@ -55,6 +55,7 @@ public class Hazard : MonoBehaviour {
 			if(other.gameObject.tag == "Player")
 			{
 				playerCharacter myPlayer = other.GetComponent<playerCharacter>();
+				RigidBodyControls myRigidBody = other.GetComponent<RigidBodyControls>();
 				if(Type == type.area_damage)
 				{
 					if(timer >= waitTimer)
@@ -69,7 +70,7 @@ public class Hazard : MonoBehaviour {
 				}
 				if(Type == type.area_slow)
 				{
-					myPlayer.walkingSpeed = 1;
+					myRigidBody.speed = 1;
 				}
 			}
 		}
@@ -81,11 +82,10 @@ public class Hazard : MonoBehaviour {
 		{
 			if(other.gameObject.tag == "Player")
 			{
-				playerCharacter myPlayer = other.GetComponent<playerCharacter>();
-
+				RigidBodyControls myRigidBody = other.GetComponent<RigidBodyControls>();
 				if(Type == type.area_slow)
 				{
-					myPlayer.walkingSpeed = 10;
+					myRigidBody.speed = 10;
 				}
 			}
 		}

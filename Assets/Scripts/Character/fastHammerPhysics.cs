@@ -29,7 +29,7 @@ public class fastHammerPhysics : MonoBehaviour {
 
 			enemyPC.Ragdoll = true;
 			enemyPC.previousRotation = enemyPC.transform.rotation;
-			enemyPC.rigidbody.freezeRotation = false;
+			enemyPC.rigidbody.constraints = RigidbodyConstraints.None;
 			Vector3 direction = Vector3.Cross((enemyPC.transform.position - transform.position),Vector3.up);
 			direction.y = Random.Range(-0.3f,0.3f);
 			Vector3 forceVec = (direction.normalized * (pcOwner.rotationMultiplier));

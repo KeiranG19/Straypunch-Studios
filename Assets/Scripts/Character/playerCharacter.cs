@@ -5,57 +5,34 @@ using System.Collections;
 [RequireComponent (typeof (CapsuleCollider))]
 
 public class playerCharacter : MonoBehaviour {
-		
-
 	private Rigidbody RB;
 
 	public float health = 200;
 	public bool isAlive = true;
 
-	[Header("Controller variables")]
+	public float uppercutDamage;
+	public float uppercutForce;
+	public float uppercutCooldown;
 
-	[Header("Movement variables")]
-
-	[Tooltip("Character walking speed")]
-	public float walkingSpeed = 10.0f;
-	
-	[Tooltip("Character running speed")]
-	public float runningSpeed = 20.0f;
-	
-	[Tooltip("How quickly the character can jump")]
-	public float jumpSpeed = 20f;
-	
-	[Tooltip("How quickly the character can turn")]
-	public float rotationSpeed = 4f;
-
-	[Tooltip("How much gravity to apply to the character")]
-	public float gravityStrength = 20.0f;
-
-	[Tooltip("How many extra jumps a character can do (0 is a single jump, 1 is a double jump)")]
-	public int additionalJumps = 1; 
-
-	public float gravity = 10.0f;
-	public float maxVelocityChange = 10.0f;
-	public bool canJump = true;
-	public float jumpHeight = 2.0f;
+	//IDEA!!!  slam gameobject which handles itself 
+	public float slamDamage;
+	public float slamRadius;
+	public bool dontStopSpin = false;
 	public bool Ragdoll = false;
-	public float currentSpeed = 10.0f;
-	private int jumpsRemaining;
 	public float rotationMultiplier = 1;
-	public Vector3 addedVel = new Vector3 (0,0,0);
-	public Vector3 velocityChange;
 	public int recoveryTime = 2;
 	Quaternion currentRotation;
-	Quaternion DefaultRotation;
 	public Quaternion previousRotation;
 	private XboxControls controllerInput;
 	private float cooldown;
+	public float uppercutCD = 0;
+	private hitBox Box;
+	
 	void Start () 
 	{
 		controllerInput = GetComponent<XboxControls> ();
-		DefaultRotation = rigidbody.rotation;
+		Box = GetComponentInChildren<hitBox>();
 	}
-	
 
 	void Update () 
 	{
@@ -64,7 +41,7 @@ public class playerCharacter : MonoBehaviour {
 
 			if (Ragdoll)
 			{
-				rigidbody.freezeRotation = false;
+				rigidbody.constraints = RigidbodyConstraints.None;
 				recover();
 			}
 			else{
@@ -75,7 +52,7 @@ public class playerCharacter : MonoBehaviour {
 		if (health <= 0 && isAlive) 
 		{
 			isAlive = false;
-			rigidbody.freezeRotation = false;
+			Ragdoll = true;
 			Transform hammer = transform.FindChild("Hammer");
 			hammer.gameObject.AddComponent<Rigidbody>();
 			hammer.GetComponent<CapsuleCollider>().enabled = true;
@@ -83,8 +60,10 @@ public class playerCharacter : MonoBehaviour {
 			hammer.transform.parent = null;
 			Debug.Log("dead");
 		}
-
-
+		if(uppercutCD >0)
+		{
+			uppercutCD -= Time.deltaTime;
+		}
 	}
 
 	private bool started_spinning = false;
@@ -99,9 +78,6 @@ public class playerCharacter : MonoBehaviour {
 
 		float lThumbX = Input.GetAxis(controllerInput.buttons.movementHorizontalAxis)*sensitivityX;
 		float lThumbY = -Input.GetAxis(controllerInput.buttons.movementVerticalAxis)*sensitivityY;
-
-	
-			
 		
 		// CLAMP THE SPIN SPEED
 		// UPPER BOUND OF SPIN SPEED
@@ -147,13 +123,18 @@ public class playerCharacter : MonoBehaviour {
 				if(started_spinning == false)
 				{
 					//DECREASE ROTATION OVER TIME IF NOT SPINNING
-					rotationMultiplier -= 0.0001f + (rotationMultiplier / 20);
-					transform.Rotate(new Vector3(0, -90, 0) * Time.deltaTime * rotationMultiplier);
-					
+					if(!dontStopSpin)
+					{
+						rotationMultiplier -= 0.0001f + (rotationMultiplier / 20);
+						transform.Rotate(new Vector3(0, -90, 0) * Time.deltaTime * rotationMultiplier);
+					}
 					if(Mathf.Abs(rotationMultiplier) <= 1)
+					{
+					if(lThumbX != 0 || lThumbY != 0)
 					{
 					aim_angle = Mathf.Atan2(lThumbY, lThumbX) * Mathf.Rad2Deg;
 					transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.AngleAxis (aim_angle, Vector3.up), .2f);
+					}
 					}
 				}
 		}
@@ -161,6 +142,40 @@ public class playerCharacter : MonoBehaviour {
 		{
 			rotationMultiplier =80;
 		}
+
+		if(Input.GetButton(controllerInput.buttons.rBumper))
+		{
+
+			//attack
+			if(GetComponent<RigidBodyControls>().grounded)
+			{
+				if(uppercutCD <= 0)
+				{
+					//uppercut
+					foreach(GameObject target in Box.targets)
+					{
+						punt(target);
+						target.GetComponent<playerCharacter>().rotationMultiplier = 0;
+					}
+					uppercutCD = uppercutCooldown;
+				}
+			}
+			else
+			{
+				//slam
+			}
+		}
+	}
+
+	public void punt(GameObject target)
+	{
+		target.transform.position += new Vector3(0,0.05f,0);
+		Vector3 direction = (target.transform.position - transform.position);
+		direction.y += direction.sqrMagnitude;
+		direction.x *= 0.5f;
+		direction.z *= 0.5f;
+		//direction.Normalize();
+		target.rigidbody.AddForce(direction*uppercutForce);
 	}
 
 	public void recover()
@@ -172,6 +187,8 @@ public class playerCharacter : MonoBehaviour {
 			currentRotation = transform.rotation;
 			transform.rotation = Quaternion.Lerp (currentRotation, previousRotation, recoveryTime);
 			Ragdoll = false;
+			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+			rigidbody.angularVelocity = Vector3.zero;
 			cooldown = 0;
 		} 
 		else 
@@ -186,26 +203,6 @@ public class playerCharacter : MonoBehaviour {
 //		Quaternion.Slerp(currentRotation,DefaultRotation,0.5f);
 //	}
 
-	void OnControllerColliderHit (ControllerColliderHit hit) 
-	{
 
-		if (hit.rigidbody != null && !hit.collider.attachedRigidbody.isKinematic) 
-		{
-			RB = hit.collider.attachedRigidbody;
-
-			Vector3 push = new Vector3 (hit.moveDirection.x, 0, hit.moveDirection.z);  //Make a vector of velocity to push the rigidbody
-
-			RB.AddForceAtPosition(push, hit.point);
-		}
-
-
-		if (hit.gameObject.tag == "Player") 
-		{
-			playerCharacter	enemyPC = hit.gameObject.GetComponent<playerCharacter>();
-			float multiplier =  rotationMultiplier;
-			Vector3 push = new Vector3 (hit.moveDirection.x, hit.moveDirection.y, hit.moveDirection.z)*multiplier; 
-			enemyPC.addedVel = push;
-		}
-	} 
 }
 
