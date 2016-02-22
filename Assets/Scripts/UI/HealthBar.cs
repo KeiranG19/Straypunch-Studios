@@ -11,7 +11,7 @@ public class HealthBar : MonoBehaviour {
 	
 	private CanvasGroup visibility;		// Referance to the canvasGroup component
 	private Color startingColour;
-	public playerCharacter player;	//Referance to the player
+	public playerCharacter player;		//Referance to the player
 
 	private float newHealth;
 	private float changeInHealth;
@@ -19,10 +19,11 @@ public class HealthBar : MonoBehaviour {
 
 	void Start()
 	{
+		healthBar = GetComponent<Image>();
 		//player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-		startingColour = healthBar.color;
-		visibility = GetComponent<CanvasGroup>();
-		visible = true;
+		startingColour = player.renderer.material.color;
+		//visibility = GetComponent<CanvasGroup>();
+		//visible = true;
 	}
 
 	void Update () 
@@ -31,38 +32,41 @@ public class HealthBar : MonoBehaviour {
 		changeInHealth = newHealth - previousHealth;
 		previousHealth = player.health;
 
-		if(changeInHealth != 0)
-		{
-			visible = true;
-		}
-
-		if(visible == true)
-		{
-			StartCoroutine( showHealthBar());
-			
-		}
+		//if damaged show health bar
+//		if(changeInHealth != 0)
+//		{
+//			visible = true;
+//		}
+//
+//		if(visible == true)
+//		{
+//			StartCoroutine( showHealthBar());
+//			
+//		}
 
 		float percentage = (float)player.health / 100;
 
 		healthBar.fillAmount = percentage;
 
-		startingColour.r = 1 - percentage;
-		startingColour.g = percentage;
-		startingColour.b = 0;
-		healthBar.color = startingColour;
+		// change the health bar colour as health lowers
+//		startingColour.r = 1 - percentage;
+//		startingColour.g = percentage;
+//		startingColour.b = 0;
+		healthBar.color = startingColour /1.3f;
+
 		// Lerp the light's intensity towards the current target.
 	//	healthBar.color = new Color ( myImage.color.r, Mathf.Lerp(myImage.color.g, targetIntensity, fadeSpeed * Time.deltaTime), Mathf.Lerp(myImage.color.b, targetIntensity, fadeSpeed * Time.deltaTime));
 
 	}
 
 
-	private IEnumerator showHealthBar()
-	{
-		visibility.alpha = 1;
-		yield return new WaitForSeconds(delay);
-		visibility.alpha =  Mathf.Lerp(visibility.alpha, 0, fadeSpeed * Time.deltaTime);
-		visible = false;
-		
-	}
+//	private IEnumerator showHealthBar()
+//	{
+//		visibility.alpha = 1;
+//		yield return new WaitForSeconds(delay);
+//		visibility.alpha =  Mathf.Lerp(visibility.alpha, 0, fadeSpeed * Time.deltaTime);
+//		visible = false;
+//		
+//	}
 
 }
