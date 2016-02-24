@@ -147,9 +147,6 @@ StateMachine:
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
     data:
-      first: {fileID: 0}
-      second: []
-    data:
       first: {fileID: 110258900}
       second:
       - {fileID: 110193902}

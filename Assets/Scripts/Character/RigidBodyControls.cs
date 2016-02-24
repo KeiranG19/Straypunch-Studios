@@ -58,7 +58,7 @@ public class RigidBodyControls : MonoBehaviour {
 		if (player.isAlive && !player.Ragdoll)
 		{
 			if (grounded) {
-				if(Input.GetButton(controllerInput.buttons.B))
+				if(Input.GetButtonUp(controllerInput.buttons.B))
 				{
 					if(dashUseCD <= 0)
 					{

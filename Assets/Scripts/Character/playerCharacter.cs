@@ -64,9 +64,28 @@ public class playerCharacter : MonoBehaviour {
 		{
 			uppercutCD -= Time.deltaTime;
 		}
+		if(gameObject.name == "Player 1")
+		{
+		if(GetComponent<Animation>().IsPlaying("upperCut"))
+		{
+			if(animation["upperCut"].time > 0.30f && animation["upperCut"].time< 0.50f)
+			{
+				if(uppercutCD <= 0)
+				{
+					foreach(GameObject target in Box.targets)
+					{
+						punt(target);
+						target.GetComponent<playerCharacter>().rotationMultiplier = 0;
+					}
+					uppercutCD = uppercutCooldown;
+				}
+			}
+		}
+		}
+
 	}
 
-	private bool started_spinning = false;
+private bool started_spinning = false;
 	private float sensitivityX=90;
 	private float sensitivityY=90;
 	float aim_angle = 0.0f;
@@ -130,11 +149,15 @@ public class playerCharacter : MonoBehaviour {
 					}
 					if(Mathf.Abs(rotationMultiplier) <= 1)
 					{
-					if(lThumbX != 0 || lThumbY != 0)
-					{
-					aim_angle = Mathf.Atan2(lThumbY, lThumbX) * Mathf.Rad2Deg;
-					transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.AngleAxis (aim_angle, Vector3.up), .2f);
-					}
+						if(lThumbX != 0 || lThumbY != 0)
+						{
+							if(!GetComponent<Animation>().isPlaying)
+							{
+								GetComponent<Animation>().Play("walk");
+							}
+							aim_angle = Mathf.Atan2(lThumbY, lThumbX) * Mathf.Rad2Deg;
+							transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.AngleAxis (aim_angle, Vector3.up), .2f);
+						}
 					}
 				}
 		}
@@ -151,13 +174,9 @@ public class playerCharacter : MonoBehaviour {
 			{
 				if(uppercutCD <= 0)
 				{
+					GetComponent<Animation>().Play("upperCut");
 					//uppercut
-					foreach(GameObject target in Box.targets)
-					{
-						punt(target);
-						target.GetComponent<playerCharacter>().rotationMultiplier = 0;
-					}
-					uppercutCD = uppercutCooldown;
+
 				}
 			}
 			else
