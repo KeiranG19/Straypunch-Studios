@@ -34,7 +34,7 @@ public class CameraScript : MonoBehaviour {
 				{
 					maxZ = player.transform.position.z;
 				}
-				else if(player.transform.position.z < minZ)
+				if(player.transform.position.z < minZ)
 				{
 					minZ = player.transform.position.z;
 				}
