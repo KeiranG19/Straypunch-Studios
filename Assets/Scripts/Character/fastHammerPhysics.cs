@@ -19,7 +19,6 @@ public class fastHammerPhysics : MonoBehaviour {
 	{
 		if (hit.gameObject.tag == "Player" && isEnabled) 
 		{
-			Debug.Log("collision");
 			playerCharacter	enemyPC = hit.gameObject.GetComponent<playerCharacter>();
 
 			float hammerOffset = 0.8f;
@@ -29,7 +28,7 @@ public class fastHammerPhysics : MonoBehaviour {
 
 			enemyPC.Ragdoll = true;
 			enemyPC.previousRotation = enemyPC.transform.rotation;
-			enemyPC.rigidbody.constraints = RigidbodyConstraints.None;
+			//enemyPC.rigidbody.constraints = RigidbodyConstraints.None;
 			Vector3 direction = Vector3.Cross((enemyPC.transform.position - transform.position),Vector3.up);
 			direction.y = Random.Range(-0.3f,0.3f);
 			Vector3 forceVec = (direction.normalized * (pcOwner.rotationMultiplier));

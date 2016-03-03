@@ -24,7 +24,6 @@ public class hammerController : MonoBehaviour {
 		{
 			slowHit.isEnabled = true;
 			fastHit.isEnabled = false;
-			//
 		}
 	}
 }

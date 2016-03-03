@@ -14,9 +14,9 @@ public class playerCharacter : MonoBehaviour {
 	public float uppercutForce;
 	public float uppercutCooldown;
 
-	//IDEA!!!  slam gameobject which handles itself 
-	public float slamDamage;
-	public float slamRadius;
+	public float slamSpeed;
+	public float slamCooldown;
+	
 	public bool dontStopSpin = false;
 	public bool Ragdoll = false;
 	public float rotationMultiplier = 1;
@@ -25,17 +25,28 @@ public class playerCharacter : MonoBehaviour {
 	public Quaternion previousRotation;
 	private XboxControls controllerInput;
 	private float cooldown;
-	public float uppercutCD = 0;
+	private float uppercutCD = 0;
+	private float slamCD = 0;
 	private hitBox Box;
-	
+	private slam Slam;
+	public  gameController manager;
+	public Vector3 angularVelocity;
 	void Start () 
 	{
+		manager = GameObject.FindGameObjectWithTag ("GameController").GetComponent<gameController>();
 		controllerInput = GetComponent<XboxControls> ();
 		Box = GetComponentInChildren<hitBox>();
+		Slam = GetComponentInChildren<slam> ();
+		manager.players.Add (this);
 	}
 
 	void Update () 
 	{
+		angularVelocity = rigidbody.angularVelocity;
+		if (Mathf.Abs(rotationMultiplier) < 0.01f) 
+		{
+			rotationMultiplier = 0;
+		}
 		if (isAlive)
 		{
 
@@ -64,8 +75,11 @@ public class playerCharacter : MonoBehaviour {
 		{
 			uppercutCD -= Time.deltaTime;
 		}
-		if(gameObject.name == "Player 1")
+		if(slamCD >0)
 		{
+			slamCD -= Time.deltaTime;
+		}
+
 		if(GetComponent<Animation>().IsPlaying("upperCut"))
 		{
 			if(animation["upperCut"].time > 0.30f && animation["upperCut"].time< 0.50f)
@@ -81,20 +95,29 @@ public class playerCharacter : MonoBehaviour {
 				}
 			}
 		}
+		if(GetComponent<Animation>().IsPlaying("slam"))
+		{
+			if(animation["slam"].time > 0.5f && !GetComponent<RigidBodyControls>().grounded)
+			{
+				animation.enabled = false;
+			}
+			Slam.isEnabled = true;
+			if(GetComponent<RigidBodyControls>().grounded)
+			{
+				Slam.isEnabled = false;
+				slamCD = slamCooldown;
+				animation.enabled = true;
+			}
 		}
-
+		
 	}
-
-private bool started_spinning = false;
+	
 	private float sensitivityX=90;
 	private float sensitivityY=90;
 	float aim_angle = 0.0f;
 
 	void Movement()
 	{ 
-		float rThumbX = Input.GetAxis(controllerInput.buttons.rotationHorizontalAxis)*sensitivityX;
-		float rThumbY = Input.GetAxis(controllerInput.buttons.rotationVerticalAxis)*sensitivityY;
-
 		float lThumbX = Input.GetAxis(controllerInput.buttons.movementHorizontalAxis)*sensitivityX;
 		float lThumbY = -Input.GetAxis(controllerInput.buttons.movementVerticalAxis)*sensitivityY;
 		
@@ -104,69 +127,38 @@ private bool started_spinning = false;
 		{
 				// IF RIGHT TRIGGER IS DOWN
 			if (Input.GetAxis (controllerInput.buttons.rTrigger) >= 1) 
-				{ 
-					// HOLDING, BUT NOT SPINING THE THUMBSTICK, INCREASE SLOWLY
-				if(rThumbX != 0 && rThumbY == 0)
-					{
-						rotationMultiplier+= 0.2f;
-						started_spinning = true;
-					transform.Rotate(new Vector3(0, rThumbX, 0) * Time.deltaTime * rotationMultiplier);
-					}
-					else
-					{
-						//	SPINNING THE THUMBSTICK, INCREASE FASTER
-					if (rThumbX != 0.0f || rThumbY != 0.0f) 
-						{
-							started_spinning = true;
-						aim_angle = Mathf.Atan2(rThumbY, rThumbX) * Mathf.Rad2Deg;
-
-							// CALCULATE ANGLE AND ROTATE
-							transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(aim_angle, Vector3.up),.2f) ;
-
-							if(started_spinning == true)
-							{
-								rotationMultiplier += 0.0000001f + (rotationMultiplier / 40);
-								transform.Rotate(new Vector3(0,(transform.eulerAngles.y/90),0)* rotationMultiplier);
-							}
-						}
-						else 
-						{
-							started_spinning = false;
-						}
-					}
-				}
-				else
+			{ 
+				rotationMultiplier+= 0.2f;
+				transform.Rotate(new Vector3(0, -90, 0) * Time.deltaTime * rotationMultiplier);
+			}
+			else
+			{
+				//DECREASE ROTATION OVER TIME IF NOT SPINNING
+				if(!dontStopSpin)
 				{
-					started_spinning = false;
+					rotationMultiplier -= 0.0001f + (rotationMultiplier / 20);
+					transform.Rotate(new Vector3(0, -90, 0) * Time.deltaTime * rotationMultiplier);
 				}
-				if(started_spinning == false)
+				if(Mathf.Abs(rotationMultiplier) <= 1)
 				{
-					//DECREASE ROTATION OVER TIME IF NOT SPINNING
-					if(!dontStopSpin)
+					if(lThumbX != 0 || lThumbY != 0)
 					{
-						rotationMultiplier -= 0.0001f + (rotationMultiplier / 20);
-						transform.Rotate(new Vector3(0, -90, 0) * Time.deltaTime * rotationMultiplier);
-					}
-					if(Mathf.Abs(rotationMultiplier) <= 1)
-					{
-						if(lThumbX != 0 || lThumbY != 0)
+						if(!GetComponent<Animation>().isPlaying)
 						{
-							if(!GetComponent<Animation>().isPlaying)
-							{
-								GetComponent<Animation>().Play("walk");
-							}
-							aim_angle = Mathf.Atan2(lThumbY, lThumbX) * Mathf.Rad2Deg;
-							transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.AngleAxis (aim_angle, Vector3.up), .2f);
+							GetComponent<Animation>().Play("walk");
 						}
+						aim_angle = Mathf.Atan2(lThumbY, lThumbX) * Mathf.Rad2Deg;
+						transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.AngleAxis (aim_angle, Vector3.up), .2f);
 					}
 				}
+			}
 		}
 		else
 		{
 			rotationMultiplier =80;
 		}
 
-		if(Input.GetButton(controllerInput.buttons.rBumper))
+		if(Input.GetButtonUp(controllerInput.buttons.rBumper))
 		{
 
 			//attack
@@ -176,12 +168,16 @@ private bool started_spinning = false;
 				{
 					GetComponent<Animation>().Play("upperCut");
 					//uppercut
-
 				}
 			}
 			else
 			{
-				//slam
+				if(slamCD <= 0)
+				{
+					rigidbody.velocity = Vector3.zero;
+					rigidbody.AddForce(Vector3.down*slamSpeed);
+					GetComponent<Animation>().Play("slam");
+				}
 			}
 		}
 	}
@@ -205,8 +201,9 @@ private bool started_spinning = false;
 		{
 			currentRotation = transform.rotation;
 			transform.rotation = Quaternion.Lerp (currentRotation, previousRotation, recoveryTime);
+			rotationMultiplier = 0;
 			Ragdoll = false;
-			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 			rigidbody.angularVelocity = Vector3.zero;
 			cooldown = 0;
 		} 

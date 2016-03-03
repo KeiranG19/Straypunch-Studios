@@ -1,5 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &107026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 407026}
+  - 64: {fileID: 6407026}
+  - 114: {fileID: 11407026}
+  m_Layer: 0
+  m_Name: slamCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &186144
 GameObject:
   m_ObjectHideFlags: 0
@@ -50,7 +67,8 @@ GameObject:
   - 114: {fileID: 11486150}
   - 54: {fileID: 5486144}
   - 114: {fileID: 11486148}
-  - 95: {fileID: 9586144}
+  - 114: {fileID: 11407024}
+  - 111: {fileID: 11196834}
   m_Layer: 0
   m_Name: Player 3
   m_TagString: Player
@@ -67,6 +85,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 486150}
   - 65: {fileID: 6586144}
+  - 114: {fileID: 11407022}
   m_Layer: 0
   m_Name: uppercut hitbox
   m_TagString: Untagged
@@ -111,6 +130,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &407026
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 107026}
+  m_LocalRotation: {x: 0, y: -.67712909, z: 0, w: .735864341}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_Children: []
+  m_Father: {fileID: 486148}
+  m_RootOrder: 4
 --- !u!4 &486144
 Transform:
   m_ObjectHideFlags: 1
@@ -150,6 +181,7 @@ Transform:
   - {fileID: 486146}
   - {fileID: 486150}
   - {fileID: 486144}
+  - {fileID: 407026}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &486150
@@ -160,7 +192,7 @@ Transform:
   m_GameObject: {fileID: 186150}
   m_LocalRotation: {x: -5.75776049e-08, y: .138810322, z: -2.1994655e-08, w: .990319014}
   m_LocalPosition: {x: 3.5400002, y: -.260000229, z: -1.24000025}
-  m_LocalScale: {x: 1.09038317, y: 1.33864379, z: 1.58698428}
+  m_LocalScale: {x: 2, y: 1.33864379, z: 2.5}
   m_Children: []
   m_Father: {fileID: 486148}
   m_RootOrder: 2
@@ -311,6 +343,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 2
+--- !u!64 &6407026
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 107026}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_SmoothSphereCollisions: 0
+  m_Convex: 0
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!64 &6486144
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -336,21 +381,63 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!95 &9586144
-Animator:
-  serializedVersion: 3
+--- !u!111 &11196834
+Animation:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 186148}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0332df92a92336442a9d9eb6477f7947, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 1e66c7a9432eacb478a75a206b3d1025, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 1e66c7a9432eacb478a75a206b3d1025, type: 2}
+  - {fileID: 7400000, guid: 1c30f07bef34e654f827265eafac5d62, type: 2}
+  - {fileID: 7400000, guid: 86b82ba1f07ab204fa240779f77a1955, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &11407022
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 186150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1633ae5985ac28d44ac4ad2b1e8384ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targets: []
+--- !u!114 &11407024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 186148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5483eb0c1f461b440bc2d51845fdb2c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controllerInUse: 2
+--- !u!114 &11407026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 107026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e590be29b3630d94b9f17a6b219e00a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 60
+  force: 3000
+  maxDamageThreshold: 1
+  damageThreshold: 3
+  isEnabled: 0
 --- !u!114 &11486144
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -390,10 +477,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  dashSpeed: 2500
   gravity: 30
   maxVelocityChange: 10
   canJump: 1
-  jumpHeight: 2
+  jumpHeight: 10
+  grounded: 0
+  player: {fileID: 0}
+  maxDashes: 3
+  remainingDashes: 3
+  dashUseCooldown: .5
+  regenDashCooldown: 5
 --- !u!114 &11486150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -405,24 +499,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae9d46d63c008a488f22dabfd1e8211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
+  health: 100
   isAlive: 1
-  controllerInUse: 2
-  walkingSpeed: 10
-  runningSpeed: 20
-  jumpSpeed: 20
-  rotationSpeed: 50
-  gravityStrength: 20
-  additionalJumps: 1
-  gravity: 10
-  maxVelocityChange: 10
-  canJump: 1
-  jumpHeight: 2
+  uppercutDamage: 5
+  uppercutForce: 50
+  uppercutCooldown: 1
+  slamSpeed: 5
+  slamCooldown: 1
+  dontStopSpin: 0
   Ragdoll: 0
-  currentSpeed: 0
   rotationMultiplier: 0
-  addedVel: {x: 0, y: 0, z: 0}
-  velocityChange: {x: 0, y: 0, z: 0}
+  recoveryTime: 4
+  previousRotation: {x: 0, y: 0, z: 0, w: 0}
+  manager: {fileID: 0}
+  angularVelocity: {x: 0, y: 0, z: 0}
 --- !u!114 &11486152
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -434,6 +524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92c10993ae4daba4ca3f8786153641a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageThreshold: 15
   pcOwner: {fileID: 0}
   isEnabled: 1
 --- !u!135 &13586144
