@@ -8,11 +8,10 @@ public class slam : MonoBehaviour {
 	public float maxDamageThreshold = 1;
 	public float damageThreshold = 7;
 	public bool isEnabled = false;
-	
-	private gameController manager;
+
 	// Use this for initialization
-	void Start () {
-		manager = GetComponentInParent<playerCharacter> ().manager;
+	void Start () 
+	{
 	}
 
 	void OnTriggerEnter(Collider other)
@@ -52,39 +51,5 @@ public class slam : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-//		if(isEnabled)
-//		{
-//		foreach(playerCharacter other in manager.players)
-//		{
-//			MeshCollider area =  GetComponent<MeshCollider>();
-//
-//			if (area.bounds.Contains(other.transform.position) && other.gameObject != transform.parent.gameObject) 
-//			{
-//				Vector3 position = other.transform.position;
-//				float distance = Vector3.Distance(position,transform.position);
-//				if(distance <= maxDamageThreshold)
-//				{
-//					//max damage
-//					other.health -= damage;
-//						Debug.Log("max damage applied");
-//				}
-//				else if(distance <= damageThreshold)
-//				{
-//					//scaled damage
-//					other.health -= damage/distance;
-//					other.rigidbody.AddForce((transform.position-position)*force/distance);
-//						Debug.Log("mid damage applied");
-//				}
-//				else
-//				{
-//					//no damage
-//					other.rigidbody.AddForce((transform.position-position)*force/distance);
-//						Debug.Log("slow applied");
-//				}
-//
-//			}
-//		}
-//			isEnabled = false;
-//		}
 	}
 }

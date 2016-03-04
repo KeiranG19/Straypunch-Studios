@@ -27,6 +27,7 @@ public class CameraScript : MonoBehaviour {
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 		float maxZ = float.NegativeInfinity;
 		float minZ = float.PositiveInfinity;
+		float minX = float.PositiveInfinity;
 		foreach (GameObject player in players) {
 			if (player.GetComponent<playerCharacter>().isAlive)
 			{
@@ -38,6 +39,10 @@ public class CameraScript : MonoBehaviour {
 				{
 					minZ = player.transform.position.z;
 				}
+				if(player.transform.position.x<minX)
+				{
+					minX = player.transform.position.x;
+				}
 			}
 		}
 
@@ -47,9 +52,12 @@ public class CameraScript : MonoBehaviour {
 		zoomAmount = 1 - (Dist / maxDist);
 
 		startPosition.z = zPosition;
-		forwardPosition.z = zPosition;
-		
-		Vector3 targetPosition = Vector3.Lerp (startPosition, forwardPosition, zoomAmount);
+
+		Vector3 endPosition = forwardPosition;
+
+		endPosition.z = zPosition;
+		endPosition.x += minX + 10;
+		Vector3 targetPosition = Vector3.Lerp (startPosition, endPosition, zoomAmount);
 
 		transform.position = Vector3.Lerp (transform.position, targetPosition, Time.deltaTime * zoomSpeed);
 	}
