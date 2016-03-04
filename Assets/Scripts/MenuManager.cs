@@ -35,6 +35,11 @@ public class MenuManager : MonoBehaviour {
 		}
 	}
 
+	public void loadScene(int scene)
+	{
+		Application.LoadLevel(scene);
+	}
+
 	public void ExitGame()
 	{
 		Application.Quit();
