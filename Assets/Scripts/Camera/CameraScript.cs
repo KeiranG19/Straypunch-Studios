@@ -13,7 +13,7 @@ public class CameraScript : MonoBehaviour {
 	void Start () {
 
 		startPosition = transform.position;
-		forwardPosition = transform.position + (transform.forward * 30);
+		forwardPosition = transform.position + (transform.forward * 50);
 
 	}
 	
@@ -56,7 +56,7 @@ public class CameraScript : MonoBehaviour {
 		Vector3 endPosition = forwardPosition;
 
 		endPosition.z = zPosition;
-		endPosition.x += minX + 10;
+		//endPosition.x += minX + 10;
 		Vector3 targetPosition = Vector3.Lerp (startPosition, endPosition, zoomAmount);
 
 		transform.position = Vector3.Lerp (transform.position, targetPosition, Time.deltaTime * zoomSpeed);

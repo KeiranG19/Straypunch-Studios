@@ -1,0 +1,125 @@
+fileFormatVersion: 2
+guid: 1cc5388257e90744caed7b111dd8f8cd
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: hob_1
+    100002: hob_2
+    100004: hob_3
+    100006: hob_4
+    100008: hob_base
+    100010: hob_dial_1
+    100012: hob_dial_2
+    100014: hob_dial_3
+    100016: hob_dial_4
+    100018: igniter
+    100020: pan_support_1
+    100022: pan_support_2
+    100024: //RootNode
+    100026: Tape001.Target
+    400000: hob_1
+    400002: hob_2
+    400004: hob_3
+    400006: hob_4
+    400008: hob_base
+    400010: hob_dial_1
+    400012: hob_dial_2
+    400014: hob_dial_3
+    400016: hob_dial_4
+    400018: igniter
+    400020: pan_support_1
+    400022: pan_support_2
+    400024: //RootNode
+    400026: Tape001.Target
+    2300000: hob_1
+    2300002: hob_2
+    2300004: hob_3
+    2300006: hob_4
+    2300008: hob_base
+    2300010: hob_dial_1
+    2300012: hob_dial_2
+    2300014: hob_dial_3
+    2300016: hob_dial_4
+    2300018: igniter
+    2300020: pan_support_1
+    2300022: pan_support_2
+    3300000: hob_1
+    3300002: hob_2
+    3300004: hob_3
+    3300006: hob_4
+    3300008: hob_base
+    3300010: hob_dial_1
+    3300012: hob_dial_2
+    3300014: hob_dial_3
+    3300016: hob_dial_4
+    3300018: igniter
+    3300020: pan_support_1
+    3300022: pan_support_2
+    4300000: hob_base
+    4300002: igniter
+    4300004: hob_dial_1
+    4300006: hob_dial_2
+    4300008: hob_dial_3
+    4300010: hob_dial_4
+    4300012: hob_1
+    4300014: hob_2
+    4300016: hob_3
+    4300018: hob_4
+    4300020: pan_support_1
+    4300022: pan_support_2
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .100000001
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
