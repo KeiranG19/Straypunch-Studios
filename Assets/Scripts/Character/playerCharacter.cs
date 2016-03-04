@@ -90,6 +90,7 @@ public class playerCharacter : MonoBehaviour {
 					{
 						punt(target);
 						target.GetComponent<playerCharacter>().rotationMultiplier = 0;
+						target.GetComponent<playerCharacter>().health -= uppercutDamage;
 					}
 					uppercutCD = uppercutCooldown;
 				}
@@ -111,7 +112,7 @@ public class playerCharacter : MonoBehaviour {
 		}
 		
 	}
-	
+	 
 	private float sensitivityX=90;
 	private float sensitivityY=90;
 	float aim_angle = 0.0f;
@@ -126,7 +127,7 @@ public class playerCharacter : MonoBehaviour {
 		if(rotationMultiplier <= 80)
 		{
 				// IF RIGHT TRIGGER IS DOWN
-			if (Input.GetAxis (controllerInput.buttons.rTrigger) >= 1) 
+			if (Input.GetAxis (controllerInput.buttons.rTrigger) >= 1 && GetComponent<RigidBodyControls>().grounded) 
 			{ 
 				rotationMultiplier+= 0.2f;
 				transform.Rotate(new Vector3(0, -90, 0) * Time.deltaTime * rotationMultiplier);
@@ -160,7 +161,6 @@ public class playerCharacter : MonoBehaviour {
 
 		if(Input.GetButtonUp(controllerInput.buttons.rBumper))
 		{
-
 			//attack
 			if(GetComponent<RigidBodyControls>().grounded)
 			{
@@ -189,7 +189,7 @@ public class playerCharacter : MonoBehaviour {
 		direction.y += direction.sqrMagnitude;
 		direction.x *= 0.5f;
 		direction.z *= 0.5f;
-		//direction.Normalize();
+		direction.Normalize();
 		target.rigidbody.AddForce(direction*uppercutForce);
 	}
 
