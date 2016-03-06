@@ -8,7 +8,7 @@ public class characterSelect : MonoBehaviour {
 	public GameObject player3JoinButton;
 	public GameObject player4JoinButton;
 
-	private MatchOptions settings;		// Referance to level options which get passed to next scene
+	private MatchOptions settings;			// Referance to level options which get passed to next scene
 	
 	void Start () 
 	{
