@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Hazard : MonoBehaviour {
+public class Hazard : MonoBehaviour 
+{
 	/*
 	 * if bool active = true ( set true by button with public Hazard variable)
 	 * then do triggerHazard, triggerHazard will get the type of Hazard it is from public enum 'type'
@@ -10,39 +11,39 @@ public class Hazard : MonoBehaviour {
 	 */
 	public enum type{
 		area_damage, 
-		area_slow};
-
-
+		area_slow,
+		area_DOT
+	};
 	public type Type;
 	public int damage;
+	public int DoTDamage;
 	public bool activated = false;
 	public int slowAmount;
 	public float waitTimer = 0.5f;
+	public float debuffTime = 3;
+	public debuff effect;
 	private float timer = 0.5f;
-	// Use this for initialization
-	void Start () {
+
+	void Start () 
+	{
 
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+	void Update () 
+	{
 		if(activated == true)
 		{
-
 			Component[] children = GetComponentsInChildren<ParticleSystem>();
 			foreach (ParticleSystem childParticleSystem in children)
 			{
-				
 				childParticleSystem.enableEmission = true;
-
 			}
-
 		}
-		else{
+		else
+		{
 			Component[] children = GetComponentsInChildren<ParticleSystem>();
 			foreach (ParticleSystem childParticleSystem in children)
 			{
-				
 				childParticleSystem.enableEmission = false;
 			}
 		}
@@ -56,6 +57,7 @@ public class Hazard : MonoBehaviour {
 			{
 				playerCharacter myPlayer = other.GetComponent<playerCharacter>();
 				RigidBodyControls myRigidBody = other.GetComponent<RigidBodyControls>();
+
 				if(Type == type.area_damage)
 				{
 					if(timer >= waitTimer)
@@ -70,27 +72,49 @@ public class Hazard : MonoBehaviour {
 				}
 				if(Type == type.area_slow)
 				{
-					myRigidBody.speed = 1;
+					if(timer >= waitTimer)
+					{
+						effect.slowSpeed = slowAmount;
+						effect.giveDebuff(myPlayer,debuffTime,debuff.type.slow);
+						timer = 0.0f;
+					}
+					else
+					{
+						timer += Time.deltaTime;
+					}
 				}
-			}
-		}
-	}
-
-	void OnTriggerExit(Collider other)
-	{
-		if(activated == true)
-		{
-			if(other.gameObject.tag == "Player")
-			{
-				RigidBodyControls myRigidBody = other.GetComponent<RigidBodyControls>();
-				if(Type == type.area_slow)
+				if(Type == type.area_DOT)
 				{
-					myRigidBody.speed = 10;
+					if(timer >= waitTimer)
+					{
+						effect.DOTdamage = DoTDamage;
+						effect.giveDebuff(myPlayer,debuffTime,debuff.type.DOT);
+						timer = 0.0f;
+					}
+					else
+					{
+						timer += Time.deltaTime;
+					}
 				}
 			}
 		}
-
 	}
+
+//	void OnTriggerExit(Collider other)
+//	{
+//		if(activated == true)
+//		{
+//			if(other.gameObject.tag == "Player")
+//			{
+//				RigidBodyControls myRigidBody = other.GetComponent<RigidBodyControls>();
+//				if(Type == type.area_slow)
+//				{
+//					myRigidBody.speed = 10;
+//				}
+//			}
+//		}
+//
+//	}
 
 
 }

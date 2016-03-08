@@ -5,8 +5,8 @@ using System.Collections;
 [RequireComponent (typeof (CapsuleCollider))]
 
 public class RigidBodyControls : MonoBehaviour {
-
-	public float speed = 10.0f;
+	public float maxSpeed = 10.0f;				// player speed before debuffs
+	public float speed = 10.0f;					// player speed after debuffs
 	public float dashSpeed = 20.0f;
 	public float gravity = 30.0f;
 	public float maxVelocityChange = 10.0f;
@@ -21,7 +21,7 @@ public class RigidBodyControls : MonoBehaviour {
 	public float regenDashCooldown = 5;
 	private float regenDashCD;
 	private float dashUseCD ;
-
+	private float myMaxSpeed;
 	void Awake () 
 	{
 		rigidbody.freezeRotation = true;
@@ -32,11 +32,13 @@ public class RigidBodyControls : MonoBehaviour {
 	{
 		player = GetComponent<playerCharacter> ();
 		controllerInput = GetComponent<XboxControls>();
+		
 	}
 
 	void FixedUpdate ()
 	{
 
+		
 		if(remainingDashes < maxDashes)
 		{
 

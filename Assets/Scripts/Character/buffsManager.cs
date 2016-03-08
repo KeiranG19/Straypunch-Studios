@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class buffsManager : MonoBehaviour 
 {
 	private gameController manager; 	// Referance to the game controller
-	
+	private float DoTCD = 0;
 	void Awake()
 	{
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<gameController>();
@@ -22,11 +22,56 @@ public class buffsManager : MonoBehaviour
 					effect.applyEffect(player);
 				}
 			}
+
+			float highestDamage = float.NegativeInfinity;
+			float highestSlow = float.NegativeInfinity;
+			// find the slow with the highest slow amount and remove the other slow debuffs, as they are redundant 
+			// if a debuff is not a slow apply its effect straight away
 			if(player.debuffs.Count > 0)
 			{
-				foreach(debuff effect in player.debuffs)
+				foreach(debuff effect in player.debuffs.ToArray())
 				{
-					effect.applyEffect(player);
+					if(effect.Type == debuff.type.slow)
+					{
+						if(effect.slowSpeed > highestSlow)
+						{
+							highestSlow = effect.slowSpeed;
+						}
+						else
+						{
+							player.debuffs.Remove(effect);
+						}
+
+					}
+					else if(effect.Type == debuff.type.DOT)
+					{
+						if(effect.DOTdamage > highestDamage)
+						{
+							highestDamage = effect.DOTdamage;
+						}
+						else
+						{
+							player.debuffs.Remove(effect);
+						}
+					}
+					else
+					{
+						effect.applyEffect(player);
+					}
+				}
+			}
+			if(player.debuffs.Count > 0)
+			{
+				foreach(debuff effect in player.debuffs.ToArray())
+				{
+					if(effect.Type == debuff.type.slow)
+					{
+						effect.applyEffect(player);
+					}
+					if(effect.Type == debuff.type.DOT)
+					{
+						effect.applyEffect(player);
+					}
 				}
 			}
 		}

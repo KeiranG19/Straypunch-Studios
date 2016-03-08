@@ -305,9 +305,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 1
   damage: 0
-  activated: 0
-  slowAmount: 1
+  DoTDamage: 0
+  activated: 1
+  slowAmount: 5
   waitTimer: .5
+  debuffTime: 3
+  effect: {fileID: 866687445}
 --- !u!1 &19264160
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,7 +547,7 @@ Transform:
   m_LocalScale: {x: 6.14912176, y: 5.89023781, z: 5.89023781}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 10
 --- !u!1 &70683561
 GameObject:
   m_ObjectHideFlags: 0
@@ -1836,11 +1839,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6493517a48abb6841869bae5dca5c93b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 0
+  Type: 2
   damage: 5
-  activated: 0
-  slowAmount: 0
+  DoTDamage: 10
+  activated: 1
+  slowAmount: 9
   waitTimer: .5
+  debuffTime: 2
+  effect: {fileID: 866687445}
 --- !u!1 &144003818
 GameObject:
   m_ObjectHideFlags: 0
@@ -3634,9 +3640,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   damage: 5
+  DoTDamage: 0
   activated: 0
   slowAmount: 0
   waitTimer: .5
+  debuffTime: 3
+  effect: {fileID: 0}
 --- !u!1 &313872482
 GameObject:
   m_ObjectHideFlags: 0
@@ -4118,6 +4127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3b80071d0514046bf732f14ea398de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 10
   speed: 10
   dashSpeed: 2500
   gravity: 30
@@ -4160,6 +4170,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   isAlive: 1
+  stunned: 0
+  buffs: []
+  debuffs: []
   uppercutDamage: 10
   uppercutForce: 1000
   uppercutCooldown: 1
@@ -4446,9 +4459,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   damage: 5
+  DoTDamage: 0
   activated: 0
   slowAmount: 0
   waitTimer: .5
+  debuffTime: 3
+  effect: {fileID: 0}
 --- !u!1 &482578032
 GameObject:
   m_ObjectHideFlags: 0
@@ -5866,7 +5882,7 @@ Transform:
   - {fileID: 1585899469}
   - {fileID: 1988809748}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
 --- !u!111 &566940152
 Animation:
   m_ObjectHideFlags: 0
@@ -5897,6 +5913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3b80071d0514046bf732f14ea398de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 10
   speed: 10
   dashSpeed: 2500
   gravity: 30
@@ -5939,6 +5956,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   isAlive: 1
+  stunned: 0
+  buffs: []
+  debuffs: []
   uppercutDamage: 10
   uppercutForce: 1000
   uppercutCooldown: 1
@@ -10432,6 +10452,61 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
+--- !u!1 &866687444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 866687446}
+  - 114: {fileID: 866687445}
+  - 114: {fileID: 866687447}
+  m_Layer: 0
+  m_Name: debuff
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &866687445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 866687444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91a0325db5889e04ca04e7fa1d00ab92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DoTCooldown: 2
+  DOTdamage: 1
+  slowSpeed: 1
+  Type: 1
+--- !u!4 &866687446
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 866687444}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 679.370239, y: -566.504272, z: 1.58496714}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+--- !u!114 &866687447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 866687444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f55217861348ac4b9942c8723007ae2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &876603554
 GameObject:
   m_ObjectHideFlags: 0
@@ -10825,6 +10900,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   isAlive: 1
+  stunned: 0
+  buffs: []
+  debuffs: []
   uppercutDamage: 10
   uppercutForce: 1000
   uppercutCooldown: 1
@@ -10849,6 +10927,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3b80071d0514046bf732f14ea398de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 10
   speed: 10
   dashSpeed: 2500
   gravity: 30
@@ -11376,9 +11455,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   damage: 5
+  DoTDamage: 0
   activated: 0
   slowAmount: 0
   waitTimer: .5
+  debuffTime: 3
+  effect: {fileID: 0}
 --- !u!1 &1064598169
 GameObject:
   m_ObjectHideFlags: 0
@@ -15982,7 +16064,7 @@ Transform:
   - {fileID: 1849278507}
   - {fileID: 338497994}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 9
 --- !u!111 &1281835851
 Animation:
   m_ObjectHideFlags: 0
@@ -16013,6 +16095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3b80071d0514046bf732f14ea398de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 10
   speed: 10
   dashSpeed: 2500
   gravity: 30
@@ -16055,6 +16138,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   isAlive: 1
+  stunned: 0
+  buffs: []
+  debuffs: []
   uppercutDamage: 10
   uppercutForce: 1000
   uppercutCooldown: 1
@@ -20916,7 +21002,7 @@ Transform:
   m_LocalScale: {x: 6.14912176, y: 5.89023781, z: 5.89023781}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 11
 --- !u!1 &2008328338
 GameObject:
   m_ObjectHideFlags: 0
