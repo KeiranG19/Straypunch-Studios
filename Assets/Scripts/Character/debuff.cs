@@ -14,7 +14,7 @@ public class debuff : MonoBehaviour
 		dazed};		 		 	// controlls inversed
 	public type Type;			
 
-	private float lifeTime;		// How long the debuff will last ( given by hazard )
+	public float lifeTime;		// How long the debuff will last ( given by hazard )
 	private float DoTCD = 0;	// Cooldown between dot damage being applied
 	
 	void Update () 

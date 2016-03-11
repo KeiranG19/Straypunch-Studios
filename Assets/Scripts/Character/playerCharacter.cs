@@ -14,6 +14,8 @@ public class playerCharacter : MonoBehaviour {
 	public List<buff> buffs = new List<buff>();			// List of all positive effects on the player, used by buffsManager
 	public List<debuff> debuffs = new List<debuff>();	// List of all negative effects on the player, used by buffsManager
 
+	public GameObject buffSlots;						// Grid layout group to show an image for each active buff (set by showBuffs )
+
 	public float uppercutDamage;
 	public float uppercutForce;
 	public float uppercutCooldown;

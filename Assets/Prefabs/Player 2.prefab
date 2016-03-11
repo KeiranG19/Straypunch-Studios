@@ -69,6 +69,7 @@ GameObject:
   - 114: {fileID: 11462836}
   - 114: {fileID: 11440274}
   - 111: {fileID: 11102136}
+  - 114: {fileID: 11498678}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Player
@@ -476,6 +477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3b80071d0514046bf732f14ea398de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 10
   speed: 10
   dashSpeed: 2500
   gravity: 30
@@ -501,8 +503,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   isAlive: 1
-  uppercutDamage: 5
-  uppercutForce: 50
+  stunned: 0
+  buffs: []
+  debuffs: []
+  uppercutDamage: 10
+  uppercutForce: 1000
   uppercutCooldown: 1
   slamSpeed: 5
   slamCooldown: 1
@@ -527,6 +532,18 @@ MonoBehaviour:
   damageThreshold: 15
   pcOwner: {fileID: 0}
   isEnabled: 1
+--- !u!114 &11498678
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be5ffa6dcccaf2d498a22fd7b426163f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNumber: 2
 --- !u!135 &13562832
 SphereCollider:
   m_ObjectHideFlags: 1

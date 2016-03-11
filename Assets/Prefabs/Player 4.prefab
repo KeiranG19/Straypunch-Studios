@@ -69,6 +69,7 @@ GameObject:
   - 114: {fileID: 11475582}
   - 114: {fileID: 11466296}
   - 111: {fileID: 11181820}
+  - 114: {fileID: 11407812}
   m_Layer: 0
   m_Name: Player 4
   m_TagString: Player
@@ -174,7 +175,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 175582}
   m_LocalRotation: {x: 0, y: -.215676129, z: 0, w: .976464987}
-  m_LocalPosition: {x: -30.3999996, y: 7.80000019, z: -49.2000008}
+  m_LocalPosition: {x: -30.3999996, y: 7, z: -9.80000019}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 475586}
@@ -398,6 +399,18 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &11407812
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 175582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be5ffa6dcccaf2d498a22fd7b426163f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNumber: 4
 --- !u!114 &11466296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -476,6 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3b80071d0514046bf732f14ea398de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 10
   speed: 10
   dashSpeed: 2500
   gravity: 30
@@ -501,8 +515,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   isAlive: 1
-  uppercutDamage: 5
-  uppercutForce: 50
+  stunned: 0
+  buffs: []
+  debuffs: []
+  uppercutDamage: 10
+  uppercutForce: 1000
   uppercutCooldown: 1
   slamSpeed: 5
   slamCooldown: 1
