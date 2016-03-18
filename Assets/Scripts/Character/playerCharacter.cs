@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent (typeof (Rigidbody))]
 [RequireComponent (typeof (CapsuleCollider))]
@@ -9,6 +10,11 @@ public class playerCharacter : MonoBehaviour {
 
 	public float health = 200;
 	public bool isAlive = true;
+	public bool stunned = false;						// set by debuffs, used to lock the player's movement and attacks
+	public List<buff> buffs = new List<buff>();			// List of all positive effects on the player, used by buffsManager
+	public List<debuff> debuffs = new List<debuff>();	// List of all negative effects on the player, used by buffsManager
+
+	public GameObject buffSlots;						// Grid layout group to show an image for each active buff (set by showBuffs )
 
 	public float uppercutDamage;
 	public float uppercutForce;
@@ -47,16 +53,20 @@ public class playerCharacter : MonoBehaviour {
 		{
 			rotationMultiplier = 0;
 		}
-		if (isAlive)
+		if(!stunned)
 		{
-
-			if (Ragdoll)
+			if (isAlive)
 			{
-				rigidbody.constraints = RigidbodyConstraints.None;
-				recover();
-			}
-			else{
-				Movement ();
+
+				if (Ragdoll)
+				{
+					rigidbody.constraints = RigidbodyConstraints.None;
+					recover();
+				}
+				else
+				{
+					Movement ();
+				}
 			}
 		}
 
@@ -71,6 +81,7 @@ public class playerCharacter : MonoBehaviour {
 			hammer.transform.parent = null;
 			Debug.Log("dead");
 		}
+
 		if(uppercutCD >0)
 		{
 			uppercutCD -= Time.deltaTime;
