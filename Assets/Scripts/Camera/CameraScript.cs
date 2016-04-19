@@ -13,7 +13,7 @@ public class CameraScript : MonoBehaviour {
 	void Start () {
 
 		startPosition = transform.position;
-		forwardPosition = transform.position + (transform.forward * 50);
+		forwardPosition = transform.position + (transform.forward * 15);
 
 	}
 	

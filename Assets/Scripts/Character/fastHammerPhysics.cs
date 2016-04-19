@@ -21,7 +21,7 @@ public class fastHammerPhysics : MonoBehaviour {
 		{
 			playerCharacter	enemyPC = hit.gameObject.GetComponent<playerCharacter>();
 
-			float hammerOffset = 0.8f;
+			float hammerOffset = 0.7f;
 			float heightOffset = enemyPC.transform.position.y - transform.position.y;
 			Vector3 contactPoint = enemyPC.transform.position;
 			contactPoint.y += hammerOffset + heightOffset;
@@ -31,7 +31,7 @@ public class fastHammerPhysics : MonoBehaviour {
 			//enemyPC.rigidbody.constraints = RigidbodyConstraints.None;
 			Vector3 direction = Vector3.Cross((enemyPC.transform.position - transform.position),Vector3.up);
 			direction.y = Random.Range(-0.3f,0.3f);
-			Vector3 forceVec = (direction.normalized * (pcOwner.rotationMultiplier));
+			Vector3 forceVec = (direction.normalized * (pcOwner.rotationMultiplier/2));
 			enemyPC.health -= forceVec.magnitude;
 			hit.rigidbody.AddForce(forceVec,ForceMode.Impulse);
 			hit.rigidbody.AddTorque(Vector3.Cross(forceVec , contactPoint)*5,ForceMode.Impulse);
