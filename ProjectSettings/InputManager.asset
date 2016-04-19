@@ -14,7 +14,7 @@ InputManager:
     altNegativeButton: a
     altPositiveButton: d
     gravity: 0
-    dead: .5
+    dead: .200000003
     sensitivity: 2
     snap: 1
     invert: 1
@@ -78,7 +78,7 @@ InputManager:
     altNegativeButton: s
     altPositiveButton: w
     gravity: 0
-    dead: .5
+    dead: .200000003
     sensitivity: 2
     snap: 1
     invert: 1
@@ -1076,6 +1076,70 @@ InputManager:
     invert: 0
     type: 1
     axis: 0
+    joyNum: 4
+  - serializedVersion: 3
+    m_Name: Vertical
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: .00100000005
+    sensitivity: 1000
+    snap: 1
+    invert: 0
+    type: 1
+    axis: 1
+    joyNum: 4
+  - serializedVersion: 3
+    m_Name: P0VertDpad
+    descriptiveName: up and down on d pad
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: .00100000005
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 6
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: P0HoriDpad
+    descriptiveName: left + right Dpad
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: .00100000005
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 5
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: Vertical
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: .00100000005
+    sensitivity: 1000
+    snap: 1
+    invert: 0
+    type: 1
+    axis: 1
     joyNum: 4
   - serializedVersion: 3
     m_Name: Vertical

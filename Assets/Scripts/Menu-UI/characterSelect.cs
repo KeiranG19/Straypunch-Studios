@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class characterSelect : MonoBehaviour {
-
+	public MenuManager manager;
+	public Menu myMenu;
 	public bool player3Enabled = false;
 	public bool player4Enabled = false;
 	public GameObject player3JoinButton;
@@ -17,6 +18,25 @@ public class characterSelect : MonoBehaviour {
 
 	void Update () 
 	{
+		if (manager.currentMenu == myMenu) 
+		{
+			if (Input.GetButtonDown ("P2Jump")) 
+			{
+				player3SetActive (true);
+			}
+			if (Input.GetButtonDown ("P2Sprint")) 
+			{
+				player3SetActive (false);
+			}
+			if (Input.GetButtonDown ("P3Jump"))
+			{
+				player4SetActive (true);
+			}
+			if (Input.GetButtonDown ("P3Sprint")) 
+			{
+				player4SetActive (false);
+			}
+		}
 
 	}
 
