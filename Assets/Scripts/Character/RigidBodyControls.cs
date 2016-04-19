@@ -61,7 +61,7 @@ public class RigidBodyControls : MonoBehaviour {
 
 		if (player.isAlive && !player.Ragdoll)
 		{
-			if (grounded) {
+
 				if(Input.GetButtonUp(controllerInput.buttons.B))
 				{
 					if(dashUseCD <= 0)
@@ -91,7 +91,7 @@ public class RigidBodyControls : MonoBehaviour {
 				velocityChange.z = Mathf.Clamp (velocityChange.z, -maxVelocityChange, maxVelocityChange);
 				velocityChange.y = 0;
 				rigidbody.AddForce (velocityChange, ForceMode.VelocityChange);
-				
+				if (grounded) {
 				// Jump
 				if (canJump && Input.GetButton (controllerInput.buttons.A)) {
 					rigidbody.velocity = new Vector3 (velocity.x, CalculateJumpVerticalSpeed (), velocity.z);
