@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 public class playerCharacter : MonoBehaviour {
 	private Rigidbody RB;
-
+	public Animator animator;
 	public float health = 200;
 	public bool isAlive = true;
 	public bool stunned = false;						// set by debuffs, used to lock the player's movement and attacks
@@ -37,6 +37,9 @@ public class playerCharacter : MonoBehaviour {
 	private slam Slam;
 	public  gameController manager;
 	public Vector3 angularVelocity;
+
+	private float idleTimer = 3;
+	public float idleTime = 0;
 	void Start () 
 	{
 		manager = GameObject.FindGameObjectWithTag ("GameController").GetComponent<gameController>();
@@ -44,10 +47,22 @@ public class playerCharacter : MonoBehaviour {
 		Box = GetComponentInChildren<hitBox>();
 		Slam = GetComponentInChildren<slam> ();
 		manager.players.Add (this);
+		animator = GetComponentInChildren<Animator> ();
 	}
 
 	void Update () 
 	{
+		Debug.Log (idleTime.ToString ());
+		if (idleTime > idleTimer) 
+		{
+			animator.SetBool ("longIdleTrigger", true);
+			idleTime=0;
+		} 
+		else 
+		{
+			animator.SetBool ("longIdleTrigger", false);
+		}
+		idleTime += Time.deltaTime;
 		angularVelocity = rigidbody.angularVelocity;
 		if (Mathf.Abs(rotationMultiplier) < 0.01f) 
 		{
@@ -137,6 +152,10 @@ public class playerCharacter : MonoBehaviour {
 		// UPPER BOUND OF SPIN SPEED
 		if(rotationMultiplier <= 80)
 		{
+			if(rotationMultiplier >= 0.01f)
+			{
+				idleTime = 0;
+			}
 				// IF RIGHT TRIGGER IS DOWN
 			if (Input.GetAxis (controllerInput.buttons.rTrigger) >= 1 && GetComponent<RigidBodyControls>().grounded) 
 			{ 
@@ -172,12 +191,13 @@ public class playerCharacter : MonoBehaviour {
 
 		if(Input.GetButtonUp(controllerInput.buttons.rBumper))
 		{
+			idleTime = 0;
 			//attack
 			if(GetComponent<RigidBodyControls>().grounded)
 			{
 				if(uppercutCD <= 0)
 				{
-					GetComponent<Animation>().Play("upperCut");
+					animator.SetTrigger("uppercutTrigger");
 					//uppercut
 				}
 			}
@@ -187,7 +207,7 @@ public class playerCharacter : MonoBehaviour {
 				{
 					rigidbody.velocity = Vector3.zero;
 					rigidbody.AddForce(Vector3.down*slamSpeed);
-					GetComponent<Animation>().Play("slam");
+					animator.SetTrigger("slamtrigger");
 				}
 			}
 		}

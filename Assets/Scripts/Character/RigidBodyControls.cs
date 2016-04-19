@@ -22,6 +22,7 @@ public class RigidBodyControls : MonoBehaviour {
 	private float regenDashCD;
 	private float dashUseCD ;
 	private float myMaxSpeed;
+	public Animator animator;
 	void Awake () 
 	{
 		rigidbody.freezeRotation = true;
@@ -32,6 +33,7 @@ public class RigidBodyControls : MonoBehaviour {
 	{
 		player = GetComponent<playerCharacter> ();
 		controllerInput = GetComponent<XboxControls>();
+		animator = GetComponentInChildren<Animator> ();
 		
 	}
 
@@ -79,7 +81,9 @@ public class RigidBodyControls : MonoBehaviour {
 				// Calculate how fast we should be moving
 				Vector3 direction = new Vector3 (Input.GetAxis (controllerInput.buttons.movementHorizontalAxis), 0, Input.GetAxis (controllerInput.buttons.movementVerticalAxis));
 				Vector3 targetVelocity = direction * speed;
-			
+				Vector3 planeVelocity = targetVelocity;
+				planeVelocity.y=0;
+				animator.SetFloat("Speed", planeVelocity.magnitude);
 				// Apply a force that attempts to reach our target velocity
 				Vector3 velocity = rigidbody.velocity;
 				Vector3 velocityChange = (targetVelocity - velocity);
@@ -87,10 +91,11 @@ public class RigidBodyControls : MonoBehaviour {
 				velocityChange.z = Mathf.Clamp (velocityChange.z, -maxVelocityChange, maxVelocityChange);
 				velocityChange.y = 0;
 				rigidbody.AddForce (velocityChange, ForceMode.VelocityChange);
-			
+				
 				// Jump
 				if (canJump && Input.GetButton (controllerInput.buttons.A)) {
 					rigidbody.velocity = new Vector3 (velocity.x, CalculateJumpVerticalSpeed (), velocity.z);
+					animator.SetTrigger("jumpTrigger");
 				}
 				}
 			}
@@ -99,7 +104,10 @@ public class RigidBodyControls : MonoBehaviour {
 			rigidbody.AddForce (new Vector3 (0, -gravity * rigidbody.mass, 0));
 		
 			grounded = false;
-		
+		if (rigidbody.velocity.sqrMagnitude > 0.01) 
+		{
+			player.idleTime = 0;
+		}
 	}
 	
 	void OnCollisionStay () {
