@@ -502,6 +502,7 @@ MonoBehaviour:
   remainingDashes: 3
   dashUseCooldown: .5
   regenDashCooldown: 5
+  animator: {fileID: 0}
 --- !u!114 &11486150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -513,11 +514,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae9d46d63c008a488f22dabfd1e8211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   health: 100
   isAlive: 1
   stunned: 0
   buffs: []
   debuffs: []
+  buffSlots: {fileID: 0}
   uppercutDamage: 10
   uppercutForce: 1000
   uppercutCooldown: 1
@@ -530,6 +533,7 @@ MonoBehaviour:
   previousRotation: {x: 0, y: 0, z: 0, w: 0}
   manager: {fileID: 0}
   angularVelocity: {x: 0, y: 0, z: 0}
+  idleTime: 0
 --- !u!114 &11486152
 MonoBehaviour:
   m_ObjectHideFlags: 1
