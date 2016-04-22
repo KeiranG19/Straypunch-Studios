@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 public class MatchOptions : MonoBehaviour {
 
 	public int level = 0;
 	public int timeLimit;
 	public int lives;
 	public int playerCount = 2;
-
+	public Text livesTxt;
+	public Text livesPrev;
 	//string[8] livesSettings = new string["1","2","3","4","5","6","7","∞"];
 	void Awake()
 	{
@@ -31,7 +33,19 @@ public class MatchOptions : MonoBehaviour {
 	{
 		lives = numberOfLives;
 	}
-
+	public void incrementLives()
+	{
+		if(lives>5)
+		{
+			lives = 1;
+		}
+		else
+		{
+			lives++;
+		}
+		livesTxt.text = ("Lives : "+lives);
+		livesPrev.text = livesTxt.text;
+	}
 	public void LoadScene()
 	{
 		Application.LoadLevel(level);
