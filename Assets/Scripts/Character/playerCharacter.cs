@@ -6,6 +6,11 @@ using System.Collections.Generic;
 [RequireComponent (typeof (CapsuleCollider))]
 
 public class playerCharacter : MonoBehaviour {
+
+	private fastHammerPhysics spinning;
+	private RigidBodyControls rigidBody;
+	private float gravityValue;
+
 	private Rigidbody RB;
 	public Animator animator;
 	public float health = 200;
@@ -13,7 +18,7 @@ public class playerCharacter : MonoBehaviour {
 	public bool stunned = false;						// set by debuffs, used to lock the player's movement and attacks
 	public List<buff> buffs = new List<buff>();			// List of all positive effects on the player, used by buffsManager
 	public List<debuff> debuffs = new List<debuff>();	// List of all negative effects on the player, used by buffsManager
-
+	public int lives = 1;
 	public GameObject buffSlots;						// Grid layout group to show an image for each active buff (set by showBuffs )
 
 	public float uppercutDamage;
@@ -32,7 +37,15 @@ public class playerCharacter : MonoBehaviour {
 	private XboxControls controllerInput;
 	private float cooldown;
 	private float uppercutCD = 0;
+	private bool uppercut = false;
+	private float uppercutDelay = 0.3f;
+	private float uDelay = 0;
+
 	private float slamCD = 0;
+	private bool slam = false;
+	private float slamDelay = 0.3f;
+	private float sDelay = 0;
+
 	private hitBox Box;
 	private slam Slam;
 	public  gameController manager;
@@ -48,11 +61,25 @@ public class playerCharacter : MonoBehaviour {
 		Slam = GetComponentInChildren<slam> ();
 		manager.players.Add (this);
 		animator = GetComponentInChildren<Animator> ();
+		spinning = GetComponentInChildren<fastHammerPhysics> ();
+		rigidBody = GetComponent<RigidBodyControls> ();
+		gravityValue = rigidBody.gravity;
+		lives = manager.settings.lives;
 	}
 
 	void Update () 
 	{
-		Debug.Log (idleTime.ToString ());
+
+		if (rotationMultiplier > 10) {
+			spinning.isEnabled = true;
+			animator.SetBool("Spinning",true);
+		} 
+		else 
+		{
+			spinning.isEnabled = false;
+			animator.SetBool("Spinning",false);
+		}
+
 		if (idleTime > idleTimer) 
 		{
 			animator.SetBool ("longIdleTrigger", true);
@@ -63,6 +90,7 @@ public class playerCharacter : MonoBehaviour {
 			animator.SetBool ("longIdleTrigger", false);
 		}
 		idleTime += Time.deltaTime;
+
 		angularVelocity = rigidbody.angularVelocity;
 		if (Mathf.Abs(rotationMultiplier) < 0.01f) 
 		{
@@ -76,6 +104,7 @@ public class playerCharacter : MonoBehaviour {
 				if (Ragdoll)
 				{
 					rigidbody.constraints = RigidbodyConstraints.None;
+
 					recover();
 				}
 				else
@@ -87,14 +116,17 @@ public class playerCharacter : MonoBehaviour {
 
 		if (health <= 0 && isAlive) 
 		{
-			isAlive = false;
-			Ragdoll = true;
-			Transform hammer = transform.FindChild("Hammer");
-			hammer.gameObject.AddComponent<Rigidbody>();
-			hammer.GetComponent<CapsuleCollider>().enabled = true;
-			hammer.FindChild("HammerHead").GetComponent<CapsuleCollider>().isTrigger = false;
-			hammer.transform.parent = null;
-			Debug.Log("dead");
+			lives--;
+			if(lives >0)
+			{
+				int randomSpawn = Random.Range(0,3);
+				manager.spawnPoints[randomSpawn].respawn(this);
+			}
+			else
+			{
+				isAlive = false;
+				Ragdoll = true;
+			}
 		}
 
 		if(uppercutCD >0)
@@ -106,11 +138,11 @@ public class playerCharacter : MonoBehaviour {
 			slamCD -= Time.deltaTime;
 		}
 
-		if(GetComponent<Animation>().IsPlaying("upperCut"))
+		if(uppercut)
 		{
-			if(animation["upperCut"].time > 0.30f && animation["upperCut"].time< 0.50f)
+			if(uppercutCD <= 0)
 			{
-				if(uppercutCD <= 0)
+				if(uDelay >= uppercutDelay)
 				{
 					foreach(GameObject target in Box.targets)
 					{
@@ -119,24 +151,32 @@ public class playerCharacter : MonoBehaviour {
 						target.GetComponent<playerCharacter>().health -= uppercutDamage;
 					}
 					uppercutCD = uppercutCooldown;
+					uppercut = false;
+				}
+				else
+				{
+					uDelay += Time.deltaTime;
 				}
 			}
 		}
-		if(GetComponent<Animation>().IsPlaying("slam"))
-		{
-			if(animation["slam"].time > 0.5f && !GetComponent<RigidBodyControls>().grounded)
+
+		if (slam) {
+			if(sDelay >= slamDelay)
 			{
-				animation.enabled = false;
+				Slam.isEnabled = true;
+				rigidBody.gravity = gravityValue;
+				if (GetComponent<RigidBodyControls> ().grounded) {
+					Slam.isEnabled = false;
+					slamCD = slamCooldown;
+					slam = false;
+					animator.SetBool("slamTrigger",false);
+				}
 			}
-			Slam.isEnabled = true;
-			if(GetComponent<RigidBodyControls>().grounded)
+			else
 			{
-				Slam.isEnabled = false;
-				slamCD = slamCooldown;
-				animation.enabled = true;
+				sDelay += Time.deltaTime;
 			}
 		}
-		
 	}
 	 
 	private float sensitivityX=90;
@@ -150,7 +190,7 @@ public class playerCharacter : MonoBehaviour {
 		
 		// CLAMP THE SPIN SPEED
 		// UPPER BOUND OF SPIN SPEED
-		if(rotationMultiplier <= 80)
+		if(rotationMultiplier <= 30)
 		{
 			if(rotationMultiplier >= 0.01f)
 			{
@@ -186,7 +226,7 @@ public class playerCharacter : MonoBehaviour {
 		}
 		else
 		{
-			rotationMultiplier =80;
+			rotationMultiplier =30;
 		}
 
 		if(Input.GetButtonUp(controllerInput.buttons.rBumper))
@@ -198,6 +238,8 @@ public class playerCharacter : MonoBehaviour {
 				if(uppercutCD <= 0)
 				{
 					animator.SetTrigger("uppercutTrigger");
+					uppercut = true;
+					uDelay = 0;
 					//uppercut
 				}
 			}
@@ -206,8 +248,10 @@ public class playerCharacter : MonoBehaviour {
 				if(slamCD <= 0)
 				{
 					rigidbody.velocity = Vector3.zero;
-					rigidbody.AddForce(Vector3.down*slamSpeed);
-					animator.SetTrigger("slamtrigger");
+					animator.SetBool("slamTrigger",true);
+					slam = true;
+					sDelay = 0;
+					rigidBody.gravity=0;
 				}
 			}
 		}

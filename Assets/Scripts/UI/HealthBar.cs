@@ -21,7 +21,7 @@ public class HealthBar : MonoBehaviour {
 	{
 		healthBar = GetComponent<Image>();
 		//player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-		startingColour = player.renderer.material.color;
+		startingColour = player.transform.FindChild("characterModel").FindChild("goo_man").renderer.material.color;
 		//visibility = GetComponent<CanvasGroup>();
 		//visible = true;
 	}

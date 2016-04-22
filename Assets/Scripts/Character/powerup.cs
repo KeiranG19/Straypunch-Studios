@@ -9,6 +9,7 @@ public class powerup : MonoBehaviour
 		speed,
 		HoT
 	};
+
 	public type Type;
 	public int healAmount;
 	public int HoTamount;

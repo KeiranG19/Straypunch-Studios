@@ -18,6 +18,12 @@ public class playerSpawn : MonoBehaviour
 		manager.spawnPoints.Add(this);
 	}
 
+	public void respawn(playerCharacter player)
+	{
+		player.health = 100;
+		player.transform.position = transform.position;
+	}
+
 	public void spawnPlayer(int player)
 	{
 		if(player == 1)
@@ -26,6 +32,7 @@ public class playerSpawn : MonoBehaviour
 			if(tempPlayer == null)
 			{
 				Instantiate(player1,transform.position, transform.rotation);
+
 			}
 			else
 			{
