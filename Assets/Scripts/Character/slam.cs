@@ -3,6 +3,8 @@ using System.Collections;
 
 public class slam : MonoBehaviour {
 
+	private playerCharacter player;
+
 	public float damage = 60;
 	public float force = 10;
 	public float maxDamageThreshold = 1;
@@ -12,6 +14,7 @@ public class slam : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		player = GetComponentInParent<playerCharacter> ();
 	}
 
 	void OnTriggerEnter(Collider other)
@@ -26,14 +29,14 @@ public class slam : MonoBehaviour {
 			if(distance <= maxDamageThreshold)
 			{
 				//max damage
-				target.health -= damage;
+				target.health -= damage * player.damageMultiplier;
 				target.Ragdoll = true;
 				target.previousRotation = target.transform.rotation;
 			}
 			else if(distance <= damageThreshold)
 			{
 				//scaled damage
-				target.health -= damage/distance;
+				target.health -= (damage/distance) * player.damageMultiplier;
 				target.transform.position += new Vector3(0,0.05f,0);
 				target.rigidbody.AddForce(direction*force/distance);
 				target.Ragdoll = true;

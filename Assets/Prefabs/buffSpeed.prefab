@@ -11,6 +11,8 @@ GameObject:
   - 33: {fileID: 3305440}
   - 135: {fileID: 13505440}
   - 23: {fileID: 2305440}
+  - 114: {fileID: 11468098}
+  - 111: {fileID: 11168098}
   m_Layer: 0
   m_Name: buffSpeed
   m_TagString: Untagged
@@ -28,8 +30,10 @@ GameObject:
   - 4: {fileID: 405440}
   - 198: {fileID: 19805440}
   - 199: {fileID: 19905440}
+  - 111: {fileID: 11168096}
+  - 114: {fileID: 11468096}
   m_Layer: 0
-  m_Name: buffSpeedParticle
+  m_Name: particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +46,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 105438}
   m_LocalRotation: {x: .0868240818, y: .992403924, z: -.00759612489, w: -.0868241116}
-  m_LocalPosition: {x: -1.02999997, y: 9.99400043, z: -5.57999992}
+  m_LocalPosition: {x: -1.02999997, y: 8.96700001, z: -5.57999992}
   m_LocalScale: {x: .5, y: .499999821, z: .499999911}
   m_Children:
   - {fileID: 405440}
@@ -87,6 +91,74 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 105438}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!111 &11168096
+Animation:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105440}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: 09c4ddb8fb1cc96468888c2babe26bf5, type: 2}
+  - {fileID: 7400000, guid: ca23c601804a6be41a234956b744c77a, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!111 &11168098
+Animation:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105438}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: 09c4ddb8fb1cc96468888c2babe26bf5, type: 2}
+  - {fileID: 7400000, guid: ca23c601804a6be41a234956b744c77a, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &11468096
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8cea1b2f4ded74488486885637f0b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  healTime: 0
+  speedTime: 0
+  growTime: 0
+  attackTime: 0
+  respawnTime: 0
+  ready: 1
+--- !u!114 &11468098
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8cea1b2f4ded74488486885637f0b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  healTime: 3
+  speedTime: 3
+  growTime: 0
+  attackTime: 0
+  respawnTime: 5
+  ready: 1
 --- !u!135 &13505440
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -94,7 +166,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 105438}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: .5

@@ -6,13 +6,17 @@ public class powerup : MonoBehaviour
 
 	public enum Type{
 		heal, 
-		speed
+		speed,
+		grow,
+		attack
 	};
 
 	public Type type;
 
 	public float healTime;
 	public float speedTime;
+	public float growTime;
+	public float attackTime;
 
 	public float respawnTime;
 	private float timer;
@@ -39,6 +43,14 @@ public class powerup : MonoBehaviour
 			{
 				other.gameObject.GetComponent<PlayerBuffs>().speedCooldown = speedTime;
 			}
+			else if(type == Type.grow)
+			{
+				other.gameObject.GetComponent<PlayerBuffs>().growCooldown = growTime;
+			}
+			else if(type == Type.attack)
+			{
+				other.gameObject.GetComponent<PlayerBuffs>().attackCooldown = attackTime;
+			}
 			particles.SetActive(false);
 			timer = 0;
 			ready = false;
@@ -51,10 +63,6 @@ public class powerup : MonoBehaviour
 		if (timer > respawnTime && !ready) 
 		{
 			//respawn
-			if(type==Type.heal)
-			{
-
-			}
 			particles.SetActive (true);
 			ready = true;
 			fadeOut.Play("healPowerupIdle");
