@@ -68,7 +68,7 @@ public class RigidBodyControls : MonoBehaviour {
 						if(remainingDashes > 0)
 						{
 							//transform.position = Vector3.Lerp(transform.position, transform.position+transform.right*dashSpeed,0.5f);
-							transform.position += new Vector3(0,0.1f,0);
+							//transform.position += new Vector3(0,0.1f,0);
 							rigidbody.AddForce(transform.right*dashSpeed);
 							remainingDashes --;
 							dashUseCD = dashUseCooldown;

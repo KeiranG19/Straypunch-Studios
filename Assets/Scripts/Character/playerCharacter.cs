@@ -102,14 +102,15 @@ public class playerCharacter : MonoBehaviour {
 		{
 			rotationMultiplier = 0;
 		}
-
+		if (Ragdoll) 
+		{
+			rigidbody.constraints = RigidbodyConstraints.None;
+		}
 		if (isAlive)
 		{
 
 			if (Ragdoll)
 			{
-				rigidbody.constraints = RigidbodyConstraints.None;
-
 				recover();
 			}
 			else
@@ -268,11 +269,12 @@ public class playerCharacter : MonoBehaviour {
 	{
 		target.transform.position += new Vector3(0,0.05f,0);
 		Vector3 direction = (target.transform.position - transform.position);
-		direction.y += direction.sqrMagnitude;
-		direction.x *= 0.5f;
-		direction.z *= 0.5f;
+		direction.y += direction.magnitude;
+//		direction.x *= 0.5f;
+//		direction.z *= 0.5f;
 		direction.Normalize();
 		target.rigidbody.AddForce(direction*uppercutForce);
+		target.rigidbody.AddTorque (direction * uppercutForce);
 	}
 
 	public void recover()

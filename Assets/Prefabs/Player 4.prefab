@@ -737,7 +737,6 @@ GameObject:
   - 54: {fileID: 5475578}
   - 114: {fileID: 11475582}
   - 114: {fileID: 11466296}
-  - 111: {fileID: 11181820}
   - 114: {fileID: 11407812}
   - 114: {fileID: 11467612}
   m_Layer: 0
@@ -1312,8 +1311,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 167606}
-  m_LocalRotation: {x: -.512880683, y: -.485563993, z: -.471944004, w: .527683616}
-  m_LocalPosition: {x: -.100000001, y: .600000024, z: -.100000001}
+  m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106829}
+  m_LocalPosition: {x: 0, y: .800000012, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 475582}
@@ -1375,7 +1374,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 175582}
   m_LocalRotation: {x: 0, y: -.215676129, z: 0, w: .976464987}
-  m_LocalPosition: {x: .680000007, y: 9.03899956, z: -15.6110001}
+  m_LocalPosition: {x: -.229480505, y: 8.70500088, z: -15.1223993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 475580}
@@ -1536,23 +1535,6 @@ TrailRenderer:
       rgba: 16777215
   m_MinVertexDistance: .100000001
   m_Autodestruct: 0
---- !u!111 &11181820
-Animation:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 175582}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 1e66c7a9432eacb478a75a206b3d1025, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 1e66c7a9432eacb478a75a206b3d1025, type: 2}
-  - {fileID: 7400000, guid: 1c30f07bef34e654f827265eafac5d62, type: 2}
-  - {fileID: 7400000, guid: 86b82ba1f07ab204fa240779f77a1955, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &11407812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1600,8 +1582,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e590be29b3630d94b9f17a6b219e00a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 60
-  force: 3000
+  damage: 10
+  force: 1000
   maxDamageThreshold: 1
   damageThreshold: 3
   isEnabled: 0
@@ -1619,9 +1601,13 @@ MonoBehaviour:
   fireCooldown: 0
   healCooldown: 0
   speedCooldown: 0
+  growCooldown: 0
+  attackCooldown: 0
   fireDamagePerTick: .100000001
   healPerTick: .100000001
   speedMultiplier: 1.5
+  growAmount: 0
+  attackBoost: 0
 --- !u!114 &11475580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1646,7 +1632,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3b80071d0514046bf732f14ea398de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 5
   speed: 5
   dashSpeed: 2000
   gravity: 30
@@ -1659,6 +1644,7 @@ MonoBehaviour:
   remainingDashes: 3
   dashUseCooldown: .5
   regenDashCooldown: 5
+  speedMultiplier: 1
   animator: {fileID: 0}
 --- !u!114 &11475584
 MonoBehaviour:
@@ -1674,11 +1660,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   health: 100
   isAlive: 1
-  stunned: 0
-  buffs: []
-  debuffs: []
   lives: 1
-  buffSlots: {fileID: 0}
+  damageMultiplier: 1
   uppercutDamage: 10
   uppercutForce: 1000
   uppercutCooldown: 1
@@ -2798,7 +2781,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 2
+      scalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2831,7 +2814,7 @@ ParticleSystem:
         m_PostInfinity: 2
       minMaxState: 0
     startSpeed:
-      scalar: 2
+      scalar: .5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2958,7 +2941,7 @@ ParticleSystem:
         rgba: 4294967295
       minMaxState: 0
     startSize:
-      scalar: 1.39999998
+      scalar: .5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -3030,7 +3013,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     type: 4
-    radius: .410906553
+    radius: .200000003
     angle: 16.8904858
     length: 5
     boxX: 1
