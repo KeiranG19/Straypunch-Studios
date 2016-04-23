@@ -14,6 +14,7 @@ public class playerCharacter : MonoBehaviour {
 	private Rigidbody RB;
 	public Animator animator;
 	public float health = 200;
+	private float healthMax;
 	public bool isAlive = true;
 	public int lives = 1;
 
@@ -64,11 +65,15 @@ public class playerCharacter : MonoBehaviour {
 		{
 			lives = manager.settings.lives;
 		}
+		healthMax = health;
 	}
 
 	void Update () 
 	{
-
+		if (health > healthMax) 
+		{
+			health = healthMax;
+		}
 		if (rotationMultiplier > 10) {
 			spinning.isEnabled = true;
 			animator.SetBool("Spinning",true);
