@@ -6888,8 +6888,8 @@ GameObject:
   m_Component:
   - 224: {fileID: 561185443}
   - 222: {fileID: 561185445}
-  - 114: {fileID: 561185446}
   - 114: {fileID: 561185444}
+  - 114: {fileID: 561185446}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -6905,13 +6905,13 @@ RectTransform:
   m_GameObject: {fileID: 561185442}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .201932997, y: .209426731, z: .274790466}
+  m_LocalScale: {x: .293576598, y: .28888613, z: .333540708}
   m_Children: []
   m_Father: {fileID: 413747728}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: .5}
   m_AnchorMax: {x: 0, y: .5}
-  m_AnchoredPosition: {x: 290, y: 206}
+  m_AnchoredPosition: {x: 301, y: 197.080002}
   m_SizeDelta: {x: 1210, y: 512}
   m_Pivot: {x: .5, y: 1}
 --- !u!114 &561185444
@@ -6920,7 +6920,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 561185442}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
@@ -6942,24 +6942,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 561185442}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: .136786357, g: .845588207, b: .845588207, a: 1}
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: 4d6eea763b7dbd64592a210d5870ef9b, type: 3}
-    m_FontSize: 300
-    m_FontStyle: 1
-    m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 300
-    m_Alignment: 1
-    m_RichText: 0
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 1
-    m_LineSpacing: 1
-  m_Text: HAMMERED
+  m_Color: {r: .970588207, g: .970588207, b: .970588207, a: 1}
+  m_Sprite: {fileID: 21300000, guid: aad32d9698b87764b87168e646f61083, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!1 &569007570
 GameObject:
   m_ObjectHideFlags: 0
