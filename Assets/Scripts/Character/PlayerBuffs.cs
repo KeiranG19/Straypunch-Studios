@@ -12,11 +12,14 @@ public class PlayerBuffs : MonoBehaviour {
 	public float fireCooldown;
 	public float healCooldown;
 	public float speedCooldown;
+	public float growCooldown;
+	public float attackCooldown;
 
 	public float fireDamagePerTick;
 	public float healPerTick;
 	public float speedMultiplier;
-
+	public float growAmount;
+	public float attackBoost;
 	
 	// Use this for initialization
 	void Start () {
@@ -62,6 +65,28 @@ public class PlayerBuffs : MonoBehaviour {
 			speedCooldown -= Time.deltaTime;
 			rigid.speedMultiplier = speedMultiplier;
 		}
+
+		if (growCooldown <= 0) 
+		{
+			transform.localScale = new Vector3(1,1,1);
+		} 
+		else 
+		{
+			growCooldown -= Time.deltaTime;
+			transform.localScale = new Vector3(growAmount,growAmount,growAmount);
+		}
+
+		if (attackCooldown <= 0) 
+		{
+			player.damageMultiplier = 1;
+		} 
+		else 
+		{
+			attackCooldown -= Time.deltaTime;
+			player.damageMultiplier = attackBoost;
+		}
+
+
 	}
 
 	public void clear()

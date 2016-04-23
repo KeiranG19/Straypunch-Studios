@@ -32,7 +32,7 @@ public class fastHammerPhysics : MonoBehaviour {
 			Vector3 direction = Vector3.Cross((enemyPC.transform.position - transform.position),Vector3.up);
 			direction.y = Random.Range(-0.3f,0.3f);
 			Vector3 forceVec = (direction.normalized * (pcOwner.rotationMultiplier/2));
-			enemyPC.health -= forceVec.magnitude;
+			enemyPC.health -= forceVec.magnitude * pcOwner.damageMultiplier;
 			hit.rigidbody.AddForce(forceVec,ForceMode.Impulse);
 			hit.rigidbody.AddTorque(Vector3.Cross(forceVec , contactPoint)*5,ForceMode.Impulse);
 			pcOwner.rotationMultiplier /= 2;

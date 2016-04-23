@@ -18,6 +18,8 @@ public class playerCharacter : MonoBehaviour {
 	public bool isAlive = true;
 	public int lives = 1;
 
+	public float damageMultiplier = 1.0f;
+
 	public float uppercutDamage;
 	public float uppercutForce;
 	public float uppercutCooldown;
@@ -153,7 +155,7 @@ public class playerCharacter : MonoBehaviour {
 					{
 						punt(target);
 						target.GetComponent<playerCharacter>().rotationMultiplier = 0;
-						target.GetComponent<playerCharacter>().health -= uppercutDamage;
+						target.GetComponent<playerCharacter>().health -= uppercutDamage* damageMultiplier;
 					}
 					uppercutCD = uppercutCooldown;
 					uppercut = false;
