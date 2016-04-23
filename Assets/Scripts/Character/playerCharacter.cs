@@ -133,7 +133,7 @@ public class playerCharacter : MonoBehaviour {
 				rigidbody.AddTorque(new Vector3(0,0,100));
 			}
 		}
-
+		 
 		if(uppercutCD >0)
 		{
 			uppercutCD -= Time.deltaTime;
