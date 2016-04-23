@@ -33,13 +33,13 @@ public class levelSelect : MonoBehaviour
 		if(levelSelected)
 		{
 			nextMenuButton.SetActive(true);
-			levelImage.gameObject.SetActive(true);
+			//levelImage.gameObject.SetActive(true);
 			levelName.gameObject.SetActive(true);
 		}
 		else
 		{
 			nextMenuButton.SetActive(false);
-			levelImage.gameObject.SetActive(false);
+			//levelImage.gameObject.SetActive(false);
 			levelName.gameObject.SetActive(false);
 		}
 	}
