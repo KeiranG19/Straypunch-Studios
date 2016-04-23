@@ -10,11 +10,14 @@ public class gameController : MonoBehaviour
 
 	void Start()
 	{
-		settings = GameObject.Find("level_settings").GetComponent<MatchOptions>();
+		GameObject tempSettings = GameObject.Find ("level_settings");
+			
+		
+		
 
-		if(settings != null)
+		if(tempSettings != null)
 		{
-
+			settings = tempSettings.GetComponent<MatchOptions>();
 			for(int i = 0; i<settings.playerCount;i++)
 			{
 				foreach(playerSpawn spawn in spawnPoints)

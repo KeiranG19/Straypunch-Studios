@@ -13,8 +13,7 @@ public class CameraScript : MonoBehaviour {
 	void Start () {
 
 		startPosition = transform.position;
-		forwardPosition = transform.position + (transform.forward * 15);
-
+		forwardPosition = transform.position + (transform.forward * 10);
 	}
 	
 	// Update is called once per frame
@@ -49,7 +48,7 @@ public class CameraScript : MonoBehaviour {
 		float Dist = Mathf.Abs (maxZ - minZ);
 		float zPosition = (maxZ + minZ)/2;
 
-		zoomAmount = 1 - (Dist / maxDist);
+		zoomAmount = 1 - (Dist*Dist / (maxDist * 2));
 
 		startPosition.z = zPosition;
 

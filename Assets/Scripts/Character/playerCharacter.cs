@@ -14,12 +14,9 @@ public class playerCharacter : MonoBehaviour {
 	private Rigidbody RB;
 	public Animator animator;
 	public float health = 200;
+	private float healthMax;
 	public bool isAlive = true;
-	public bool stunned = false;						// set by debuffs, used to lock the player's movement and attacks
-	public List<buff> buffs = new List<buff>();			// List of all positive effects on the player, used by buffsManager
-	public List<debuff> debuffs = new List<debuff>();	// List of all negative effects on the player, used by buffsManager
 	public int lives = 1;
-	public GameObject buffSlots;						// Grid layout group to show an image for each active buff (set by showBuffs )
 
 	public float uppercutDamage;
 	public float uppercutForce;
@@ -64,12 +61,19 @@ public class playerCharacter : MonoBehaviour {
 		spinning = GetComponentInChildren<fastHammerPhysics> ();
 		rigidBody = GetComponent<RigidBodyControls> ();
 		gravityValue = rigidBody.gravity;
-		lives = manager.settings.lives;
+		if (manager.settings != null) 
+		{
+			lives = manager.settings.lives;
+		}
+		healthMax = health;
 	}
 
 	void Update () 
 	{
-
+		if (health > healthMax) 
+		{
+			health = healthMax;
+		}
 		if (rotationMultiplier > 10) {
 			spinning.isEnabled = true;
 			animator.SetBool("Spinning",true);
@@ -96,29 +100,28 @@ public class playerCharacter : MonoBehaviour {
 		{
 			rotationMultiplier = 0;
 		}
-		if(!stunned)
+
+		if (isAlive)
 		{
-			if (isAlive)
+
+			if (Ragdoll)
 			{
+				rigidbody.constraints = RigidbodyConstraints.None;
 
-				if (Ragdoll)
-				{
-					rigidbody.constraints = RigidbodyConstraints.None;
-
-					recover();
-				}
-				else
-				{
-					Movement ();
-				}
+				recover();
+			}
+			else
+			{
+				Movement ();
 			}
 		}
 
 		if (health <= 0 && isAlive) 
 		{
 			lives--;
-			if(lives >0)
+			if(lives > 0)
 			{
+				GetComponent<PlayerBuffs>().clear();
 				int randomSpawn = Random.Range(0,3);
 				manager.spawnPoints[randomSpawn].respawn(this);
 			}
@@ -126,9 +129,11 @@ public class playerCharacter : MonoBehaviour {
 			{
 				isAlive = false;
 				Ragdoll = true;
+				animator.SetBool("Dead",true);
+				rigidbody.AddTorque(new Vector3(0,0,100));
 			}
 		}
-
+		 
 		if(uppercutCD >0)
 		{
 			uppercutCD -= Time.deltaTime;

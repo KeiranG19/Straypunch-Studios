@@ -4,9 +4,8 @@ using System.Collections;
 [RequireComponent (typeof (Rigidbody))]
 [RequireComponent (typeof (CapsuleCollider))]
 
-public class RigidBodyControls : MonoBehaviour {
-	public float maxSpeed = 10.0f;				// player speed before debuffs
-	public float speed = 10.0f;					// player speed after debuffs
+public class RigidBodyControls : MonoBehaviour {			
+	public float speed = 10.0f;					
 	public float dashSpeed = 20.0f;
 	public float gravity = 30.0f;
 	public float maxVelocityChange = 10.0f;
@@ -21,8 +20,9 @@ public class RigidBodyControls : MonoBehaviour {
 	public float regenDashCooldown = 5;
 	private float regenDashCD;
 	private float dashUseCD ;
-	private float myMaxSpeed;
+	public float speedMultiplier = 1;
 	public Animator animator;
+
 	void Awake () 
 	{
 		rigidbody.freezeRotation = true;
@@ -61,7 +61,6 @@ public class RigidBodyControls : MonoBehaviour {
 
 		if (player.isAlive && !player.Ragdoll)
 		{
-
 				if(Input.GetButtonUp(controllerInput.buttons.B))
 				{
 					if(dashUseCD <= 0)
@@ -80,7 +79,7 @@ public class RigidBodyControls : MonoBehaviour {
 				{
 				// Calculate how fast we should be moving
 				Vector3 direction = new Vector3 (Input.GetAxis (controllerInput.buttons.movementHorizontalAxis), 0, Input.GetAxis (controllerInput.buttons.movementVerticalAxis));
-				Vector3 targetVelocity = direction * speed;
+				Vector3 targetVelocity = direction * speed* speedMultiplier;
 				Vector3 planeVelocity = targetVelocity;
 				planeVelocity.y=0;
 				animator.SetFloat("Speed", planeVelocity.magnitude);
@@ -111,7 +110,10 @@ public class RigidBodyControls : MonoBehaviour {
 	}
 	
 	void OnCollisionStay () {
-		grounded = true;    
+		if (rigidbody.velocity.y < 0.1) 
+		{
+			grounded = true;    
+		}
 	}
 	
 	float CalculateJumpVerticalSpeed () {
