@@ -24,7 +24,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 181282}
   m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: .829999983, y: 18.7000008, z: -26.2000008}
+  m_LocalPosition: {x: -24.2600002, y: 14.0299997, z: 35.3100014}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -35,7 +35,7 @@ ParticleSystem:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 181282}
-  lengthInSec: 5
+  lengthInSec: 2
   startDelay: 0
   speed: 1
   randomSeed: 0
@@ -206,7 +206,7 @@ ParticleSystem:
         rgba: 4290619740
       minMaxState: 0
     startSize:
-      scalar: 7
+      scalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -271,14 +271,14 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
       minMaxState: 0
-    gravityModifier: 1
+    gravityModifier: 3
     inheritVelocity: 0
     maxNumParticles: 1000
   ShapeModule:
     serializedVersion: 2
     enabled: 1
     type: 4
-    radius: 2
+    radius: .379999995
     angle: 2
     length: 5
     boxX: 1
@@ -291,7 +291,7 @@ ParticleSystem:
     enabled: 1
     m_Type: 0
     rate:
-      scalar: 40
+      scalar: 20
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1093,7 +1093,7 @@ ParticleSystemRenderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: ad21528be536e7d4daf414a6ec211ae2, type: 2}
+  - {fileID: 2100000, guid: e73c858e287ac1141a3bbfe080c68e06, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0

@@ -64,7 +64,10 @@ public class playerCharacter : MonoBehaviour {
 		spinning = GetComponentInChildren<fastHammerPhysics> ();
 		rigidBody = GetComponent<RigidBodyControls> ();
 		gravityValue = rigidBody.gravity;
-		lives = manager.settings.lives;
+		if (manager.settings != null) 
+		{
+			lives = manager.settings.lives;
+		}
 	}
 
 	void Update () 
