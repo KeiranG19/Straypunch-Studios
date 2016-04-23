@@ -119,8 +119,9 @@ public class playerCharacter : MonoBehaviour {
 		if (health <= 0 && isAlive) 
 		{
 			lives--;
-			if(lives >0)
+			if(lives > 0)
 			{
+				GetComponent<PlayerBuffs>().clear();
 				int randomSpawn = Random.Range(0,3);
 				manager.spawnPoints[randomSpawn].respawn(this);
 			}
@@ -128,6 +129,8 @@ public class playerCharacter : MonoBehaviour {
 			{
 				isAlive = false;
 				Ragdoll = true;
+				animator.SetBool("Dead",true);
+				rigidbody.AddTorque(new Vector3(0,0,100));
 			}
 		}
 

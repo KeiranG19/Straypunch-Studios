@@ -4,16 +4,19 @@ using System.Collections;
 public class hazard : MonoBehaviour {
 
 	public bool isActive = false;
-
+	public float burnTime;
 	private GameObject particles;
 	
 	void Start () {
 		particles = transform.FindChild ("particles").gameObject;
 	}
 	
-	void OnTriggerEnter(Collider other)
+	void OnTriggerStay(Collider other)
 	{
-	
+		if (other.tag== "Player" && isActive) 
+		{
+			other.gameObject.GetComponent<PlayerBuffs>().fireCooldown = burnTime;
+		}
 	}
 
 	public void toggle()
