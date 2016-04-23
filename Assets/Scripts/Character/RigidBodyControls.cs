@@ -111,7 +111,10 @@ public class RigidBodyControls : MonoBehaviour {
 	}
 	
 	void OnCollisionStay () {
-		grounded = true;    
+		if (rigidbody.velocity.y < 0.1) 
+		{
+			grounded = true;    
+		}
 	}
 	
 	float CalculateJumpVerticalSpeed () {
