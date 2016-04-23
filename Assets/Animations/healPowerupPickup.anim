@@ -12,23 +12,7 @@ AnimationClip:
   m_UseHighQualityCurve: 1
   m_RotationCurves: []
   m_CompressedRotationCurves: []
-  m_PositionCurves:
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: {x: 0, y: 9.08399963, z: -4.54799986}
-        inSlope: {x: -6.87959982e-08, y: 0, z: 0}
-        outSlope: {x: -6.87959982e-08, y: 0, z: 0}
-        tangentMode: 59
-      - time: .25
-        value: {x: -1.71989996e-08, y: 9.08399963, z: -4.54799986}
-        inSlope: {x: -6.87959982e-08, y: 0, z: 0}
-        outSlope: {x: -6.87959982e-08, y: 0, z: 0}
-        tangentMode: -2147483635
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-    path: 
+  m_PositionCurves: []
   m_ScaleCurves:
   - curve:
       serializedVersion: 2
@@ -111,63 +95,6 @@ AnimationClip:
     attribute: _Color.a
     path: 
     classID: 21
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0
-        inSlope: -6.87959982e-08
-        outSlope: -6.87959982e-08
-        tangentMode: 10
-      - time: .25
-        value: -1.71989996e-08
-        inSlope: -6.87959982e-08
-        outSlope: -6.87959982e-08
-        tangentMode: 10
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-    attribute: m_LocalPosition.x
-    path: 
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 9.08399963
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      - time: .25
-        value: 9.08399963
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-    attribute: m_LocalPosition.y
-    path: 
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: -4.54799986
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      - time: .25
-        value: -4.54799986
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-    attribute: m_LocalPosition.z
-    path: 
-    classID: 4
     script: {fileID: 0}
   - curve:
       serializedVersion: 2
