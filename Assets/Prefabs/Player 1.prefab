@@ -1301,7 +1301,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 115840}
   m_LocalRotation: {x: 0, y: -.819901109, z: 0, w: .572505295}
-  m_LocalPosition: {x: 3.07382178, y: 8.70500088, z: -15.5396452}
+  m_LocalPosition: {x: 3.41000009, y: 8.71000004, z: -18.9599991}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 415842}
@@ -1619,11 +1619,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   health: 100
   isAlive: 1
-  stunned: 0
-  buffs: []
-  debuffs: []
   lives: 2
-  buffSlots: {fileID: 0}
   uppercutDamage: 10
   uppercutForce: 1000
   uppercutCooldown: 1

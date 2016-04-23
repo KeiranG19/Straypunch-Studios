@@ -4,64 +4,49 @@ using System.Collections;
 public class powerup : MonoBehaviour 
 {
 
-	public enum type{
+	public enum Type{
 		heal, 
-		speed,
-		HoT
+		speed
 	};
 
-	public type Type;
-	public int healAmount;
-	public int HoTamount;
-	public int speedAmount;
+	public Type type;
 
-	public float buffTime = 3;
-	public buff effect;
-	
+	public float healTime;
+	public float speedTime;
+
+	public float respawnTime;
+	private float timer;
+
+	private GameObject particles;
+
+	void Start()
+	{
+		particles = transform.FindChild ("particles").gameObject;
+	}
+
 	void OnTriggerEnter(Collider other)
 	{
-
-			if(other.gameObject.tag == "Player")
+		if (other.tag == "Player") 
+		{
+			if(type == Type.heal)
 			{
-				playerCharacter myPlayer = other.GetComponent<playerCharacter>();
-				RigidBodyControls myRigidBody = other.GetComponent<RigidBodyControls>();
-				
-				if(Type == type.heal)
-				{
-					myPlayer.health += healAmount;
-					Destroy(this.gameObject);
-				}
-				if(Type == type.speed)
-				{
-					effect.speedIncrease = speedAmount;
-					effect.giveBuff(myPlayer,buffTime,buff.type.Speed);
-					Destroy(this.gameObject);
-				}
-				if(Type == type.HoT)
-				{
-					effect.HoTamount = HoTamount;
-					effect.giveBuff(myPlayer,buffTime,buff.type.HOT);
-					Destroy(this.gameObject);
-				}
+				other.gameObject.GetComponent<PlayerBuffs>().healCooldown = healTime;
 			}
-
+			if(type == Type.speed)
+			{
+				other.gameObject.GetComponent<PlayerBuffs>().speedCooldown = speedTime;
+			}
+			gameObject.renderer.enabled = false;
+			particles.SetActive(false);
+			timer = 0;
+		}
 	}
-	
-	//	void OnTriggerExit(Collider other)
-	//	{
-	//		if(activated == true)
-	//		{
-	//			if(other.gameObject.tag == "Player")
-	//			{
-	//				RigidBodyControls myRigidBody = other.GetComponent<RigidBodyControls>();
-	//				if(Type == type.area_slow)
-	//				{
-	//					myRigidBody.speed = 10;
-	//				}
-	//			}
-	//		}
-	//
-	//	}
-	
-	
+
+	void Update()
+	{
+		if (timer > respawnTime) 
+		{
+			//respawn
+		}
+	}
 }
