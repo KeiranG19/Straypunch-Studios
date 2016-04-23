@@ -54,7 +54,7 @@ public class PlayerBuffs : MonoBehaviour {
 		if (speedCooldown <= 0) 
 		{
 			speed.SetActive(false);
-			rigid.speed = rigid.speedMultiplier = 1;
+			rigid.speedMultiplier = 1;
 		} 
 		else 
 		{
