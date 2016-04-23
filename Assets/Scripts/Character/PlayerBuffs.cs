@@ -54,13 +54,20 @@ public class PlayerBuffs : MonoBehaviour {
 		if (speedCooldown <= 0) 
 		{
 			speed.SetActive(false);
-			rigid.speed = rigid.maxSpeed;
+			rigid.speed = rigid.speedMultiplier = 1;
 		} 
 		else 
 		{
 			speed.SetActive(true);
 			speedCooldown -= Time.deltaTime;
-			rigid.speed = rigid.maxSpeed * speedMultiplier;
+			rigid.speedMultiplier = speedMultiplier;
 		}
+	}
+
+	public void clear()
+	{
+		fireCooldown = 0;
+		healCooldown = 0;
+		speedCooldown = 0;
 	}
 }
