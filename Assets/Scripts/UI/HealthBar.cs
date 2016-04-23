@@ -12,6 +12,7 @@ public class HealthBar : MonoBehaviour {
 	private CanvasGroup visibility;		// Referance to the canvasGroup component
 	private Color startingColour;
 	public playerCharacter player;		//Referance to the player
+	public int playerNumber = 0;
 
 	private float newHealth;
 	private float changeInHealth;
@@ -19,11 +20,64 @@ public class HealthBar : MonoBehaviour {
 
 	void Start()
 	{
+		if(playerNumber == 1)
+		{
+			GameObject tempPlayer = GameObject.Find("Player 1");
+			if(tempPlayer != null)
+			{
+				player = tempPlayer.GetComponent<playerCharacter>();
+				
+			}
+			else
+			{
+				Debug.Log("player 1 doesn't exist");
+			}
+		}
+		else if(playerNumber == 2)
+		{
+			GameObject tempPlayer = GameObject.Find("Player 2");
+			if(tempPlayer != null)
+			{
+				player = tempPlayer.GetComponent<playerCharacter>();
+				
+			}
+			else
+			{
+				Debug.Log("player 2 doesn't exist");
+			}
+		}
+		else if(playerNumber == 3)
+		{
+			GameObject tempPlayer = GameObject.Find("Player 3");
+			if(tempPlayer != null)
+			{
+				player = tempPlayer.GetComponent<playerCharacter>();
+				
+			}
+			else
+			{
+				Debug.Log("player 3 doesn't exist");
+			}
+		}
+		else
+		{
+			GameObject tempPlayer = GameObject.Find("Player 4");
+			if(tempPlayer != null)
+			{
+				player = tempPlayer.GetComponent<playerCharacter>();
+				
+			}
+			else
+			{
+				Debug.Log("player 4 doesn't exist");
+			}
+		}
 		healthBar = GetComponent<Image>();
 		//player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 		startingColour = player.transform.FindChild("characterModel").FindChild("goo_man").renderer.material.color;
 		//visibility = GetComponent<CanvasGroup>();
 		//visible = true;
+
 	}
 
 	void Update () 
@@ -52,7 +106,7 @@ public class HealthBar : MonoBehaviour {
 //		startingColour.r = 1 - percentage;
 //		startingColour.g = percentage;
 //		startingColour.b = 0;
-		healthBar.color = startingColour /1.3f;
+		healthBar.color = startingColour *0.95f;
 
 		// Lerp the light's intensity towards the current target.
 	//	healthBar.color = new Color ( myImage.color.r, Mathf.Lerp(myImage.color.g, targetIntensity, fadeSpeed * Time.deltaTime), Mathf.Lerp(myImage.color.b, targetIntensity, fadeSpeed * Time.deltaTime));
