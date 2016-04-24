@@ -17,7 +17,7 @@ public class playerCharacter : MonoBehaviour {
 	private float healthMax;
 	public bool isAlive = true;
 	public int lives = 1;
-
+	public int ID = 0;
 	public float uppercutDamage;
 	public float uppercutForce;
 	public float uppercutCooldown;
@@ -66,6 +66,7 @@ public class playerCharacter : MonoBehaviour {
 			lives = manager.settings.lives;
 		}
 		healthMax = health;
+		manager.alivePlayers.Add (this);
 	}
 
 	void Update () 
@@ -131,6 +132,7 @@ public class playerCharacter : MonoBehaviour {
 				Ragdoll = true;
 				animator.SetBool("Dead",true);
 				rigidbody.AddTorque(new Vector3(0,0,100));
+				manager.alivePlayers.Remove(this);
 			}
 		}
 

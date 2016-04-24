@@ -1313,7 +1313,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162836}
   m_LocalRotation: {x: 0, y: -.215676129, z: 0, w: .976464987}
-  m_LocalPosition: {x: 2.04999995, y: 8.90999985, z: -18.5100002}
+  m_LocalPosition: {x: -.439999998, y: 8.71000004, z: -18.5699997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 462834}
@@ -1382,8 +1382,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188398}
-  m_LocalRotation: {x: -.512880683, y: -.485563964, z: -.471944034, w: .527683556}
-  m_LocalPosition: {x: -.100000001, y: .600000024, z: -.100000001}
+  m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106829}
+  m_LocalPosition: {x: 0, y: .800000012, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 462836}
@@ -1617,7 +1617,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3b80071d0514046bf732f14ea398de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 5
   speed: 5
   dashSpeed: 2000
   gravity: 30
@@ -1630,6 +1629,7 @@ MonoBehaviour:
   remainingDashes: 3
   dashUseCooldown: .5
   regenDashCooldown: 5
+  speedMultiplier: 1
   animator: {fileID: 0}
 --- !u!114 &11462838
 MonoBehaviour:
@@ -1645,11 +1645,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   health: 100
   isAlive: 1
-  stunned: 0
-  buffs: []
-  debuffs: []
   lives: 1
-  buffSlots: {fileID: 0}
+  ID: 2
   uppercutDamage: 10
   uppercutForce: 1000
   uppercutCooldown: 1
@@ -4872,7 +4869,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 2
+      scalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4905,7 +4902,7 @@ ParticleSystem:
         m_PostInfinity: 2
       minMaxState: 0
     startSpeed:
-      scalar: 2
+      scalar: .5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5032,7 +5029,7 @@ ParticleSystem:
         rgba: 4294967295
       minMaxState: 0
     startSize:
-      scalar: 1.39999998
+      scalar: .5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5104,7 +5101,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     type: 4
-    radius: .410906553
+    radius: .200000003
     angle: 16.8904858
     length: 5
     boxX: 1
