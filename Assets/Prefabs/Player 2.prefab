@@ -1852,7 +1852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae9d46d63c008a488f22dabfd1e8211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slamParticles: {fileID: 0}
+  slamParticles: {fileID: 177678, guid: d37f2fb182f65ff49b9025dcb459323a, type: 2}
   stunParticles: {fileID: 0}
   animator: {fileID: 0}
   health: 100
@@ -1893,8 +1893,8 @@ MonoBehaviour:
   fireDamagePerTick: .100000001
   healPerTick: .100000001
   speedMultiplier: 1.5
-  growAmount: 0
-  attackBoost: 0
+  growAmount: 1.5
+  attackBoost: 1.5
 --- !u!114 &11498678
 MonoBehaviour:
   m_ObjectHideFlags: 1
