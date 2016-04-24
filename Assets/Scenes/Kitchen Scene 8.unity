@@ -31273,6 +31273,10 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 64
       objectReference: {fileID: 0}
+    - target: {fileID: 11440830, guid: 70e92d22b0cbf38469c0f5b2fdbef0f4, type: 2}
+      propertyPath: manager
+      value: 
+      objectReference: {fileID: 1883524637}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 70e92d22b0cbf38469c0f5b2fdbef0f4, type: 2}
   m_RootGameObject: {fileID: 1237857954}
@@ -35095,6 +35099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDist: 100
   zoomSpeed: 5
+  manager: {fileID: 1883524637}
 --- !u!81 &1237857958
 AudioListener:
   m_ObjectHideFlags: 0
