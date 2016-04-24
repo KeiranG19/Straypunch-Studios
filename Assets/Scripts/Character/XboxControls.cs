@@ -42,19 +42,12 @@ public class XboxControls : MonoBehaviour
 
 	public inputButtons buttons;
 
-
-	void Start () 
-	{
-		SetupButtons();
-	}
-
-	void SetupButtons()
-	{
+	void Awake(){
 		buttons.movementHorizontalAxis = "P"+ controllerInUse.ToString() + "Horizontal";
 		buttons.movementVerticalAxis =   "P"+ controllerInUse.ToString() + "Vertical";
 		buttons.rotationHorizontalAxis = "P"+ controllerInUse.ToString() + "RotX";
 		buttons.rotationVerticalAxis =   "P"+ controllerInUse.ToString() + "RotY"; 
-
+		
 		buttons.A = "P"+ controllerInUse.ToString() + "Jump";
 		buttons.B = "P"+ controllerInUse.ToString() + "Sprint";
 		buttons.X = "P" + controllerInUse.ToString() + "Attack";
@@ -71,11 +64,5 @@ public class XboxControls : MonoBehaviour
 		
 		buttons.lTrigger = "P" + controllerInUse.ToString() + "Ltrigger";
 		buttons.rTrigger = "P" + controllerInUse.ToString() + "Rtrigger";
-	}
-
-
-	void Update () 
-	{
-	
 	}
 }

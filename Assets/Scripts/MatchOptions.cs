@@ -9,6 +9,7 @@ public class MatchOptions : MonoBehaviour {
 	public int lives;
 	public int playerCount = 2;
 	public Text livesTxt;
+	public int winningPlayer;
 	//public Text livesPrev;
 	//string[8] livesSettings = new string["1","2","3","4","5","6","7","∞"];
 	void Awake()
