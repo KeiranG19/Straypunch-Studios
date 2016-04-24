@@ -303,12 +303,12 @@ ParticleSystem:
       minMaxState: 0
     gravityModifier: 0
     inheritVelocity: 0
-    maxNumParticles: 1000
+    maxNumParticles: 100
   ShapeModule:
     serializedVersion: 2
     enabled: 1
     type: 7
-    radius: .340000004
+    radius: 1
     angle: 0
     length: 5
     boxX: 1
@@ -321,7 +321,7 @@ ParticleSystem:
     enabled: 1
     m_Type: 0
     rate:
-      scalar: 20
+      scalar: 100
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1355,12 +1355,12 @@ ParticleSystem:
       minMaxState: 0
     gravityModifier: 0
     inheritVelocity: 0
-    maxNumParticles: 1000
+    maxNumParticles: 100
   ShapeModule:
     serializedVersion: 2
     enabled: 1
     type: 8
-    radius: .613434196
+    radius: 1
     angle: 44.3477745
     length: .322453976
     boxX: 1
@@ -1373,7 +1373,7 @@ ParticleSystem:
     enabled: 1
     m_Type: 0
     rate:
-      scalar: 20
+      scalar: 100
       maxCurve:
         serializedVersion: 2
         m_Curve:

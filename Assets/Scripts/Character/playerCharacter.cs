@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 public class playerCharacter : MonoBehaviour {
 
+	public GameObject slamParticles;
+	public GameObject stunParticles;
+
 	private fastHammerPhysics spinning;
 	private RigidBodyControls rigidBody;
 	private float gravityValue;
@@ -46,7 +49,7 @@ public class playerCharacter : MonoBehaviour {
 	private float sDelay = 0;
 
 	private hitBox Box;
-	private slam Slam;
+	public slam Slam;
 	public  gameController manager;
 	public Vector3 angularVelocity;
 
@@ -68,6 +71,7 @@ public class playerCharacter : MonoBehaviour {
 			lives = manager.settings.lives;
 		}
 		healthMax = health;
+		stunParticles = transform.FindChild ("stun").gameObject;
 	}
 
 	void Update () 
@@ -105,10 +109,10 @@ public class playerCharacter : MonoBehaviour {
 		if (Ragdoll) 
 		{
 			rigidbody.constraints = RigidbodyConstraints.None;
+			stunParticles.SetActive(true);
 		}
 		if (isAlive)
 		{
-
 			if (Ragdoll)
 			{
 				recover();
@@ -174,10 +178,12 @@ public class playerCharacter : MonoBehaviour {
 				Slam.isEnabled = true;
 				rigidBody.gravity = gravityValue;
 				if (GetComponent<RigidBodyControls> ().grounded) {
+					Slam.clear();
 					Slam.isEnabled = false;
 					slamCD = slamCooldown;
 					slam = false;
 					animator.SetBool("slamTrigger",false);
+					Instantiate(slamParticles,transform.position+new Vector3(0,0.3f,0),Quaternion.Euler(90,0,0));
 				}
 			}
 			else
@@ -222,10 +228,6 @@ public class playerCharacter : MonoBehaviour {
 				{
 					if(lThumbX != 0 || lThumbY != 0)
 					{
-						if(!GetComponent<Animation>().isPlaying)
-						{
-							GetComponent<Animation>().Play("walk");
-						}
 						aim_angle = Mathf.Atan2(lThumbY, lThumbX) * Mathf.Rad2Deg;
 						transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.AngleAxis (aim_angle, Vector3.up), .2f);
 					}
@@ -269,7 +271,7 @@ public class playerCharacter : MonoBehaviour {
 	{
 		target.transform.position += new Vector3(0,0.05f,0);
 		Vector3 direction = (target.transform.position - transform.position);
-		direction.y += direction.magnitude;
+		direction.y += direction.magnitude/2;
 //		direction.x *= 0.5f;
 //		direction.z *= 0.5f;
 		direction.Normalize();
@@ -289,6 +291,7 @@ public class playerCharacter : MonoBehaviour {
 			Ragdoll = false;
 			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 			rigidbody.angularVelocity = Vector3.zero;
+			stunParticles.SetActive(false);
 			cooldown = 0;
 		} 
 		else 

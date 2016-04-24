@@ -35,10 +35,12 @@ public class PlayerBuffs : MonoBehaviour {
 		if (fireCooldown <= 0) 
 		{
 			fire.SetActive(false);
+			player.animator.SetBool("Fire",false);
 		} 
 		else 
 		{
 			fire.SetActive(true);
+			player.animator.SetBool("Fire",true);
 			fireCooldown -= Time.deltaTime;
 			player.health -= fireDamagePerTick;
 		}
