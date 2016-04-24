@@ -54,8 +54,8 @@ public class HealthBar : MonoBehaviour {
 					Debug.Log ("player 4 doesn't exist");
 				}
 			}
-			healthBar = GetComponent<Image> ();
-			startingColour = player.transform.FindChild ("characterModel").FindChild ("goo_man").renderer.material.color;
+			//healthBar = GetComponent<Image> ();
+			//startingColour = player.transform.FindChild ("characterModel").FindChild ("goo_man").renderer.material.color;
 		} 
 		else 
 		{

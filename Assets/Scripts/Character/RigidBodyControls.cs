@@ -22,7 +22,7 @@ public class RigidBodyControls : MonoBehaviour {
 	private float dashUseCD ;
 	public float speedMultiplier = 1;
 	public Animator animator;
-
+	public GameObject trailEffect;
 	void Awake () 
 	{
 		rigidbody.freezeRotation = true;
@@ -30,12 +30,13 @@ public class RigidBodyControls : MonoBehaviour {
 		player = GetComponent<playerCharacter> ();
 		controllerInput = GetComponent<XboxControls>();
 		animator = GetComponentInChildren<Animator> ();
+		trailEffect = transform.FindChild("dashTrail").gameObject;
 	}
 
 	void FixedUpdate ()
 	{
 
-		
+
 		if(remainingDashes < maxDashes)
 		{
 
@@ -51,9 +52,13 @@ public class RigidBodyControls : MonoBehaviour {
 		}
 		if(dashUseCD > 0)
 		{
+			trailEffect.SetActive(true);
 			dashUseCD -= Time.deltaTime;
 		}
-
+		else
+		{
+			trailEffect.SetActive(false);
+		}
 		if (player.isAlive && !player.Ragdoll)
 		{
 			if(Input.GetButtonUp(controllerInput.buttons.B))
@@ -63,6 +68,7 @@ public class RigidBodyControls : MonoBehaviour {
 					if(remainingDashes > 0)
 					{
 						//transform.position += new Vector3(0,0.1f,0);
+
 						rigidbody.AddForce(transform.right*dashSpeed);
 						remainingDashes --;
 						dashUseCD = dashUseCooldown;
