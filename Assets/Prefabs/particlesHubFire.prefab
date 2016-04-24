@@ -308,7 +308,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     type: 7
-    radius: .430000007
+    radius: .600000024
     angle: 25
     length: 5
     boxX: 1
@@ -1355,7 +1355,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     type: 7
-    radius: .400000006
+    radius: .600000024
     angle: 25
     length: 5
     boxX: 1
