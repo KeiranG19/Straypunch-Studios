@@ -15542,6 +15542,7 @@ MonoBehaviour:
   lives: 3
   playerCount: 2
   livesTxt: {fileID: 1245614043}
+  winningPlayer: 0
 --- !u!1 &1393577797
 GameObject:
   m_ObjectHideFlags: 0

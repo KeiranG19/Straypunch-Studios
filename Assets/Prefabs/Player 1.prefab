@@ -1703,7 +1703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be5ffa6dcccaf2d498a22fd7b426163f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumber: 0
+  playerNumber: 1
 --- !u!114 &11415210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1756,11 +1756,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slamParticles: {fileID: 177678, guid: d37f2fb182f65ff49b9025dcb459323a, type: 2}
+  stunParticles: {fileID: 0}
   animator: {fileID: 0}
   health: 100
   isAlive: 1
   lives: 2
   damageMultiplier: 1
+  ID: 1
   uppercutDamage: 20
   uppercutForce: 1500
   uppercutCooldown: 1
@@ -1793,7 +1795,7 @@ MonoBehaviour:
   canJump: 1
   jumpHeight: 2
   grounded: 0
-  player: {fileID: 0}
+  player: {fileID: 11415836}
   maxDashes: 3
   remainingDashes: 3
   dashUseCooldown: .5

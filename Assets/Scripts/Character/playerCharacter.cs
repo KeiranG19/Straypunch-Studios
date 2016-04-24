@@ -54,7 +54,8 @@ public class playerCharacter : MonoBehaviour {
 
 	private float idleTimer = 3;
 	public float idleTime = 0;
-	void Start () 
+
+	void Awake () 
 	{
 		manager = GameObject.FindGameObjectWithTag ("GameController").GetComponent<gameController>();
 		controllerInput = GetComponent<XboxControls> ();

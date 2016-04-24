@@ -27,14 +27,9 @@ public class RigidBodyControls : MonoBehaviour {
 	{
 		rigidbody.freezeRotation = true;
 		rigidbody.useGravity = false;
-	}
-
-	void Start()
-	{
 		player = GetComponent<playerCharacter> ();
 		controllerInput = GetComponent<XboxControls>();
 		animator = GetComponentInChildren<Animator> ();
-		
 	}
 
 	void FixedUpdate ()

@@ -1815,11 +1815,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slamParticles: {fileID: 0}
+  stunParticles: {fileID: 0}
   animator: {fileID: 0}
   health: 100
   isAlive: 1
   lives: 1
   damageMultiplier: 1
+  ID: 3
   uppercutDamage: 20
   uppercutForce: 1500
   uppercutCooldown: 1
