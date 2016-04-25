@@ -178,8 +178,9 @@ public class playerCharacter : MonoBehaviour {
 			if(sDelay >= slamDelay)
 			{
 				Slam.isEnabled = true;
-				rigidBody.gravity = gravityValue;
+				rigidBody.gravity = gravityValue*2;
 				if (GetComponent<RigidBodyControls> ().grounded) {
+					rigidBody.gravity = gravityValue;
 					Slam.clear();
 					Slam.isEnabled = false;
 					slamCD = slamCooldown;
@@ -247,7 +248,7 @@ public class playerCharacter : MonoBehaviour {
 			//attack
 			if(GetComponent<RigidBodyControls>().grounded)
 			{
-				if(uppercutCD <= 0)
+				if(uppercutCD <= 0 && !uppercut)
 				{
 					animator.SetTrigger("uppercutTrigger");
 					uppercut = true;
@@ -257,7 +258,7 @@ public class playerCharacter : MonoBehaviour {
 			}
 			else
 			{
-				if(slamCD <= 0)
+				if(slamCD <= 0 && !slam)
 				{
 					rigidbody.velocity = Vector3.zero;
 					animator.SetBool("slamTrigger",true);

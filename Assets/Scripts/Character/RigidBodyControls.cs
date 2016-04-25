@@ -78,21 +78,21 @@ public class RigidBodyControls : MonoBehaviour {
 			else
 			{
 				Vector3 velocity = rigidbody.velocity;
-				if(!player.Slam.isEnabled)
+				if(!player.slam)
 				{
-				// Calculate how fast we should be moving
-				Vector3 direction = new Vector3 (Input.GetAxis (controllerInput.buttons.movementHorizontalAxis), 0, Input.GetAxis (controllerInput.buttons.movementVerticalAxis));
-				Vector3 targetVelocity = direction * speed* speedMultiplier;
-				Vector3 planeVelocity = targetVelocity;
-				planeVelocity.y=0;
-				animator.SetFloat("Speed", planeVelocity.magnitude);
-				// Apply a force that attempts to reach our target velocity
+					// Calculate how fast we should be moving
+					Vector3 direction = new Vector3 (Input.GetAxis (controllerInput.buttons.movementHorizontalAxis), 0, Input.GetAxis (controllerInput.buttons.movementVerticalAxis));
+					Vector3 targetVelocity = direction * speed* speedMultiplier;
+					Vector3 planeVelocity = targetVelocity;
+					planeVelocity.y=0;
+					animator.SetFloat("Speed", planeVelocity.magnitude);
+					// Apply a force that attempts to reach our target velocity
 				
-				Vector3 velocityChange = (targetVelocity - velocity);
-				velocityChange.x = Mathf.Clamp (velocityChange.x, -maxVelocityChange, maxVelocityChange);
-				velocityChange.z = Mathf.Clamp (velocityChange.z, -maxVelocityChange, maxVelocityChange);
-				velocityChange.y = 0;
-				rigidbody.AddForce (velocityChange, ForceMode.VelocityChange);
+					Vector3 velocityChange = (targetVelocity - velocity);
+					velocityChange.x = Mathf.Clamp (velocityChange.x, -maxVelocityChange, maxVelocityChange);
+					velocityChange.z = Mathf.Clamp (velocityChange.z, -maxVelocityChange, maxVelocityChange);
+					velocityChange.y = 0;
+					rigidbody.AddForce (velocityChange, ForceMode.VelocityChange);
 				}
 				if (grounded) 
 				{
