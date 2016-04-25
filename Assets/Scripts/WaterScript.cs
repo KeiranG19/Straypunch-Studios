@@ -4,6 +4,7 @@ using System.Collections;
 public class WaterScript : MonoBehaviour {
 
 	public GameObject ripples;
+	public GameObject splash;
 
 	void OnTriggerEnter(Collider other)
 	{
@@ -13,6 +14,7 @@ public class WaterScript : MonoBehaviour {
 			Vector3 position = other.transform.position;
 			position.y = 7.8f;
 			Instantiate(ripples,position,Quaternion.Euler(-90,0,0));
+			Instantiate(splash,position,Quaternion.Euler(-90,0,0));
 		}
 	}
 }
