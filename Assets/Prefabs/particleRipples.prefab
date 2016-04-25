@@ -335,7 +335,7 @@ ParticleSystem:
   SizeModule:
     enabled: 1
     curve:
-      scalar: 100
+      scalar: 45
       maxCurve:
         serializedVersion: 2
         m_Curve:
