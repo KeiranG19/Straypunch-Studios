@@ -26,6 +26,7 @@ public class slam : MonoBehaviour {
 		{
 			hitList.Add(other);
 			playerCharacter target = other.GetComponent<playerCharacter> ();
+			target.rotationMultiplier = 0;
 			Vector3 position = other.transform.position;
 			float distance = Vector3.Distance(position,transform.position);
 			Vector3 direction = position-transform.position;
