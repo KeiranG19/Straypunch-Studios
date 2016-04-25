@@ -43,7 +43,7 @@ public class playerCharacter : MonoBehaviour {
 	private float uDelay = 0;
 
 	private float slamCD = 0;
-	private bool slam = false;
+	public bool slam = false;
 	private float slamDelay = 0.3f;
 	private float sDelay = 0;
 
