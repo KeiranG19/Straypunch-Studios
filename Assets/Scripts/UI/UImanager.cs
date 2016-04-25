@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-
+using UnityEngine.EventSystems;
 public class UImanager : MonoBehaviour {
 
-	public Menu currentMenu;			// current open menu
 	public int delay = 4;				// Time until the ui will start to fade
-	public int fadeSpeed = 2;			// How quickly the ui elements will fade
-	public bool visible = false;		// If the UI is visible
-	
+	public float fadeSpeed = 2;			// How quickly the ui elements will fade
+	public EventSystem buttons;
 	private CanvasGroup visibility;		// Referance to the canvasGroup component
+	public GameObject topButton;
 	//private PlayerController player;	
 
 	void Start ()
@@ -17,35 +16,15 @@ public class UImanager : MonoBehaviour {
 		//player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 		visibility = GetComponent<CanvasGroup>();
 		visibility.alpha = 0;
-	}
-
-	void Update ()
-	{
-		if(visible == true)
-		{
-			StartCoroutine( showUI());
-
-		}
-	}
-
-	public void ShowMenu(Menu menu)
-	{
-		if (currentMenu != null)
-			currentMenu.isOpen = false;
-		
-		
-		currentMenu = menu;
-		currentMenu.isOpen = true;
+		StartCoroutine( showUI());
 
 	}
 
 	private IEnumerator showUI()
 	{
-		visibility.alpha = 1;
 		yield return new WaitForSeconds(delay);
-		visibility.alpha =  Mathf.Lerp(visibility.alpha, 0, fadeSpeed * Time.deltaTime);
-		visible = false;
-
+		visibility.alpha =  Mathf.Lerp(0, 255, fadeSpeed * Time.deltaTime);
+		buttons.SetSelectedGameObject (topButton);
 	}
 
 	public void ExitGame()

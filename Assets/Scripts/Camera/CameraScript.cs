@@ -8,9 +8,9 @@ public class CameraScript : MonoBehaviour {
 	private float zoomAmount = 0;
 	private Vector3 startPosition;
 	private Vector3 forwardPosition;
-
+	public gameController manager;
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 
 		startPosition = transform.position;
 		forwardPosition = transform.position + (transform.forward * 10);
@@ -23,25 +23,21 @@ public class CameraScript : MonoBehaviour {
 
 
 	void setLookat() {
-		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 		float maxZ = float.NegativeInfinity;
 		float minZ = float.PositiveInfinity;
 		float minX = float.PositiveInfinity;
-		foreach (GameObject player in players) {
-			if (player.GetComponent<playerCharacter>().isAlive)
+		foreach (playerCharacter player in manager.alivePlayers) {
+			if(player.transform.position.z > maxZ)
 			{
-				if(player.transform.position.z > maxZ)
-				{
-					maxZ = player.transform.position.z;
-				}
-				if(player.transform.position.z < minZ)
-				{
-					minZ = player.transform.position.z;
-				}
-				if(player.transform.position.x<minX)
-				{
-					minX = player.transform.position.x;
-				}
+				maxZ = player.transform.position.z;
+			}
+			if(player.transform.position.z < minZ)
+			{
+				minZ = player.transform.position.z;
+			}
+			if(player.transform.position.x<minX)
+			{
+				minX = player.transform.position.x;
 			}
 		}
 

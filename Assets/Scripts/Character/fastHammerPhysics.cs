@@ -14,7 +14,6 @@ public class fastHammerPhysics : MonoBehaviour {
 		
 	}
 
-
 	void OnTriggerEnter(Collider hit)
 	{
 		if (hit.gameObject.tag == "Player" && isEnabled) 
