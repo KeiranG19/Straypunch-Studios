@@ -54,7 +54,8 @@ public class playerCharacter : MonoBehaviour {
 
 	private float idleTimer = 3;
 	public float idleTime = 0;
-
+	public playerSFX soundEffect;
+	public AudioSource myAudio;
 	void Awake () 
 	{
 		manager = GameObject.FindGameObjectWithTag ("GameController").GetComponent<gameController>();
@@ -73,17 +74,30 @@ public class playerCharacter : MonoBehaviour {
 		healthMax = health;
 		stunParticles = transform.FindChild ("stun").gameObject;
 		manager.alivePlayers.Add (this);
+		soundEffect = GetComponent<playerSFX> ();
+		myAudio = GetComponent<AudioSource> ();
 	}
 
 	void Update () 
 	{
+		myAudio.Stop ();
 		if (health > healthMax) 
 		{
 			health = healthMax;
 		}
+		if (rotationMultiplier <= 10 && rotationMultiplier > 0) 
+		{
+
+			if(!myAudio.isPlaying)
+			{
+				myAudio.clip = soundEffect.spinSlow;
+				myAudio.Play();
+			}
+		}
 		if (rotationMultiplier > 10) {
 			spinning.isEnabled = true;
 			animator.SetBool("Spinning",true);
+			//myAudio.PlayOneShot(soundEffect.spinQuick);
 		} 
 		else 
 		{
@@ -135,11 +149,13 @@ public class playerCharacter : MonoBehaviour {
 			}
 			else
 			{
+				myAudio.PlayOneShot(soundEffect.deathScream);
 				isAlive = false;
 				Ragdoll = true;
 				animator.SetBool("Dead",true);
 				rigidbody.AddTorque(new Vector3(0,0,100));
 				manager.alivePlayers.Remove(this);
+
 			}
 		}
 		 
@@ -160,10 +176,13 @@ public class playerCharacter : MonoBehaviour {
 				{
 					foreach(GameObject target in Box.targets)
 					{
+						// bool hit someone
+						myAudio.PlayOneShot(soundEffect.upperCutHit);
 						punt(target);
 						target.GetComponent<playerCharacter>().rotationMultiplier = 0;
 						target.GetComponent<playerCharacter>().health -= uppercutDamage* damageMultiplier;
 					}
+
 					uppercutCD = uppercutCooldown;
 					uppercut = false;
 				}
