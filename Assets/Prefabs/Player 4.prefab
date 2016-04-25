@@ -818,6 +818,8 @@ GameObject:
   - 114: {fileID: 11466296}
   - 114: {fileID: 11407812}
   - 114: {fileID: 11467612}
+  - 82: {fileID: 8233216}
+  - 114: {fileID: 11433216}
   m_Layer: 0
   m_Name: Player 4
   m_TagString: Player
@@ -1650,6 +1652,64 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &8233216
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 175582}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!95 &9521066
 Animator:
   serializedVersion: 3
@@ -1774,6 +1834,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 4
+--- !u!114 &11433216
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 175582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c2eccb3226e38649bf5cea5cbe88a51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dash: {fileID: 8300000, guid: 2abcf06203eb22c44ad1422f113e102d, type: 3}
+  scream: {fileID: 8300000, guid: e6354f4fe1fa85a4c866ff4b159d7846, type: 3}
+  deathScream: {fileID: 8300000, guid: 2675d1a1681e40c45a583a9305fa0fdb, type: 3}
+  upperCutHit: {fileID: 8300000, guid: f4994bfa795a4f84d97dff2c0f8ba1e0, type: 3}
+  jump: {fileID: 8300000, guid: d4aa089950cd2174980d2500df53e899, type: 3}
+  spinSlow: {fileID: 8300000, guid: 627ab500ed496c34d911eec50b8b369a, type: 3}
+  spinQuick: {fileID: 8300000, guid: 4680b6fb055414b45bf7b7c5515c5bbf, type: 3}
+  walk: {fileID: 8300000, guid: 0cfd707d933eb704087e953c27e841de, type: 3}
 --- !u!114 &11466296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1874,6 +1953,8 @@ MonoBehaviour:
   speedMultiplier: 1
   animator: {fileID: 0}
   trailEffect: {fileID: 0}
+  jumpUseCD: 0
+  jumpUseCooldown: .5
 --- !u!114 &11475584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1908,6 +1989,12 @@ MonoBehaviour:
   manager: {fileID: 0}
   angularVelocity: {x: 0, y: 0, z: 0}
   idleTime: 0
+  soundEffect: {fileID: 0}
+  myAudio: {fileID: 0}
+  spinningAudio: 0
+  dashAudio: 0
+  jumpAudio: 0
+  walkAudio: 0
 --- !u!136 &13675580
 CapsuleCollider:
   m_ObjectHideFlags: 1

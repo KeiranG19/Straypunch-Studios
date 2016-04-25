@@ -10,6 +10,7 @@ public class playerSFX : MonoBehaviour
 	public AudioClip jump;
 	public AudioClip spinSlow;
 	public AudioClip spinQuick;
+	public AudioClip walk;
 
 	// Use this for initialization
 	void Start () {

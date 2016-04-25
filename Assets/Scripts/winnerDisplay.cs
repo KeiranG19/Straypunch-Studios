@@ -43,17 +43,17 @@ public class winnerDisplay : MonoBehaviour
 			} 
 			else if (winnerID == 3) 
 			{
-				winner.renderer.material = yellow;
+				winner.renderer.material = green;
 				looser1.renderer.material = blue;
 				looser2.renderer.material = red;
-				looser3.renderer.material = green;
-				looser3OtherHalf.renderer.material = green;
+				looser3.renderer.material = yellow;
+				looser3OtherHalf.renderer.material = yellow;
 			} 
 			else 
 			{
-				winner.renderer.material = green;
+				winner.renderer.material = yellow;
 				looser1.renderer.material = blue;
-				looser2.renderer.material = yellow;
+				looser2.renderer.material = green;
 				looser3.renderer.material = red;
 				looser3OtherHalf.renderer.material = red;
 			}

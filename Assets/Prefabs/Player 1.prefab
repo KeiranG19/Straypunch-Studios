@@ -1910,6 +1910,10 @@ MonoBehaviour:
   idleTime: 0
   soundEffect: {fileID: 0}
   myAudio: {fileID: 0}
+  spinningAudio: 0
+  dashAudio: 0
+  jumpAudio: 0
+  walkAudio: 0
 --- !u!114 &11415838
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1936,6 +1940,8 @@ MonoBehaviour:
   speedMultiplier: 1
   animator: {fileID: 0}
   trailEffect: {fileID: 0}
+  jumpUseCD: 0
+  jumpUseCooldown: .5
 --- !u!114 &11415840
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1960,13 +1966,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2eccb3226e38649bf5cea5cbe88a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dash: {fileID: 8300000, guid: 1dceb522841df3d408a87b7687c80806, type: 3}
+  dash: {fileID: 8300000, guid: 2abcf06203eb22c44ad1422f113e102d, type: 3}
   scream: {fileID: 8300000, guid: e6354f4fe1fa85a4c866ff4b159d7846, type: 3}
-  deathScream: {fileID: 8300000, guid: aece7d29fb3fbdf4ca62b6f9640e2d3b, type: 3}
+  deathScream: {fileID: 8300000, guid: 2675d1a1681e40c45a583a9305fa0fdb, type: 3}
   upperCutHit: {fileID: 8300000, guid: f4994bfa795a4f84d97dff2c0f8ba1e0, type: 3}
   jump: {fileID: 8300000, guid: d4aa089950cd2174980d2500df53e899, type: 3}
   spinSlow: {fileID: 8300000, guid: 627ab500ed496c34d911eec50b8b369a, type: 3}
   spinQuick: {fileID: 8300000, guid: 4680b6fb055414b45bf7b7c5515c5bbf, type: 3}
+  walk: {fileID: 8300000, guid: 0cfd707d933eb704087e953c27e841de, type: 3}
 --- !u!114 &11499526
 MonoBehaviour:
   m_ObjectHideFlags: 1

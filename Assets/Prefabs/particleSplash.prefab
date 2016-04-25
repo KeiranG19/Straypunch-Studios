@@ -44,6 +44,7 @@ GameObject:
   - 4: {fileID: 491098}
   - 198: {fileID: 19891098}
   - 199: {fileID: 19991098}
+  - 114: {fileID: 11483132}
   m_Layer: 0
   m_Name: particleSplash
   m_TagString: Untagged
@@ -89,6 +90,17 @@ Transform:
   - {fileID: 489518}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11483132
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 191098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e54ef3b101ed8ce42920bd3246c11658, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &19889518
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -2206,7 +2218,7 @@ ParticleSystem:
   looping: 0
   prewarm: 0
   playOnAwake: 1
-  moveWithTransform: 1
+  moveWithTransform: 0
   InitialModule:
     enabled: 1
     startLifetime:

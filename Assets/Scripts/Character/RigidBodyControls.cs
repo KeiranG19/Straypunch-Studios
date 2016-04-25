@@ -23,6 +23,8 @@ public class RigidBodyControls : MonoBehaviour {
 	public float speedMultiplier = 1;
 	public Animator animator;
 	public GameObject trailEffect;
+	public float jumpUseCD = 0;
+	public float jumpUseCooldown = 0.5f;
 	void Awake () 
 	{
 		rigidbody.freezeRotation = true;
@@ -50,15 +52,28 @@ public class RigidBodyControls : MonoBehaviour {
 				regenDashCD = regenDashCooldown;
 			}
 		}
+
 		if(dashUseCD > 0)
 		{
+
 			trailEffect.SetActive(true);
 			dashUseCD -= Time.deltaTime;
 		}
 		else
 		{
+			player.dashAudio = false;
 			trailEffect.SetActive(false);
 		}
+
+		if (jumpUseCD > 0) 
+		{
+			jumpUseCD -= Time.deltaTime;
+		} 
+		else 
+		{
+			player.jumpAudio = false;
+		}
+
 		if (player.isAlive && !player.Ragdoll)
 		{
 			if(Input.GetButtonUp(controllerInput.buttons.B))
@@ -72,6 +87,9 @@ public class RigidBodyControls : MonoBehaviour {
 						rigidbody.AddForce(transform.right*dashSpeed);
 						remainingDashes --;
 						dashUseCD = dashUseCooldown;
+						player.myAudio.clip = player.soundEffect.dash;
+						player.myAudio.Play();
+						player.dashAudio = true;
 					}
 				}
 			}
@@ -94,6 +112,8 @@ public class RigidBodyControls : MonoBehaviour {
 					velocityChange.y = 0;
 					rigidbody.AddForce (velocityChange, ForceMode.VelocityChange);
 				}
+
+
 				if (grounded) 
 				{
 					// Jump
@@ -101,8 +121,13 @@ public class RigidBodyControls : MonoBehaviour {
 					{
 						rigidbody.velocity = new Vector3 (velocity.x, CalculateJumpVerticalSpeed (), velocity.z);
 						animator.SetTrigger("jumpTrigger");
+						player.myAudio.clip = player.soundEffect.jump;
+						player.myAudio.Play();
+						jumpUseCD = jumpUseCooldown;
+						player.jumpAudio = true;
 					}
 				}
+
 			}
 		}
 		// We apply gravity manually for more tuning control
