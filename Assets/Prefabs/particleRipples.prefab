@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 430718}
   - 198: {fileID: 19830718}
   - 199: {fileID: 19930718}
+  - 114: {fileID: 11430782}
   m_Layer: 0
   m_Name: particleRipples
   m_TagString: Untagged
@@ -29,6 +30,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11430782
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e54ef3b101ed8ce42920bd3246c11658, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &19830718
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -335,7 +347,7 @@ ParticleSystem:
   SizeModule:
     enabled: 1
     curve:
-      scalar: 100
+      scalar: 45
       maxCurve:
         serializedVersion: 2
         m_Curve:

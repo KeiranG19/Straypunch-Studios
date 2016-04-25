@@ -873,8 +873,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 166300}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .300000012, z: 0}
-  m_LocalScale: {x: 3, y: .5, z: 3}
+  m_LocalPosition: {x: 0, y: .25, z: 0}
+  m_LocalScale: {x: 3, y: .75, z: 3}
   m_Children: []
   m_Father: {fileID: 475582}
   m_RootOrder: 2
@@ -1505,7 +1505,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 175580}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .699999988, z: 0}
+  m_LocalPosition: {x: 0, y: .600000024, z: 0}
   m_LocalScale: {x: 2, y: .300000012, z: 2}
   m_Children: []
   m_Father: {fileID: 475582}
@@ -1517,7 +1517,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 175582}
   m_LocalRotation: {x: 9.90654758e-09, y: -.215676129, z: 7.51199369e-09, w: .976464987}
-  m_LocalPosition: {x: -.229478836, y: 8.70499992, z: -15.1224012}
+  m_LocalPosition: {x: -.229000002, y: 8.75, z: -15.1219997}
   m_LocalScale: {x: 1.16411769, y: 1.07197165, z: 1.11768293}
   m_Children:
   - {fileID: 475580}
@@ -1555,7 +1555,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: cbb0bdf45a9931a4eb65932fe0084cdd, type: 2}
+  - {fileID: 2100000, guid: 7cb3b4183c78a52448802ebfe5cfd7c1, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -1833,8 +1833,8 @@ MonoBehaviour:
   fireDamagePerTick: .100000001
   healPerTick: .100000001
   speedMultiplier: 1.5
-  growAmount: 0
-  attackBoost: 0
+  growAmount: 1.5
+  attackBoost: 1.5
 --- !u!114 &11475580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1885,7 +1885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae9d46d63c008a488f22dabfd1e8211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slamParticles: {fileID: 0}
+  slamParticles: {fileID: 177678, guid: d37f2fb182f65ff49b9025dcb459323a, type: 2}
   stunParticles: {fileID: 0}
   animator: {fileID: 0}
   health: 100
@@ -1903,6 +1903,7 @@ MonoBehaviour:
   rotationMultiplier: 0
   recoveryTime: 4
   previousRotation: {x: 0, y: 0, z: 0, w: 0}
+  slam: 0
   Slam: {fileID: 0}
   manager: {fileID: 0}
   angularVelocity: {x: 0, y: 0, z: 0}
@@ -1932,7 +1933,7 @@ SkinnedMeshRenderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: cc3d619bc19342a4d800cfe4910d4223, type: 2}
+  - {fileID: 2100000, guid: 483fa5629376ec148aa1960ed0e93df6, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0

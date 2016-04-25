@@ -5,6 +5,7 @@ public class CameraScript : MonoBehaviour {
 
 	public float maxDist = 100;
 	public float zoomSpeed = 5;
+	public float zoomDist = 10;
 	private float zoomAmount = 0;
 	private Vector3 startPosition;
 	private Vector3 forwardPosition;
@@ -13,7 +14,7 @@ public class CameraScript : MonoBehaviour {
 	void Awake () {
 
 		startPosition = transform.position;
-		forwardPosition = transform.position + (transform.forward * 10);
+		forwardPosition = transform.position + (transform.forward * zoomDist);
 	}
 	
 	// Update is called once per frame
