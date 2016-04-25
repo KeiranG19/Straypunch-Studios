@@ -22,25 +22,21 @@ public class RigidBodyControls : MonoBehaviour {
 	private float dashUseCD ;
 	public float speedMultiplier = 1;
 	public Animator animator;
-
+	public GameObject trailEffect;
 	void Awake () 
 	{
 		rigidbody.freezeRotation = true;
 		rigidbody.useGravity = false;
-	}
-
-	void Start()
-	{
 		player = GetComponent<playerCharacter> ();
 		controllerInput = GetComponent<XboxControls>();
 		animator = GetComponentInChildren<Animator> ();
-		
+		trailEffect = transform.FindChild("dashTrail").gameObject;
 	}
 
 	void FixedUpdate ()
 	{
 
-		
+
 		if(remainingDashes < maxDashes)
 		{
 
@@ -56,64 +52,74 @@ public class RigidBodyControls : MonoBehaviour {
 		}
 		if(dashUseCD > 0)
 		{
+			trailEffect.SetActive(true);
 			dashUseCD -= Time.deltaTime;
 		}
-
+		else
+		{
+			trailEffect.SetActive(false);
+		}
 		if (player.isAlive && !player.Ragdoll)
 		{
-				if(Input.GetButtonUp(controllerInput.buttons.B))
+			if(Input.GetButtonUp(controllerInput.buttons.B))
+			{
+				if(dashUseCD <= 0 && grounded)
 				{
-					if(dashUseCD <= 0)
+					if(remainingDashes > 0)
 					{
-						if(remainingDashes > 0)
-						{
-							//transform.position = Vector3.Lerp(transform.position, transform.position+transform.right*dashSpeed,0.5f);
-							transform.position += new Vector3(0,0.1f,0);
-							rigidbody.AddForce(transform.right*dashSpeed);
-							remainingDashes --;
-							dashUseCD = dashUseCooldown;
-						}
+						//transform.position += new Vector3(0,0.1f,0);
+
+						rigidbody.AddForce(transform.right*dashSpeed);
+						remainingDashes --;
+						dashUseCD = dashUseCooldown;
 					}
 				}
-				else
-				{
-				// Calculate how fast we should be moving
-				Vector3 direction = new Vector3 (Input.GetAxis (controllerInput.buttons.movementHorizontalAxis), 0, Input.GetAxis (controllerInput.buttons.movementVerticalAxis));
-				Vector3 targetVelocity = direction * speed* speedMultiplier;
-				Vector3 planeVelocity = targetVelocity;
-				planeVelocity.y=0;
-				animator.SetFloat("Speed", planeVelocity.magnitude);
-				// Apply a force that attempts to reach our target velocity
+			}
+			else
+			{
 				Vector3 velocity = rigidbody.velocity;
-				Vector3 velocityChange = (targetVelocity - velocity);
-				velocityChange.x = Mathf.Clamp (velocityChange.x, -maxVelocityChange, maxVelocityChange);
-				velocityChange.z = Mathf.Clamp (velocityChange.z, -maxVelocityChange, maxVelocityChange);
-				velocityChange.y = 0;
-				rigidbody.AddForce (velocityChange, ForceMode.VelocityChange);
-				if (grounded) {
-				// Jump
-				if (canJump && Input.GetButton (controllerInput.buttons.A)) {
-					rigidbody.velocity = new Vector3 (velocity.x, CalculateJumpVerticalSpeed (), velocity.z);
-					animator.SetTrigger("jumpTrigger");
+				if(!player.slam)
+				{
+					// Calculate how fast we should be moving
+					Vector3 direction = new Vector3 (Input.GetAxis (controllerInput.buttons.movementHorizontalAxis), 0, Input.GetAxis (controllerInput.buttons.movementVerticalAxis));
+					Vector3 targetVelocity = direction * speed* speedMultiplier;
+					Vector3 planeVelocity = targetVelocity;
+					planeVelocity.y=0;
+					animator.SetFloat("Speed", planeVelocity.magnitude);
+					// Apply a force that attempts to reach our target velocity
+				
+					Vector3 velocityChange = (targetVelocity - velocity);
+					velocityChange.x = Mathf.Clamp (velocityChange.x, -maxVelocityChange, maxVelocityChange);
+					velocityChange.z = Mathf.Clamp (velocityChange.z, -maxVelocityChange, maxVelocityChange);
+					velocityChange.y = 0;
+					rigidbody.AddForce (velocityChange, ForceMode.VelocityChange);
 				}
+				if (grounded) 
+				{
+					// Jump
+					if (canJump && Input.GetButton (controllerInput.buttons.A)) 
+					{
+						rigidbody.velocity = new Vector3 (velocity.x, CalculateJumpVerticalSpeed (), velocity.z);
+						animator.SetTrigger("jumpTrigger");
+					}
 				}
 			}
 		}
-			// We apply gravity manually for more tuning control
-			rigidbody.AddForce (new Vector3 (0, -gravity * rigidbody.mass, 0));
+		// We apply gravity manually for more tuning control
+		rigidbody.AddForce (new Vector3 (0, -gravity * rigidbody.mass, 0));
 		
-			grounded = false;
+		grounded = false;
 		if (rigidbody.velocity.sqrMagnitude > 0.01) 
 		{
 			player.idleTime = 0;
 		}
 	}
 	
-	void OnCollisionStay () {
-		if (rigidbody.velocity.y < 0.1) 
+	void OnCollisionStay(Collision other) {
+		if (rigidbody.velocity.y < 0.1 && other.gameObject.tag != "Wall") 
 		{
 			grounded = true;    
-		}
+		} 
 	}
 	
 	float CalculateJumpVerticalSpeed () {

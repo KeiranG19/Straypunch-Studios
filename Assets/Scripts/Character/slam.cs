@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class slam : MonoBehaviour {
 
 	private playerCharacter player;
+
+	List<Collider> hitList = new List<Collider> ();
 
 	public float damage = 60;
 	public float force = 10;
@@ -19,8 +22,9 @@ public class slam : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.tag == "Player" && other.gameObject != this.gameObject && isEnabled) 
+		if (other.tag == "Player" && other.gameObject != this.gameObject && isEnabled && !hitList.Contains(other)) 
 		{
+			hitList.Add(other);
 			playerCharacter target = other.GetComponent<playerCharacter> ();
 			Vector3 position = other.transform.position;
 			float distance = Vector3.Distance(position,transform.position);
@@ -49,6 +53,11 @@ public class slam : MonoBehaviour {
 				target.rigidbody.AddForce(direction*force/distance);
 			}
 		}
+	}
+
+	public void clear()
+	{
+		hitList.Clear ();
 	}
 
 	// Update is called once per frame

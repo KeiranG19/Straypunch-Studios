@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 public class playerCharacter : MonoBehaviour {
 
+	public GameObject slamParticles;
+	public GameObject stunParticles;
+
 	private fastHammerPhysics spinning;
 	private RigidBodyControls rigidBody;
 	private float gravityValue;
@@ -17,9 +20,8 @@ public class playerCharacter : MonoBehaviour {
 	private float healthMax;
 	public bool isAlive = true;
 	public int lives = 1;
-
 	public float damageMultiplier = 1.0f;
-
+	public int ID = 0;
 	public float uppercutDamage;
 	public float uppercutForce;
 	public float uppercutCooldown;
@@ -46,13 +48,14 @@ public class playerCharacter : MonoBehaviour {
 	private float sDelay = 0;
 
 	private hitBox Box;
-	private slam Slam;
+	public slam Slam;
 	public  gameController manager;
 	public Vector3 angularVelocity;
 
 	private float idleTimer = 3;
 	public float idleTime = 0;
-	void Start () 
+
+	void Awake () 
 	{
 		manager = GameObject.FindGameObjectWithTag ("GameController").GetComponent<gameController>();
 		controllerInput = GetComponent<XboxControls> ();
@@ -68,6 +71,8 @@ public class playerCharacter : MonoBehaviour {
 			lives = manager.settings.lives;
 		}
 		healthMax = health;
+		stunParticles = transform.FindChild ("stun").gameObject;
+		manager.alivePlayers.Add (this);
 	}
 
 	void Update () 
@@ -102,14 +107,15 @@ public class playerCharacter : MonoBehaviour {
 		{
 			rotationMultiplier = 0;
 		}
-
+		if (Ragdoll) 
+		{
+			rigidbody.constraints = RigidbodyConstraints.None;
+			stunParticles.SetActive(true);
+		}
 		if (isAlive)
 		{
-
 			if (Ragdoll)
 			{
-				rigidbody.constraints = RigidbodyConstraints.None;
-
 				recover();
 			}
 			else
@@ -133,6 +139,7 @@ public class playerCharacter : MonoBehaviour {
 				Ragdoll = true;
 				animator.SetBool("Dead",true);
 				rigidbody.AddTorque(new Vector3(0,0,100));
+				manager.alivePlayers.Remove(this);
 			}
 		}
 		 
@@ -171,12 +178,15 @@ public class playerCharacter : MonoBehaviour {
 			if(sDelay >= slamDelay)
 			{
 				Slam.isEnabled = true;
-				rigidBody.gravity = gravityValue;
+				rigidBody.gravity = gravityValue*2;
 				if (GetComponent<RigidBodyControls> ().grounded) {
+					rigidBody.gravity = gravityValue;
+					Slam.clear();
 					Slam.isEnabled = false;
 					slamCD = slamCooldown;
 					slam = false;
 					animator.SetBool("slamTrigger",false);
+					Instantiate(slamParticles,transform.position+new Vector3(0,0.3f,0),Quaternion.Euler(90,0,0));
 				}
 			}
 			else
@@ -221,10 +231,6 @@ public class playerCharacter : MonoBehaviour {
 				{
 					if(lThumbX != 0 || lThumbY != 0)
 					{
-						if(!GetComponent<Animation>().isPlaying)
-						{
-							GetComponent<Animation>().Play("walk");
-						}
 						aim_angle = Mathf.Atan2(lThumbY, lThumbX) * Mathf.Rad2Deg;
 						transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.AngleAxis (aim_angle, Vector3.up), .2f);
 					}
@@ -242,7 +248,7 @@ public class playerCharacter : MonoBehaviour {
 			//attack
 			if(GetComponent<RigidBodyControls>().grounded)
 			{
-				if(uppercutCD <= 0)
+				if(uppercutCD <= 0 && !uppercut)
 				{
 					animator.SetTrigger("uppercutTrigger");
 					uppercut = true;
@@ -252,7 +258,7 @@ public class playerCharacter : MonoBehaviour {
 			}
 			else
 			{
-				if(slamCD <= 0)
+				if(slamCD <= 0 && !slam)
 				{
 					rigidbody.velocity = Vector3.zero;
 					animator.SetBool("slamTrigger",true);
@@ -268,11 +274,12 @@ public class playerCharacter : MonoBehaviour {
 	{
 		target.transform.position += new Vector3(0,0.05f,0);
 		Vector3 direction = (target.transform.position - transform.position);
-		direction.y += direction.sqrMagnitude;
-		direction.x *= 0.5f;
-		direction.z *= 0.5f;
+		direction.y += direction.magnitude/2;
+//		direction.x *= 0.5f;
+//		direction.z *= 0.5f;
 		direction.Normalize();
 		target.rigidbody.AddForce(direction*uppercutForce);
+		target.rigidbody.AddTorque (direction * uppercutForce);
 	}
 
 	public void recover()
@@ -287,6 +294,7 @@ public class playerCharacter : MonoBehaviour {
 			Ragdoll = false;
 			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 			rigidbody.angularVelocity = Vector3.zero;
+			stunParticles.SetActive(false);
 			cooldown = 0;
 		} 
 		else 
