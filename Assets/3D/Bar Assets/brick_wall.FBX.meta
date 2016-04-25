@@ -1,16 +1,12 @@
 fileFormatVersion: 2
-guid: a46a89f68f6b2bd4a9797de01b085a8f
+guid: 767c03153d6d81345997e51098bb1d7a
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: Box001
-    100002: //RootNode
-    100004: Sky001
-    400000: Box001
-    400002: //RootNode
-    400004: Sky001
-    2300000: Box001
-    3300000: Box001
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
     4300000: Box001
     9500000: //RootNode
   materials:
