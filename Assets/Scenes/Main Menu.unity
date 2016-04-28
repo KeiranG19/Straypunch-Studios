@@ -5735,6 +5735,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c146fb6251191234da7d6ab3b909721c, type: 2}
+    - target: {fileID: 9500000, guid: 622da4cc63eb1334b82c512600fac6ae, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 21748afec7b7cd44eb4af5a07d95f793, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 622da4cc63eb1334b82c512600fac6ae, type: 3}
   m_RootGameObject: {fileID: 394028218}
@@ -5783,7 +5787,7 @@ Animator:
   m_GameObject: {fileID: 394028218}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 622da4cc63eb1334b82c512600fac6ae, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 21748afec7b7cd44eb4af5a07d95f793, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -27726,7 +27730,7 @@ MonoBehaviour:
         m_MethodName: displayLevel
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 21300000, guid: c9795dcb1407c0b4d9c7022ed43b4e94,
+          m_ObjectArgument: {fileID: 21300000, guid: dc3a083cc75131041858443195b6132e,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
@@ -27786,7 +27790,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 21300000, guid: c9795dcb1407c0b4d9c7022ed43b4e94, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dc3a083cc75131041858443195b6132e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

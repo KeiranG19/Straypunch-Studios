@@ -54,7 +54,12 @@ public class playerCharacter : MonoBehaviour {
 
 	private float idleTimer = 3;
 	public float idleTime = 0;
-
+	public playerSFX soundEffect;
+	public AudioSource myAudio;
+	public bool spinningAudio = false;
+	public bool dashAudio = false;
+	public bool jumpAudio = false;
+	public bool walkAudio = false;
 	void Awake () 
 	{
 		manager = GameObject.FindGameObjectWithTag ("GameController").GetComponent<gameController>();
@@ -73,17 +78,33 @@ public class playerCharacter : MonoBehaviour {
 		healthMax = health;
 		stunParticles = transform.FindChild ("stun").gameObject;
 		manager.alivePlayers.Add (this);
+		soundEffect = GetComponent<playerSFX> ();
+		myAudio = GetComponent<AudioSource> ();
 	}
 
 	void Update () 
 	{
+		if (!spinningAudio && !dashAudio && !jumpAudio && !walkAudio) 
+		{
+			myAudio.loop = false;
+			myAudio.clip = null;
+		}
+
 		if (health > healthMax) 
 		{
 			health = healthMax;
 		}
+		if (rotationMultiplier < 5) 
+		{
+			spinningAudio = false;
+		}
+
 		if (rotationMultiplier > 10) {
 			spinning.isEnabled = true;
 			animator.SetBool("Spinning",true);
+
+
+			//myAudio.PlayOneShot(soundEffect.spinQuick);
 		} 
 		else 
 		{
@@ -135,11 +156,13 @@ public class playerCharacter : MonoBehaviour {
 			}
 			else
 			{
+				myAudio.PlayOneShot(soundEffect.deathScream);
 				isAlive = false;
 				Ragdoll = true;
 				animator.SetBool("Dead",true);
 				rigidbody.AddTorque(new Vector3(0,0,100));
 				manager.alivePlayers.Remove(this);
+
 			}
 		}
 		 
@@ -160,10 +183,13 @@ public class playerCharacter : MonoBehaviour {
 				{
 					foreach(GameObject target in Box.targets)
 					{
+						// bool hit someone
+						myAudio.PlayOneShot(soundEffect.upperCutHit);
 						punt(target);
 						target.GetComponent<playerCharacter>().rotationMultiplier = 0;
 						target.GetComponent<playerCharacter>().health -= uppercutDamage* damageMultiplier;
 					}
+
 					uppercutCD = uppercutCooldown;
 					uppercut = false;
 				}
@@ -194,6 +220,11 @@ public class playerCharacter : MonoBehaviour {
 				sDelay += Time.deltaTime;
 			}
 		}
+
+		if (!myAudio.isPlaying) 
+		{
+
+		}
 	}
 	 
 	private float sensitivityX=90;
@@ -218,6 +249,13 @@ public class playerCharacter : MonoBehaviour {
 			{ 
 				rotationMultiplier+= 0.2f;
 				transform.Rotate(new Vector3(0, -90, 0) * Time.deltaTime * rotationMultiplier);
+				if(!myAudio.isPlaying)
+				{
+					myAudio.clip = soundEffect.spinSlow;
+					myAudio.Play();
+					myAudio.loop = true;
+				}
+				spinningAudio = true;
 			}
 			else
 			{
@@ -233,7 +271,18 @@ public class playerCharacter : MonoBehaviour {
 					{
 						aim_angle = Mathf.Atan2(lThumbY, lThumbX) * Mathf.Rad2Deg;
 						transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.AngleAxis (aim_angle, Vector3.up), .2f);
+						if(!myAudio.isPlaying)
+						{
+							myAudio.clip = soundEffect.walk;
+							myAudio.Play();
+							//myAudio.loop = true;
+							walkAudio = true;
+						}
 					}
+				}
+				else
+				{
+					walkAudio = false;
 				}
 			}
 		}
